@@ -37,7 +37,7 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink href="/data-feeds">📈 Data Feeds</NavLink>
+        <NavLink href="/data-feeds">📈 Price Feeds</NavLink>
       </li>
       <li>
         <NavLink href="/automation">🤖 Automation</NavLink>
