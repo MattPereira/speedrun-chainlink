@@ -1015,6 +1015,82 @@ const contracts = {
       },
     },
   ],
+  11155111: [
+    {
+      chainId: "11155111",
+      name: "sepolia",
+      contracts: {
+        PriceFeedConsumer: {
+          address: "0xb09C9e0748f3360802C656E374e762Ce8EB8696D",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "priceFeedAddress",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "getDecimals",
+              outputs: [
+                {
+                  internalType: "uint8",
+                  name: "",
+                  type: "uint8",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getDescripition",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getLatestPrice",
+              outputs: [
+                {
+                  internalType: "int256",
+                  name: "",
+                  type: "int256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getVersion",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+          ],
+        },
+      },
+    },
+  ],
 } as const;
 
 export default contracts;

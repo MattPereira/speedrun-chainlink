@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const router = useRouter();
@@ -29,6 +30,9 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
+
+  const network = getTargetNetwork();
+
   useOutsideClick(
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
@@ -37,7 +41,7 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink href="/data-feeds">📈 Price Feeds</NavLink>
+        <NavLink href="/price-feeds">📈 Price Feeds</NavLink>
       </li>
       <li>
         <NavLink href="/automation">🤖 Automation</NavLink>
@@ -51,12 +55,14 @@ export const Header = () => {
           Debug Contracts
         </NavLink>
       </li>
-      <li>
-        <NavLink href="/blockexplorer">
-          <MagnifyingGlassIcon className="h-4 w-4" />
-          Block Explorer
-        </NavLink>
-      </li>
+      {network.id === 31337 && (
+        <li>
+          <NavLink href="/blockexplorer">
+            <MagnifyingGlassIcon className="h-4 w-4" />
+            Block Explorer
+          </NavLink>
+        </li>
+      )}
     </>
   );
 

@@ -13,9 +13,7 @@ const deployPriceFeedConsumer: DeployFunction = async function (hre: HardhatRunt
   const { deploy, log } = hre.deployments;
   const { ethers } = hre;
 
-  //   const chainId = network.config.chainId;
   const chainId = await hre.ethers.provider.getNetwork().then(network => network.chainId);
-  console.log(`The current chain ID is: ${chainId}`);
 
   log("------------------------------------");
   let priceFeedAddress: string | undefined;
@@ -42,4 +40,4 @@ const deployPriceFeedConsumer: DeployFunction = async function (hre: HardhatRunt
 
 export default deployPriceFeedConsumer;
 
-deployPriceFeedConsumer.tags = ["price-consumer", "all"];
+deployPriceFeedConsumer.tags = ["aggregator", "all"];

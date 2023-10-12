@@ -3,8 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { developmentChains } from "../helper-hardhat-config";
 import { network } from "hardhat";
 
-/**
- * Deploys mock contracts necessary for testing on local networks
+/** Deploy mock contracts necessary for testing on local networks
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
@@ -45,6 +44,4 @@ const deployMocks: DeployFunction = async function (hre: HardhatRuntimeEnvironme
 
 export default deployMocks;
 
-// Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployMocks.tags = ["all", "mocks"];
+deployMocks.tags = ["mocks", "all"];
