@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { ExternalLink } from "~~/components/ExternalLink";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { AggregatorV3Consumer } from "~~/components/price-feeds/AggregatorV3Consumer";
+import { FeedRegistryDisplay } from "~~/components/price-feeds/FeedRegistry";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
@@ -25,11 +26,9 @@ const PriceFeeds: NextPage = () => {
       <div className="container mx-auto py-14 px-5">
         <h1 className="text-center text-5xl font-bold mb-14">📈 Price Feeds</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 mb-14">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-14 mb-14">
           <AggregatorV3Consumer />
-          <div className="bg-base-100 rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl md:text-3xl text-center mb-6 font-bold">FeedRegistry</h3>
-          </div>
+          <FeedRegistryDisplay />
         </div>
         <InformationSection />
       </div>

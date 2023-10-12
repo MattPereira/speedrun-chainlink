@@ -29,7 +29,7 @@ export const AggregatorV3Consumer = () => {
   ];
 
   return (
-    <div className="bg-base-100 rounded-xl p-8 shadow-lg">
+    <div className="bg-base-100 rounded-xl p-10 shadow-lg">
       <h3 className="text-2xl md:text-3xl text-center mb-10 font-bold">AggregatorV3Consumer</h3>
 
       {!latestPrice || !decimals || !description ? (
@@ -45,7 +45,7 @@ export const AggregatorV3Consumer = () => {
   );
 };
 
-function StatDisplay({
+export function StatDisplay({
   title = "N/A",
   value = "N/A",
   type = "N/A",
