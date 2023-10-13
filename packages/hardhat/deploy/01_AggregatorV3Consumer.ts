@@ -8,7 +8,7 @@ import { network } from "hardhat";
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployPriceFeedConsumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployAggregatorV3Consumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, log } = hre.deployments;
   const { ethers } = hre;
@@ -28,7 +28,7 @@ const deployPriceFeedConsumer: DeployFunction = async function (hre: HardhatRunt
   }
 
   const args = [priceFeedAddress];
-  await deploy("PriceFeedConsumer", {
+  await deploy("AggregatorV3Consumer", {
     from: deployer,
     args: args,
     log: true,
@@ -38,6 +38,6 @@ const deployPriceFeedConsumer: DeployFunction = async function (hre: HardhatRunt
   // * HOW TO VERIFY : https://docs.scaffoldeth.io/deploying/deploy-smart-contracts#4-verify-your-smart-contract
 };
 
-export default deployPriceFeedConsumer;
+export default deployAggregatorV3Consumer;
 
-deployPriceFeedConsumer.tags = ["aggregator", "all"];
+deployAggregatorV3Consumer.tags = ["aggregator", "all"];

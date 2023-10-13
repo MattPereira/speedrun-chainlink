@@ -23,7 +23,7 @@ const Home: NextPage = () => {
           {PRODUCTS.map(product => (
             <div key={product.name} className="bg-base-100 h-96 rounded-xl p-14">
               <h3 className="text-3xl text-center mb-8">{product.name}</h3>
-              <p className="text-xl">{product.description}</p>
+              <p className="text-x l">{product.description}</p>
             </div>
           ))}
         </div>

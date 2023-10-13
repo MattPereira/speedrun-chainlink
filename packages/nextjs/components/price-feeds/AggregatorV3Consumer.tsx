@@ -1,4 +1,5 @@
 import { formatUnits } from "viem";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth/useScaffoldContractRead";
 
 export const AggregatorV3Consumer = () => {
@@ -23,14 +24,21 @@ export const AggregatorV3Consumer = () => {
     { title: "getDecimals()", value: decimals?.toString(), type: "uint8" },
     {
       title: "formatUnits(price, decimals)",
-      value: latestPrice && decimals ? formatUnits(latestPrice, decimals) : "N/A",
+      value: latestPrice && decimals ? "$" + parseFloat(formatUnits(latestPrice, decimals)).toFixed(2) : "N/A",
       type: "string",
     },
   ];
 
   return (
     <div className="bg-base-100 rounded-xl p-10 shadow-lg">
-      <h3 className="text-2xl md:text-3xl text-center mb-10 font-bold">AggregatorV3Consumer</h3>
+      <div className="flex justify-center items-center mb-10 gap-2">
+        <h3 className="text-2xl md:text-3xl text-center font-bold">AggregatorV3Consumer</h3>
+        <div className="tooltip tooltip-accent" data-tip={`check out the "debug contracts" tab!`}>
+          <button>
+            <InformationCircleIcon className="h-7 w-7" />
+          </button>
+        </div>
+      </div>
 
       {!latestPrice || !decimals || !description ? (
         <p>Loading...</p>
@@ -48,16 +56,13 @@ export const AggregatorV3Consumer = () => {
 export function StatDisplay({
   title = "N/A",
   value = "N/A",
-  type = "N/A",
 }: {
   title: string | undefined;
   value: string | undefined;
-  type: string | undefined;
 }) {
   return (
     <div className="stats bg-base-200 shadow-lg">
       <div className="stat">
-        <div className="stat-title">{type}</div>
         <div className="stat-value">{value}</div>
         <div className="stat-title">{title}</div>
       </div>

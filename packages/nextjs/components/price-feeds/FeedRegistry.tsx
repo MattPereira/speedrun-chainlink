@@ -2,25 +2,20 @@ import { useState } from "react";
 import { StatDisplay } from "./AggregatorV3Consumer";
 import { formatUnits } from "viem";
 import { useContractRead } from "wagmi";
-import Denominations from "~~/utils/contract-helpers/Denominations";
-import FeedRegistry from "~~/utils/contract-helpers/FeedRegistry";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import FeedRegistry from "~~/utils/external-contracts/FeedRegistry";
 
 /**
- * @dev figure out how to interact with mainnet
- * even tho we are on sepolia
+ * @dev  FeedRegistry contract is only available on mainnet
  */
-
-const { baseOptions, quoteOptions } = Denominations;
-
 export const FeedRegistryDisplay = () => {
-  const [base, setBase] = useState(baseOptions.BTC);
-  const [quote, setQuote] = useState(quoteOptions.USD);
+  const [base, setBase] = useState(BASE_OPTIONS.BTC);
 
   const { data: description } = useContractRead({
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "description",
-    args: [base, quote],
+    args: [base, QUOTE],
     chainId: 1, // force request on mainnet
   });
 
@@ -28,7 +23,15 @@ export const FeedRegistryDisplay = () => {
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "latestRoundData",
-    args: [base, quote],
+    args: [base, QUOTE],
+    chainId: 1, // force request on mainnet
+  });
+
+  const { data: decimals } = useContractRead({
+    address: FeedRegistry.address,
+    abi: FeedRegistry.abi,
+    functionName: "decimals",
+    args: [base, QUOTE],
     chainId: 1, // force request on mainnet
   });
 
@@ -41,52 +44,67 @@ export const FeedRegistryDisplay = () => {
     console.error("Unexpected data format");
   }
 
+  const items = [
+    { title: "description()", value: description?.toString(), type: "string" },
+    { title: "latestRoundData().answer", value: price?.toString(), type: "int" },
+    { title: "decimals()", value: decimals?.toString(), type: "uint8" },
+    {
+      title: "formatUnits(price, decimals)",
+      value: price && decimals ? "$" + parseFloat(formatUnits(price, Number(decimals))).toFixed(2) : "N/A",
+      type: "string",
+    },
+  ];
+
   return (
     <div className="bg-base-100 rounded-xl p-10 shadow-lg">
-      <h3 className="text-2xl md:text-3xl text-center mb-6 font-bold">FeedRegistry</h3>
+      <div className="flex justify-center items-center mb-10 gap-2">
+        <h3 className="text-2xl md:text-3xl text-center font-bold">FeedRegistry</h3>
+        <div className="tooltip tooltip-accent" data-tip={`only available on ethereum mainnet`}>
+          <button>
+            <InformationCircleIcon className="h-7 w-7" />
+          </button>
+        </div>
+      </div>
 
-      {!price || !description ? (
+      {!price || !description || !decimals ? (
         <p>loading...</p>
       ) : (
-        <div className="mb-5 flex gap-4 flex-wrap">
-          <StatDisplay title="description()" value={"ETH"} type="string" />
-          <StatDisplay title="latestRoundData().answer" value={price?.toString()} type="int256" />
+        <div className="mb-8 flex flex-wrap gap-4">
+          {items.map(item => (
+            <StatDisplay key={item.title} {...item} />
+          ))}
         </div>
       )}
 
-      <div className="mb-5">
-        <div>
-          <label className="text-xl ml-4">Base Asset</label>
+      <div className="flex items-center justify-end">
+        <div className="mr-4">
+          <label className="text-xl">Base Asset</label>
         </div>
-        <select
-          className="select select-bordered w-full text-center bg-base-200"
-          value={base}
-          onChange={e => setBase(e.target.value)}
-        >
-          {Object.entries(baseOptions).map(([key, value]) => (
-            <option key={key} value={value}>
-              {key}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
         <div>
-          <label className="text-xl ml-4">Quote Asset</label>
+          <select
+            className="select select-bordered w-full text-center bg-base-200 text-2xl"
+            value={base}
+            onChange={e => setBase(e.target.value)}
+          >
+            {Object.entries(BASE_OPTIONS).map(([key, value]) => (
+              <option key={key} value={value} className="font-bold">
+                {key}
+              </option>
+            ))}
+          </select>
         </div>
-        <select
-          value={quote}
-          className="select select-bordered w-full text-center bg-base-200"
-          onChange={e => setQuote(e.target.value)}
-        >
-          {Object.entries(quoteOptions).map(([key, value]) => (
-            <option key={key} value={value}>
-              {key}
-            </option>
-          ))}
-        </select>
       </div>
     </div>
   );
 };
+
+const BASE_OPTIONS = {
+  BTC: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+  ETH: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+  LINK: "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+  AAVE: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+  YFI: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+};
+
+// address for USD
+const QUOTE = "0x0000000000000000000000000000000000000348";
