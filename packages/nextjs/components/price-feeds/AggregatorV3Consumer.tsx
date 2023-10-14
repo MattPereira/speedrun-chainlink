@@ -4,18 +4,18 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-eth/useScaffoldContra
 
 export const AggregatorV3Consumer = () => {
   const { data: latestPrice } = useScaffoldContractRead({
-    contractName: "PriceFeedConsumer",
+    contractName: "AggregatorV3Consumer",
     functionName: "getLatestPrice",
   });
 
   const { data: decimals } = useScaffoldContractRead({
-    contractName: "PriceFeedConsumer",
+    contractName: "AggregatorV3Consumer",
     functionName: "getDecimals",
   });
 
   const { data: description } = useScaffoldContractRead({
-    contractName: "PriceFeedConsumer",
-    functionName: "getDescripition", // fix spelling lol
+    contractName: "AggregatorV3Consumer",
+    functionName: "getDescription", // fix spelling lol
   });
 
   const items = [

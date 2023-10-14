@@ -24,7 +24,7 @@ const deployAggregatorV3Consumer: DeployFunction = async function (hre: HardhatR
     priceFeedAddress = MockV3Aggregator.address;
   } else {
     // use address from helper-hardhat-config if on testnet or live network
-    priceFeedAddress = networkConfig[chainId].priceFeeds?.ETH_USD;
+    priceFeedAddress = networkConfig[chainId].priceFeedAddress?.ETH_USD;
   }
 
   const args = [priceFeedAddress];

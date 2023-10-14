@@ -1,8 +1,6 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { InformationSection } from "~~/components/common/";
-import { ExternalLink } from "~~/components/common/ExternalLink";
-import { InlineCode } from "~~/components/common/InlineCode";
+import { ExternalLink, InformationSection, InlineCode } from "~~/components/common";
 import { AggregatorV3Consumer } from "~~/components/price-feeds/AggregatorV3Consumer";
 import { FeedRegistryDisplay } from "~~/components/price-feeds/FeedRegistry";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
