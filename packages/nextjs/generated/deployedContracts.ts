@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x3eE684fFd823491212E14D7f1DdAb96411eFB857",
+          address: "0xD49e0c6F561154D5e03F2B5CC9423a4a705BE7c9",
           abi: [
             {
               inputs: [
@@ -73,49 +73,61 @@ const contracts = {
           ],
         },
         VRFConsumer: {
-          address: "0xf4eB4f2B34682080dBB67c216e5bA03ceB0b9728",
+          address: "0xA65a9c38C456394C56BD331518a10CEf1d857B14",
           abi: [
             {
               inputs: [
                 {
                   internalType: "address",
-                  name: "vrfCoordinatorV2",
+                  name: "_linkAddress",
                   type: "address",
                 },
                 {
-                  internalType: "bytes32",
-                  name: "keyHash",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "uint64",
-                  name: "subscriptionId",
-                  type: "uint64",
-                },
-                {
-                  internalType: "uint32",
-                  name: "callbackGasLimit",
-                  type: "uint32",
+                  internalType: "address",
+                  name: "_wrapperAddress",
+                  type: "address",
                 },
               ],
               stateMutability: "nonpayable",
               type: "constructor",
             },
             {
+              anonymous: false,
               inputs: [
                 {
+                  indexed: true,
                   internalType: "address",
-                  name: "have",
+                  name: "from",
                   type: "address",
                 },
                 {
+                  indexed: true,
                   internalType: "address",
-                  name: "want",
+                  name: "to",
                   type: "address",
                 },
               ],
-              name: "OnlyCoordinatorCanFulfill",
-              type: "error",
+              name: "OwnershipTransferRequested",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+              ],
+              name: "OwnershipTransferred",
+              type: "event",
             },
             {
               anonymous: false,
@@ -125,6 +137,12 @@ const contracts = {
                   internalType: "uint256",
                   name: "requestId",
                   type: "uint256",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "spinner",
+                  type: "address",
                 },
                 {
                   indexed: true,
@@ -133,7 +151,7 @@ const contracts = {
                   type: "uint256",
                 },
               ],
-              name: "RandomNumberReceived",
+              name: "WheelResult",
               type: "event",
             },
             {
@@ -148,23 +166,69 @@ const contracts = {
                 {
                   indexed: true,
                   internalType: "address",
-                  name: "requester",
+                  name: "spinner",
                   type: "address",
                 },
               ],
-              name: "RequestRandomNumber",
+              name: "WheelSpun",
               type: "event",
+            },
+            {
+              inputs: [],
+              name: "acceptOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getLinkBalance",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "linkAddress",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
             },
             {
               inputs: [
                 {
                   internalType: "uint256",
-                  name: "requestId",
+                  name: "_requestId",
                   type: "uint256",
                 },
                 {
                   internalType: "uint256[]",
-                  name: "randomWords",
+                  name: "_randomWords",
                   type: "uint256[]",
                 },
               ],
@@ -174,8 +238,46 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "s_results",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "s_spinners",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [],
-              name: "requestRandomNumber",
+              name: "spinWheel",
               outputs: [
                 {
                   internalType: "uint256",
@@ -189,39 +291,21 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              name: "s_requestIdToSender",
-              outputs: [
-                {
                   internalType: "address",
-                  name: "",
+                  name: "to",
                   type: "address",
                 },
               ],
-              stateMutability: "view",
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-              ],
-              name: "s_senderToResult",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
+              inputs: [],
+              name: "withdrawLink",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
           ],

@@ -50,7 +50,7 @@ const PriceFeeds: NextPage = () => {
           ]}
           gettingStarted={[
             <>
-              Install the <InlineCode text="@chainlink/contracts" /> package for convenient access to contracts and ABIs
+              Install the <InlineCode text="@chainlink/contracts" /> package
             </>,
             <>
               Import <InlineCode text="AggregatorV3Interface" /> into your smart contract

@@ -21,7 +21,7 @@ const AutomationPage: NextPage = () => {
           details={[<>some details here</>]}
           gettingStarted={[
             <>
-              Install the <InlineCode text="@chainlink/contracts" /> package for convenient access to contracts and ABIs
+              Install the <InlineCode text="@chainlink/contracts" /> package
             </>,
           ]}
         />
