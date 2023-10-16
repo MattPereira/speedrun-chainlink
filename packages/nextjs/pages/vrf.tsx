@@ -17,26 +17,30 @@ const VRFPage: NextPage = () => {
         <InformationSection
           summary={
             <>
-              Chainlink VRF (Verifiable Random Function) is a provably fair and verifiable random number generator (RNG)
-              that enables smart contracts to access random values without compromising security or usability. For each
+              Chainlink VRF (Verifiable Random Function) is a provably fair and verifiable random number generator that
+              enables smart contracts to access random values without compromising security or usability. For each
               request, Chainlink VRF generates one or more random values and cryptographic proof of how those values
-              were determined. This example uses the <a className="link link-accent">Direct Funding</a> method, but you
-              may prefer the <a className="link link-accent">Subscription</a> method depending on your use case.
+              were determined. This example uses the{" "}
+              <a className="link link-accent" href="https://docs.chain.link/vrf/v2/direct-funding">
+                Direct Funding
+              </a>{" "}
+              method, but you may prefer the{" "}
+              <a className="link link-accent" href="https://docs.chain.link/vrf/v2/subscription">
+                Subscription
+              </a>{" "}
+              method depending on your use case.
             </>
           }
           details={[
             <>
-              Requests for random values require payment in
-              <InlineCode text="LINK" /> token through either a subscription or direct funding{" "}
-              <ExternalLink href="https://docs.chain.link/vrf#two-methods-to-request-randomness" />
+              The Direct Funding method requires your smart contract hold <InlineCode text="LINK" /> tokens for payment{" "}
             </>,
             <>
-              The <InlineCode text="requestRandomWords()" /> method is triggered by a user
+              Grab <InlineCode text="LINK" /> on sepolia from the faucet{" "}
+              <ExternalLink href="https://faucets.chain.link/" />
             </>,
             <>
-              Smart contracts that utilize VRFConsumerBaseV2 are required to override the{" "}
-              <InlineCode text="fullFillrandomWords" /> method which is how the VRF Coordinator delivers the random
-              value(s)
+              The <InlineCode text="fulfillRandomWords()" /> function is triggered by the VRF Coordinator contract
             </>,
             <>The modulo operator can be used to create a range </>,
           ]}
@@ -45,18 +49,29 @@ const VRFPage: NextPage = () => {
               Set up your contract to inherit{" "}
               <a
                 className="link link-accent"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol"
+              >
+                VRFV2WrapperConsumerBase
+              </a>
+            </>,
+
+            <>
+              Impliment a function that triggers request for random number by calling the{" "}
+              <InlineCode text="requestRandomness" /> function which is inhereted from{" "}
+              <a
+                className="link link-accent"
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol"
               >
                 VRFV2WrapperConsumerBase
               </a>
             </>,
             <>
-              Override the <InlineCode text="fullFillrandomWords" /> function with logic that handles the random values
+              You must <InlineCode text="override" /> the <InlineCode text="fullFillrandomWords" /> function
             </>,
-            <>
-              Request for random number is triggered by <InlineCode text="requestRandomness" /> function
-            </>,
-            <></>,
           ]}
         />
       </div>

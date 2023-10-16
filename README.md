@@ -20,8 +20,4 @@ yarn deploy --network sepolia
 yarn start
 ```
 
-4. Fund the VRFConsumer and AutomationConsumer contracts with LINK (create subscription?)
-
-## Testing
-
-- For local testing mock contracts have been included and configured in the deploy scripts
+4. Fund the VRFConsumer contract with LINK. Visit the [LINK faucet](https://faucets.chain.link/)

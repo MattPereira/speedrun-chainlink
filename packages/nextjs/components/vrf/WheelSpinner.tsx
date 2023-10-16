@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
-import { formatUnits } from "viem";
+import { ResultsTable } from "./ResultsTable";
+import { LoaderIcon } from "react-hot-toast";
+import { Spinner } from "~~/components/assets/Spinner";
+import { ExternalLink } from "~~/components/common";
 import { Address } from "~~/components/scaffold-eth";
+import { TxnNotification } from "~~/hooks/scaffold-eth";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth/useScaffoldContract";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth/useScaffoldContractRead";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth/useScaffoldContractWrite";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth/useScaffoldEventHistory";
 import { useScaffoldEventSubscriber } from "~~/hooks/scaffold-eth/useScaffoldEventSubscriber";
@@ -18,7 +21,7 @@ const Wheel = dynamic(() => import("react-custom-roulette").then(mod => mod.Whee
 
 type Result = {
   spinner: string;
-  result: number;
+  randomValue: number;
 };
 /**
  *
@@ -28,10 +31,23 @@ export const WheelSpinner = () => {
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [isTxPending, setIsTxPending] = useState(false);
   const [results, setResults] = useState<Result[]>([]);
-  const [pointerVisibility, setPointerVisibility] = useState<"visible" | "hidden">("hidden");
+  const [pointerVisibility, setPointerVisibility] = useState<"visible" | "hidden">("visible");
+  const [waitingForVRF, setWaitingForVRF] = useState(false);
+  const [notificationId, setNotificationId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (waitingForVRF) {
+      const id = notification.loading("Waiting for VRF to deliver");
+      setNotificationId(id);
+    } else if (notificationId) {
+      notification.remove(notificationId);
+      setNotificationId(null);
+    }
+  }, [waitingForVRF]);
 
   const handleSpinClick = async () => {
     try {
+      setPointerVisibility("hidden");
       setIsTxPending(true);
       await spinWheel();
     } catch (e) {
@@ -51,18 +67,23 @@ export const WheelSpinner = () => {
     contractName: "VRFConsumer",
     eventName: "WheelResult",
     listener: logs => {
+      console.log("logs", logs);
       logs.map(log => {
-        const { spinner, result } = log.args;
-        // handle the roulette wheel
+        setWaitingForVRF(false);
+        const { spinner, randomValue } = log.args;
+        console.log("LOG", log);
         if (!mustSpin) {
           setIsTxPending(false);
-          setPrizeNumber(Number(result));
+          setPrizeNumber(Number(randomValue));
           setMustSpin(true);
         }
         setPointerVisibility("visible");
+        notification.success(<TxnNotification message="VRF delivered" blockExplorerLink={log.transactionHash} />, {
+          duration: 20000,
+        });
         // handle the results table
-        if (spinner && result) {
-          setResults(prev => [{ spinner, result: Number(result) }, ...prev]);
+        if (spinner && randomValue) {
+          setResults(prev => [{ spinner, randomValue: Number(randomValue) }, ...prev]);
         }
       });
     },
@@ -76,20 +97,15 @@ export const WheelSpinner = () => {
       setIsTxPending(false);
     },
     onBlockConfirmation: () => {
-      notification.loading("Waiting for VRF to deliver");
+      setWaitingForVRF(true);
     },
-  });
-
-  const { data: linkBalance } = useScaffoldContractRead({
-    contractName: "VRFConsumer",
-    functionName: "getLinkBalance",
   });
 
   useEffect(() => {
     if (!results.length && !!resultsData?.length && !resultsLoading) {
       setResults(
         resultsData?.map(({ args }) => {
-          return { spinner: args.spinner!, result: Number(args.result!) };
+          return { spinner: args.spinner!, randomValue: Number(args.randomValue!) };
         }) || [],
       );
     }
@@ -97,52 +113,34 @@ export const WheelSpinner = () => {
 
   return (
     <div className="">
-      <div className="flex justify-between gap-4 items-center">
-        <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
-        <Address size="xl" address={vrfConsumerContract?.address} />
-        <p className="text-xl">{formatUnits(linkBalance!, 18)} LINK</p>
+      <div className="flex justify-center sm:justify-between flex-wrap gap-4 items-center px-10">
+        <div className="flex items-center gap-4">
+          <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
+          <ExternalLink href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
+        </div>
+        <div>
+          <Address size="xl" address={vrfConsumerContract?.address} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2">
-        <div className="p-10 order-2 xl:order-1">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <div className="p-0 xl:p-10 order-2 xl:order-1">
           <div className="h-full w-full bg-base-200 rounded-xl">
             {!resultsData || resultsLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <div className="p-10">
-                <div className="overflow-x-auto">
-                  <table className="table text-2xl">
-                    <thead>
-                      <tr className="text-xl">
-                        <th>Spinner</th>
-                        <th>Result</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {results.slice(0, 7).map((event, i) => {
-                        const { spinner, result } = event;
-                        return (
-                          <tr key={i}>
-                            <td>
-                              <Address size="xl" address={spinner} />
-                            </td>
-                            <td>{data[Number(result)].option}</td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="w-full h-full flex flex-col justify-center items-center">
+                <Spinner width="75" height="75" />
               </div>
+            ) : (
+              <ResultsTable results={results} wheelOptions={wheelOptions} />
             )}
           </div>
         </div>
-        <div className="p-10 order-1 xl:order-2">
+        <div className="p-0 xl:p-10 order-1 xl:order-2">
           <div className={`flex justify-center ${isTxPending ? "animate-spin" : ""}`}>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={prizeNumber}
-              data={data}
+              data={wheelOptions}
               spinDuration={1}
               onStopSpinning={() => setMustSpin(false)}
               pointerProps={{ style: { visibility: pointerVisibility } }}
@@ -150,8 +148,12 @@ export const WheelSpinner = () => {
           </div>
 
           <div className="flex justify-center mt-5">
-            <button className="btn btn-primary text-white text-lg px-14" onClick={handleSpinClick}>
-              Spin
+            <button
+              disabled={isTxPending || waitingForVRF}
+              className="btn btn-accent text-primary text-lg px-14 "
+              onClick={handleSpinClick}
+            >
+              {isTxPending || waitingForVRF ? <LoaderIcon className="animate-spin h-5 w-5" /> : "Spin"}
             </button>
           </div>
         </div>
@@ -160,7 +162,7 @@ export const WheelSpinner = () => {
   );
 };
 
-const data = [
+const wheelOptions = [
   { option: "🍌", style: { backgroundColor: "#fef9c3", fontSize: 40 } },
   { option: "🍉", style: { backgroundColor: "#fda4af", fontSize: 40 } },
   { option: "🍇", style: { backgroundColor: "#c084fc", fontSize: 40 } },

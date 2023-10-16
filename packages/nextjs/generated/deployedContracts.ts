@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0xD49e0c6F561154D5e03F2B5CC9423a4a705BE7c9",
+          address: "0x9BA4731F9a2A9765a4345Fd6234d0D1034917BAF",
           abi: [
             {
               inputs: [
@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         VRFConsumer: {
-          address: "0xA65a9c38C456394C56BD331518a10CEf1d857B14",
+          address: "0x3d478cDd1F2053CBe69DE3FCb1f2B8439D298dAA",
           abi: [
             {
               inputs: [
@@ -147,7 +147,7 @@ const contracts = {
                 {
                   indexed: true,
                   internalType: "uint256",
-                  name: "result",
+                  name: "randomValue",
                   type: "uint256",
                 },
               ],

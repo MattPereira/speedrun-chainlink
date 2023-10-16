@@ -13,7 +13,7 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	uint32 callbackGasLimit = 100000; // limit for gas can be used when chainlink node calls fulfillRandomWords()
 	// how many blocks chainlink node waits before responding
 	// more blocks is safer to avoid chain reorgs but increases response time
-	uint16 requestConfirmations = 3;
+	uint16 requestConfirmations = 2;
 	uint32 numValues = 1; // how many random numbers to generate
 
 	mapping(uint256 => address) public s_spinners; // requestId => msg.sender
@@ -24,7 +24,7 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	event WheelResult(
 		uint256 indexed requestId,
 		address indexed spinner,
-		uint256 indexed result
+		uint256 indexed randomValue
 	);
 
 	constructor(
@@ -38,6 +38,7 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	}
 
 	/** This function triggers the request to chainlink node that generates the random number
+	 * @dev "requestRandomness()" is inherited from VRFV2WrapperConsumerBase
 	 * @return requestId each request has a unique ID
 	 */
 	function spinWheel() public returns (uint256 requestId) {
@@ -58,7 +59,7 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	 * @param randomWords Array containing the random number(s)
 	 *
 	 * @dev use the random number to change state of your contract here
-	 * @dev the random number is huge so you'll want to use modulo to constrain the range
+	 * @dev the random number is huge so use modulo to constrain the range
 	 */
 	function fulfillRandomWords(
 		uint256 requestId,

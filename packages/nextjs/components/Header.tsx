@@ -44,10 +44,10 @@ export const Header = () => {
         <NavLink href="/price-feeds">📈 Price Feeds</NavLink>
       </li>
       <li>
-        <NavLink href="/automation">🤖 Automation</NavLink>
+        <NavLink href="/vrf">🎲 VRF</NavLink>
       </li>
       <li>
-        <NavLink href="/vrf">🎲 VRF</NavLink>
+        <NavLink href="/automation">🤖 Automation</NavLink>
       </li>
       <li>
         <NavLink href="/debug">
