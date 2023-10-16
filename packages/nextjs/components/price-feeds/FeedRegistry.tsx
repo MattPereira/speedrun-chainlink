@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { ExternalLinkButton } from "../common";
 import { StatDisplay } from "./AggregatorV3Consumer";
 import { formatUnits } from "viem";
 import { useContractRead } from "wagmi";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { Address } from "~~/components/scaffold-eth";
 import FeedRegistry from "~~/utils/external-contracts/FeedRegistry";
 
 /**
@@ -57,13 +58,12 @@ export const FeedRegistryDisplay = () => {
 
   return (
     <div className="bg-base-100 rounded-xl p-10 shadow-lg">
-      <div className="flex justify-center items-center mb-10 gap-2">
-        <h3 className="text-2xl md:text-3xl text-center font-bold">FeedRegistry</h3>
-        <div className="tooltip tooltip-accent" data-tip={`only available on ethereum mainnet`}>
-          <button>
-            <InformationCircleIcon className="h-7 w-7" />
-          </button>
+      <div className="flex flex-col justify-center items-center mb-10 gap-2">
+        <div className="flex gap-3 items-center">
+          <h3 className="text-2xl md:text-3xl text-center font-bold">FeedRegistry</h3>
+          <ExternalLinkButton href="https://etherscan.io/address/0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf#code" />
         </div>
+        <Address size="xl" address={"0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf"} />
       </div>
 
       {!price || !description || !decimals ? (

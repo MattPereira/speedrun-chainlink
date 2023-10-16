@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { InformationSection, InlineCode } from "~~/components/common";
+import { ExternalLink, ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
 
 const AutomationPage: NextPage = () => {
   return (
@@ -11,18 +11,51 @@ const AutomationPage: NextPage = () => {
         <InformationSection
           summary={
             <>
-              Automate your smart contracts using a secure and hyper-reliable decentralized network that uses the same
-              external network of node operators that secures billions in value. Building on Chainlink Automation will
-              accelerate your innovation, save you time and money, and help you get to market faster so you do not have
-              to deal with the setup cost, ongoing maintenance, and risks associated with a centralized automation
-              stack.
+              Chainlink Automation allows you to call a smart contract function if a specific set of conditions are met.
+              The{" "}
+              <ExternalLink
+                href="https://docs.chain.link/chainlink-automation/job-scheduler"
+                text="time-based trigger"
+              />{" "}
+              calls a target function on a target contract every specified interval. The{" "}
+              <ExternalLink
+                href="https://docs.chain.link/chainlink-automation/register-upkeep"
+                text="custom logic trigger"
+              />{" "}
+              allows your contract to use on-chain state to determine when to call a target function. The{" "}
+              <ExternalLink href="https://docs.chain.link/chainlink-automation/log-trigger" text="log trigger" /> allows
+              your contract to use event log data as both a trigger and an input
             </>
           }
-          details={[<>some details here</>]}
-          gettingStarted={[
+          details={[
             <>
-              Install the <InlineCode text="@chainlink/contracts" /> package
+              The{" "}
+              <ExternalLink
+                href="https://docs.chain.link/chainlink-automation/job-scheduler"
+                text="time-based trigger"
+              />{" "}
+              does not require an interface
             </>,
+            <>
+              The{" "}
+              <ExternalLink
+                href="https://docs.chain.link/chainlink-automation/register-upkeep"
+                text="custom logic trigger"
+              />{" "}
+              requires your target contract be compatible with <InlineCode text="AutomationCompatibleInterface" />
+            </>,
+            <>
+              The <ExternalLink href="https://docs.chain.link/chainlink-automation/log-trigger" text="log trigger" />{" "}
+              requires your target contract be compatible with <InlineCode text="AutomationCompatibleInterface" />
+            </>,
+          ]}
+          gettingStarted={[
+            <>Decide which trigger fits best for your use case</>,
+            <>
+              Register a new upkeep with chainlink{" "}
+              <ExternalLinkButton href="https://automation.chain.link/sepolia/new" />{" "}
+            </>,
+            <>Provide your target contract and target function</>,
           ]}
         />
       </div>

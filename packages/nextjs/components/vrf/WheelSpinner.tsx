@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { ResultsTable } from "./ResultsTable";
 import { LoaderIcon } from "react-hot-toast";
 import { Spinner } from "~~/components/assets/Spinner";
-import { ExternalLink } from "~~/components/common";
+import { ExternalLinkButton } from "~~/components/common";
 import { Address } from "~~/components/scaffold-eth";
 import { TxnNotification } from "~~/hooks/scaffold-eth";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth/useScaffoldContract";
@@ -113,10 +113,10 @@ export const WheelSpinner = () => {
 
   return (
     <div className="">
-      <div className="flex justify-center sm:justify-between flex-wrap gap-4 items-center px-10">
+      <div className="flex justify-center sm:justify-between flex-wrap gap-4 items-center px-10  mb-10">
         <div className="flex items-center gap-4">
           <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
-          <ExternalLink href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
+          <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
         </div>
         <div>
           <Address size="xl" address={vrfConsumerContract?.address} />
@@ -124,7 +124,7 @@ export const WheelSpinner = () => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-        <div className="p-0 xl:p-10 order-2 xl:order-1">
+        <div className="p-0 lg:p-8 order-2 xl:order-1">
           <div className="h-full w-full bg-base-200 rounded-xl">
             {!resultsData || resultsLoading ? (
               <div className="w-full h-full flex flex-col justify-center items-center">
@@ -135,7 +135,7 @@ export const WheelSpinner = () => {
             )}
           </div>
         </div>
-        <div className="p-0 xl:p-10 order-1 xl:order-2">
+        <div className="order-1 xl:order-2">
           <div className={`flex justify-center ${isTxPending ? "animate-spin" : ""}`}>
             <Wheel
               mustStartSpinning={mustSpin}

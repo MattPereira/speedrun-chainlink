@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { ExternalLink, InformationSection, InlineCode } from "~~/components/common";
+import { ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
 import { AggregatorV3Consumer } from "~~/components/price-feeds/AggregatorV3Consumer";
 import { FeedRegistryDisplay } from "~~/components/price-feeds/FeedRegistry";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
@@ -39,9 +39,9 @@ const PriceFeeds: NextPage = () => {
               the price feed contract using the <InlineCode text="decimals()" /> method
             </>,
             <>
-              The price returned by the price feed contract is only updated if the price changes beyond a specified
-              deviation threshold or if a certain amount of time has passed since the last update{" "}
-              <ExternalLink href="https://data.chain.link/ethereum/mainnet/crypto-usd/eth-usd" />
+              The <InlineCode text="answer" /> returned by the price feed contract is only updated if the price deviates
+              beyond a specified threshold or if a certain amount of time has passed since the last update{" "}
+              <ExternalLinkButton href="https://data.chain.link/ethereum/mainnet/crypto-usd/eth-usd" />
             </>,
             <>
               <InlineCode text="FeedRegistry" /> is only available on Ethereum Mainnet, but{" "}
@@ -50,22 +50,19 @@ const PriceFeeds: NextPage = () => {
           ]}
           gettingStarted={[
             <>
-              Install the <InlineCode text="@chainlink/contracts" /> package
-            </>,
-            <>
               Import <InlineCode text="AggregatorV3Interface" /> into your smart contract
             </>,
             <>
               Declare a state variable of type <InlineCode text="AggregatorV3Interface" />
             </>,
             <>
-              Choose a network and a pair of assets to find the contract address{" "}
-              <ExternalLink href="https://data.chain.link/ethereum/mainnet/crypto-usd/eth-usd" />
+              Choose network and a pair of assets to find the price feed address{" "}
+              <ExternalLinkButton href="https://data.chain.link/ethereum/mainnet/crypto-usd/eth-usd" />
             </>,
-            <>Instantiate the variable using a price feed address</>,
+            <>Instantiate the variable using the price feed address</>,
             <>
-              Call <InlineCode text=".latestRoundData()" />
-              on the state variable <ExternalLink href="https://docs.chain.link/data-feeds/api-reference" />{" "}
+              Call <InlineCode text=".latestRoundData()" /> and extract the <InlineCode text="answer" />{" "}
+              <ExternalLinkButton href="https://docs.chain.link/data-feeds/api-reference" />{" "}
             </>,
           ]}
         />

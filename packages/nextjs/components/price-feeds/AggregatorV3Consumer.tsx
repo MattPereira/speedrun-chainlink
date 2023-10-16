@@ -1,8 +1,12 @@
+import { ExternalLinkButton } from "../common";
 import { formatUnits } from "viem";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { Address } from "~~/components/scaffold-eth";
+import { useScaffoldContract } from "~~/hooks/scaffold-eth/useScaffoldContract";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth/useScaffoldContractRead";
 
 export const AggregatorV3Consumer = () => {
+  const { data: aggregatorV3Consumer } = useScaffoldContract({ contractName: "AggregatorV3Consumer" });
+
   const { data: latestPrice } = useScaffoldContractRead({
     contractName: "AggregatorV3Consumer",
     functionName: "getLatestPrice",
@@ -31,13 +35,12 @@ export const AggregatorV3Consumer = () => {
 
   return (
     <div className="bg-base-100 rounded-xl p-10 shadow-lg">
-      <div className="flex justify-center items-center mb-10 gap-2">
-        <h3 className="text-2xl md:text-3xl text-center font-bold">AggregatorV3Consumer</h3>
-        <div className="tooltip tooltip-accent" data-tip={`check out the "debug contracts" tab!`}>
-          <button>
-            <InformationCircleIcon className="h-7 w-7" />
-          </button>
+      <div className="flex flex-col justify-center items-center mb-10 gap-2">
+        <div className="flex gap-3 items-center">
+          <h3 className="text-2xl md:text-3xl text-center font-bold">AggregatorV3Consumer</h3>
+          <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/AggregatorV3Consumer.sol" />
         </div>
+        <Address size="xl" address={aggregatorV3Consumer?.address} />
       </div>
 
       {!latestPrice || !decimals || !description ? (
