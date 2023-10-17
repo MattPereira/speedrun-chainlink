@@ -21,3 +21,11 @@ yarn start
 ```
 
 4. Fund the VRFConsumer contract with LINK. Visit the [LINK faucet](https://faucets.chain.link/)
+
+### Example BG Project Exploration links
+
+- https://jadenkore.medium.com/creating-a-dynamic-nft-that-updates-in-real-time-based-on-chain-data-3d989c04f137
+
+- https://app.buidlguidl.com/build/NxKk0AQM5LBm2ks4aSZr
+
+- https://github.com/danielkhoo/scaffold-eth/tree/buidl-guidl-dynamic-nft

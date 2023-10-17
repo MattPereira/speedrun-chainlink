@@ -11,8 +11,7 @@ const AutomationPage: NextPage = () => {
         <InformationSection
           summary={
             <>
-              Chainlink Automation allows you to call a smart contract function if a specific set of conditions are met.
-              The{" "}
+              Chainlink Automation calls a smart contract function if a specified set of criteria are met. The{" "}
               <ExternalLink
                 href="https://docs.chain.link/chainlink-automation/job-scheduler"
                 text="time-based trigger"
@@ -42,11 +41,20 @@ const AutomationPage: NextPage = () => {
                 href="https://docs.chain.link/chainlink-automation/register-upkeep"
                 text="custom logic trigger"
               />{" "}
-              requires your target contract be compatible with <InlineCode text="AutomationCompatibleInterface" />
+              requires your target contract be compatible with{" "}
+              <ExternalLink
+                href="https://docs.chain.link/chainlink-automation/reference/automation-interfaces#automationcompatibleinterface"
+                text="AutomationCompatibleInterface"
+              />{" "}
+              by overriding the <InlineCode text="checkUpkeep" /> and <InlineCode text="performUpkeep" /> functions
             </>,
             <>
               The <ExternalLink href="https://docs.chain.link/chainlink-automation/log-trigger" text="log trigger" />{" "}
-              requires your target contract be compatible with <InlineCode text="AutomationCompatibleInterface" />
+              requires your target contract be compatible with{" "}
+              <ExternalLink
+                href="https://docs.chain.link/chainlink-automation/reference/automation-interfaces#ilogautomation"
+                text="IlogAutomation"
+              />
             </>,
           ]}
           gettingStarted={[
