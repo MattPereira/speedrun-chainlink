@@ -4,7 +4,7 @@ import { developmentChains, networkConfig } from "../helper-hardhat-config";
 import { network } from "hardhat";
 
 /**
- * Deploy PriceFeedConsumer contract
+ * Deploy AggregatorV3Consumer contract
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
@@ -24,7 +24,7 @@ const deployAggregatorV3Consumer: DeployFunction = async function (hre: HardhatR
     priceFeedAddress = MockV3Aggregator.address;
   } else {
     // use address from helper-hardhat-config if on testnet or live network
-    priceFeedAddress = networkConfig[chainId].priceFeedAddress?.ETH_USD;
+    priceFeedAddress = networkConfig[chainId].AggregatorV3Consumer?.ETH_USD;
   }
 
   const args = [priceFeedAddress];

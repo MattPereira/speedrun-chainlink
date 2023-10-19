@@ -7,10 +7,13 @@ import { Spinner } from "~~/components/assets/Spinner";
 import { ExternalLinkButton } from "~~/components/common";
 import { Address } from "~~/components/scaffold-eth";
 import { TxnNotification } from "~~/hooks/scaffold-eth";
-import { useScaffoldContract } from "~~/hooks/scaffold-eth/useScaffoldContract";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth/useScaffoldContractWrite";
-import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth/useScaffoldEventHistory";
-import { useScaffoldEventSubscriber } from "~~/hooks/scaffold-eth/useScaffoldEventSubscriber";
+import {
+  useScaffoldContract,
+  useScaffoldContractRead,
+  useScaffoldContractWrite,
+  useScaffoldEventHistory,
+  useScaffoldEventSubscriber,
+} from "~~/hooks/scaffold-eth/";
 import { notification } from "~~/utils/scaffold-eth";
 
 // dynamic import to satisfy nextjs ssr
@@ -26,7 +29,7 @@ type Result = {
 /**
  *
  */
-export const WheelSpinner = () => {
+export const Showcase = () => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [isTxPending, setIsTxPending] = useState(false);
@@ -56,6 +59,11 @@ export const WheelSpinner = () => {
   };
 
   const { data: vrfConsumerContract } = useScaffoldContract({ contractName: "VRFConsumer" });
+
+  const { data: linkBalance } = useScaffoldContractRead({
+    contractName: "VRFConsumer",
+    functionName: "getLinkBalance",
+  });
 
   const { data: resultsData, isLoading: resultsLoading } = useScaffoldEventHistory({
     contractName: "VRFConsumer",
@@ -117,6 +125,9 @@ export const WheelSpinner = () => {
         <div className="flex items-center gap-4">
           <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
           <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
+        </div>
+        <div className="flex gap-2">
+          <div className="badge badge-warning">{linkBalance?.toString()} LINK</div>
         </div>
         <div>
           <Address size="xl" address={vrfConsumerContract?.address} />

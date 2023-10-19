@@ -5,7 +5,7 @@ import "@chainlink/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol";
 import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 
 /**
- *
+ * if you send 1 link user can spin more than once
  */
 contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	// State variables

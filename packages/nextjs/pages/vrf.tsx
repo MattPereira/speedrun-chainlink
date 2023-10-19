@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { ExternalLink, ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
-import { WheelSpinner } from "~~/components/vrf/WheelSpinner";
+import { ExternalLink, InformationSection, InlineCode } from "~~/components/common";
+import { Showcase } from "~~/components/vrf/Showcase";
 
 const VRFPage: NextPage = () => {
   return (
@@ -11,7 +11,7 @@ const VRFPage: NextPage = () => {
         <h1 className="text-center text-5xl font-bold mb-14">🎲 VRF</h1>
         <div className="mb-10">
           <div className="bg-base-100 rounded-xl p-10 shadow-lg">
-            <WheelSpinner />
+            <Showcase />
           </div>
         </div>
         <InformationSection
@@ -20,9 +20,14 @@ const VRFPage: NextPage = () => {
               Chainlink VRF (Verifiable Random Function) is a provably fair and verifiable random number generator that
               enables smart contracts to access random values without compromising security or usability. For each
               request, Chainlink VRF generates one or more random values and cryptographic proof of how those values
-              were determined. This example uses the{" "}
-              <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="DirectFunding" /> method, but you
-              may prefer the <ExternalLink href="https://docs.chain.link/vrf/v2/subscription" text="Subscription" />{" "}
+              were determined. The{" "}
+              <ExternalLink
+                href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol"
+                text="VRFConusmer"
+              />{" "}
+              contract uses the{" "}
+              <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" /> method, but
+              you may prefer the <ExternalLink href="https://docs.chain.link/vrf/v2/subscription" text="Subscription" />{" "}
               method depending on your use case.
             </>
           }
@@ -31,13 +36,11 @@ const VRFPage: NextPage = () => {
               The Direct Funding method requires your smart contract hold <InlineCode text="LINK" /> tokens for payment{" "}
             </>,
             <>
-              Grab <InlineCode text="LINK" /> on sepolia from the faucet{" "}
-              <ExternalLinkButton href="https://faucets.chain.link/" />
-            </>,
-            <>
               The <InlineCode text="fulfillRandomWords()" /> function is triggered by the VRF Coordinator contract
             </>,
-            <>The modulo operator can be used to create a range </>,
+            <>
+              The response time of the random number is tied to <InlineCode text="requestConfirmations" />
+            </>,
           ]}
           gettingStarted={[
             <>

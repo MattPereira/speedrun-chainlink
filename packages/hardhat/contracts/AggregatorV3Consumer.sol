@@ -19,8 +19,8 @@ contract AggregatorV3Consumer {
 
 	// Get the latest price from the price feed contract
 	function getLatestPrice() public view returns (int) {
-		(, /* uint80 roundID */ int answer, , , ) = /*uint startedAt*/ /*uint timeStamp*/ /*uint80 answeredInRound*/
-		i_priceFeed.latestRoundData();
+		// latestRoundData() returns roundID, answer, startedAt, timeStamp, answeredInRound
+		(, int answer, , , ) = i_priceFeed.latestRoundData();
 		return answer;
 	}
 

@@ -2,12 +2,18 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon, Bars3Icon, BugAntIcon, LinkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+interface NavLinkProps {
+  href: string;
+  children: React.ReactNode;
+  newTab?: boolean; // new prop to decide whether to open the link in a new tab or not
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ href, children, newTab = false }) => {
   const router = useRouter();
   const isActive = router.pathname === href;
 
@@ -15,6 +21,8 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
     <Link
       href={href}
       passHref
+      target={newTab ? "_blank" : "_self"}
+      rel={newTab ? "noopener noreferrer" : ""}
       className={`${
         isActive ? "bg-secondary shadow-md" : ""
       } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-lg rounded-full gap-2 grid grid-flow-col`}
@@ -55,6 +63,22 @@ export const Header = () => {
           Debug Contracts
         </NavLink>
       </li>
+      {network.id === 11155111 && (
+        <>
+          <li>
+            <NavLink newTab href="https://faucets.chain.link/sepolia">
+              <LinkIcon className="h-4 w-4" />
+              Link Faucet
+            </NavLink>
+          </li>
+          <li>
+            <NavLink newTab href="https://sepoliafaucet.com/">
+              <BanknotesIcon className="h-4 w-4" />
+              Sepolia Faucet
+            </NavLink>
+          </li>
+        </>
+      )}
       {network.id === 31337 && (
         <li>
           <NavLink href="/blockexplorer">

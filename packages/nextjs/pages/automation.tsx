@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
+import { Showcase } from "~~/components/automation/Showcase";
 import { ExternalLink, ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
 
 const AutomationPage: NextPage = () => {
@@ -8,6 +9,7 @@ const AutomationPage: NextPage = () => {
       <MetaHeader />
       <div className="container mx-auto py-14 px-5">
         <h1 className="text-center text-5xl font-bold mb-14">🤖 Automation</h1>
+        <Showcase />
         <InformationSection
           summary={
             <>

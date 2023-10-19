@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x9BA4731F9a2A9765a4345Fd6234d0D1034917BAF",
+          address: "0x5B5db2d09173905Ff52696Fd686D7e69370A8a79",
           abi: [
             {
               inputs: [
@@ -72,8 +72,270 @@ const contracts = {
             },
           ],
         },
+        AutomationConsumer: {
+          address: "0xDc2264311D611d1bf4F279B875876C7229Ae9758",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "priceFeedAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "linkTokenAddress",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "AutomationConsumer__UpkeepNotNeeded",
+              type: "error",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "betId",
+                  type: "uint256",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "bettor",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "amountLost",
+                  type: "uint256",
+                },
+              ],
+              name: "BetLost",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "betId",
+                  type: "uint256",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "bettor",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "int256",
+                  name: "referencePrice",
+                  type: "int256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "enum AutomationConsumer.Prediction",
+                  name: "prediction",
+                  type: "uint8",
+                },
+              ],
+              name: "BetPlaced",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "betId",
+                  type: "uint256",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "bettor",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "payout",
+                  type: "uint256",
+                },
+              ],
+              name: "BetWon",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "activeBets",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "bets",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "bettor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "int256",
+                  name: "referencePrice",
+                  type: "int256",
+                },
+                {
+                  internalType: "enum AutomationConsumer.Prediction",
+                  name: "prediction",
+                  type: "uint8",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes",
+                  name: "",
+                  type: "bytes",
+                },
+              ],
+              name: "checkUpkeep",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "upkeepNeeded",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "",
+                  type: "bytes",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getLatestRoundData",
+              outputs: [
+                {
+                  internalType: "uint80",
+                  name: "",
+                  type: "uint80",
+                },
+                {
+                  internalType: "int256",
+                  name: "",
+                  type: "int256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "nextBetId",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes",
+                  name: "",
+                  type: "bytes",
+                },
+              ],
+              name: "performUpkeep",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "enum AutomationConsumer.Prediction",
+                  name: "prediction",
+                  type: "uint8",
+                },
+              ],
+              name: "placeBet",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
         VRFConsumer: {
-          address: "0x3d478cDd1F2053CBe69DE3FCb1f2B8439D298dAA",
+          address: "0x45340C6298346A57522d511857e5eC6b0E4711aa",
           abi: [
             {
               inputs: [
