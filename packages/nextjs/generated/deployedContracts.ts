@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x5B5db2d09173905Ff52696Fd686D7e69370A8a79",
+          address: "0x4407171C927Ce385885B8C658F8b086E8b1abba2",
           abi: [
             {
               inputs: [
@@ -73,15 +73,10 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0xDc2264311D611d1bf4F279B875876C7229Ae9758",
+          address: "0xCC39FE82B3C95212Ca68A9052e26BF294EE7605b",
           abi: [
             {
               inputs: [
-                {
-                  internalType: "address",
-                  name: "priceFeedAddress",
-                  type: "address",
-                },
                 {
                   internalType: "address",
                   name: "linkTokenAddress",
@@ -100,141 +95,20 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "betId",
-                  type: "uint256",
+                  indexed: true,
+                  internalType: "address",
+                  name: "previousOwner",
+                  type: "address",
                 },
                 {
                   indexed: true,
                   internalType: "address",
-                  name: "bettor",
+                  name: "newOwner",
                   type: "address",
                 },
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "amountLost",
-                  type: "uint256",
-                },
               ],
-              name: "BetLost",
+              name: "OwnershipTransferred",
               type: "event",
-            },
-            {
-              anonymous: false,
-              inputs: [
-                {
-                  indexed: true,
-                  internalType: "uint256",
-                  name: "betId",
-                  type: "uint256",
-                },
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "bettor",
-                  type: "address",
-                },
-                {
-                  indexed: true,
-                  internalType: "int256",
-                  name: "referencePrice",
-                  type: "int256",
-                },
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "amount",
-                  type: "uint256",
-                },
-                {
-                  indexed: false,
-                  internalType: "enum AutomationConsumer.Prediction",
-                  name: "prediction",
-                  type: "uint8",
-                },
-              ],
-              name: "BetPlaced",
-              type: "event",
-            },
-            {
-              anonymous: false,
-              inputs: [
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "betId",
-                  type: "uint256",
-                },
-                {
-                  indexed: true,
-                  internalType: "address",
-                  name: "bettor",
-                  type: "address",
-                },
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "payout",
-                  type: "uint256",
-                },
-              ],
-              name: "BetWon",
-              type: "event",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              name: "activeBets",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              name: "bets",
-              outputs: [
-                {
-                  internalType: "address",
-                  name: "bettor",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amount",
-                  type: "uint256",
-                },
-                {
-                  internalType: "int256",
-                  name: "referencePrice",
-                  type: "int256",
-                },
-                {
-                  internalType: "enum AutomationConsumer.Prediction",
-                  name: "prediction",
-                  type: "uint8",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
             },
             {
               inputs: [
@@ -253,7 +127,7 @@ const contracts = {
                 },
                 {
                   internalType: "bytes",
-                  name: "",
+                  name: "performData",
                   type: "bytes",
                 },
               ],
@@ -262,23 +136,8 @@ const contracts = {
             },
             {
               inputs: [],
-              name: "getLatestRoundData",
+              name: "counter",
               outputs: [
-                {
-                  internalType: "uint80",
-                  name: "",
-                  type: "uint80",
-                },
-                {
-                  internalType: "int256",
-                  name: "",
-                  type: "int256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
                 {
                   internalType: "uint256",
                   name: "",
@@ -290,12 +149,77 @@ const contracts = {
             },
             {
               inputs: [],
-              name: "nextBetId",
+              name: "getLinkBalance",
               outputs: [
                 {
                   internalType: "uint256",
                   name: "",
                   type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "interval",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "isCounting",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "lastTimeStamp",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "maxCounterValue",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
                 },
               ],
               stateMutability: "view",
@@ -305,7 +229,7 @@ const contracts = {
               inputs: [
                 {
                   internalType: "bytes",
-                  name: "",
+                  name: "performData",
                   type: "bytes",
                 },
               ],
@@ -315,19 +239,42 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "renounceOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "startCounting",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "stopCounting",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
               inputs: [
                 {
-                  internalType: "uint256",
-                  name: "amount",
-                  type: "uint256",
-                },
-                {
-                  internalType: "enum AutomationConsumer.Prediction",
-                  name: "prediction",
-                  type: "uint8",
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
                 },
               ],
-              name: "placeBet",
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "withdrawLink",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",
@@ -335,7 +282,7 @@ const contracts = {
           ],
         },
         VRFConsumer: {
-          address: "0x45340C6298346A57522d511857e5eC6b0E4711aa",
+          address: "0x0Ef0C6147B97F56742731e8836007DDEA822427E",
           abi: [
             {
               inputs: [

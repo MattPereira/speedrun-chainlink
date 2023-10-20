@@ -121,22 +121,21 @@ export const Showcase = () => {
 
   return (
     <div className="">
-      <div className="flex justify-center sm:justify-between flex-wrap gap-4 items-center px-10  mb-10">
-        <div className="flex items-center gap-4">
-          <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
-          <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
-        </div>
-        <div className="flex gap-2">
-          <div className="badge badge-warning">{linkBalance?.toString()} LINK</div>
-        </div>
-        <div>
-          <Address size="xl" address={vrfConsumerContract?.address} />
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-        <div className="p-0 lg:p-8 order-2 xl:order-1">
-          <div className="h-full w-full bg-base-200 rounded-xl">
+        <div className="flex flex-col">
+          <div className="flex flex-col justify-center gap-2 items-center mb-5">
+            <div className="flex items-center gap-4">
+              <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
+              <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
+            </div>
+
+            <div className="badge badge-warning">{linkBalance?.toString()} LINK</div>
+
+            <div>
+              <Address size="xl" address={vrfConsumerContract?.address} />
+            </div>
+          </div>
+          <div className="bg-base-200 rounded-xl grow">
             {!resultsData || resultsLoading ? (
               <div className="w-full h-full flex flex-col justify-center items-center">
                 <Spinner width="75" height="75" />
@@ -146,7 +145,7 @@ export const Showcase = () => {
             )}
           </div>
         </div>
-        <div className="order-1 xl:order-2">
+        <div>
           <div className={`flex justify-center ${isTxPending ? "animate-spin" : ""}`}>
             <Wheel
               mustStartSpinning={mustSpin}
@@ -158,7 +157,7 @@ export const Showcase = () => {
             />
           </div>
 
-          <div className="flex justify-center mt-5">
+          <div className="flex justify-center mt-1">
             <button
               disabled={isTxPending || waitingForVRF}
               className="btn btn-accent text-primary text-lg px-14 "

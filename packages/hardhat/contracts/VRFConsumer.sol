@@ -11,9 +11,7 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	// State variables
 	address public linkAddress;
 	uint32 callbackGasLimit = 100000; // limit for gas can be used when chainlink node calls fulfillRandomWords()
-	// how many blocks chainlink node waits before responding
-	// more blocks is safer to avoid chain reorgs but increases response time
-	uint16 requestConfirmations = 2;
+	uint16 requestConfirmations = 2; // blocks before chainlink node responds
 	uint32 numValues = 1; // how many random numbers to generate
 
 	mapping(uint256 => address) public s_spinners; // requestId => msg.sender

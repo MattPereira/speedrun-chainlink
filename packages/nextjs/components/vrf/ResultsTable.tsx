@@ -29,7 +29,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ results, wheelOption
             </tr>
           </thead>
           <tbody>
-            {results.slice(0, 6).map((result, i) => {
+            {results.slice(0, 5).map((result, i) => {
               const { spinner, randomValue } = result;
               return (
                 <tr key={i}>

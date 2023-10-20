@@ -13,9 +13,9 @@ const deployAutomationConsumer: DeployFunction = async function (hre: HardhatRun
   const chainId = await hre.ethers.provider.getNetwork().then(network => network.chainId);
 
   log("------------------------------------");
-  const { priceFeedAddress, linkTokenAddress } = networkConfig[chainId].AutomationConsumer;
+  const { linkTokenAddress } = networkConfig[chainId].AutomationConsumer;
 
-  const args = [priceFeedAddress, linkTokenAddress];
+  const args = [linkTokenAddress];
 
   const AutomationConsumer = await deploy("AutomationConsumer", {
     from: deployer,
