@@ -4,16 +4,8 @@ import dynamic from "next/dynamic";
 import { ResultsTable } from "./ResultsTable";
 import { LoaderIcon } from "react-hot-toast";
 import { Spinner } from "~~/components/assets/Spinner";
-import { ExternalLinkButton } from "~~/components/common";
-import { Address } from "~~/components/scaffold-eth";
 import { TxnNotification } from "~~/hooks/scaffold-eth";
-import {
-  useScaffoldContract,
-  useScaffoldContractRead,
-  useScaffoldContractWrite,
-  useScaffoldEventHistory,
-  useScaffoldEventSubscriber,
-} from "~~/hooks/scaffold-eth/";
+import { useScaffoldContractWrite, useScaffoldEventHistory, useScaffoldEventSubscriber } from "~~/hooks/scaffold-eth/";
 import { notification } from "~~/utils/scaffold-eth";
 
 // dynamic import to satisfy nextjs ssr
@@ -46,7 +38,7 @@ export const Showcase = () => {
       notification.remove(notificationId);
       setNotificationId(null);
     }
-  }, [waitingForVRF]);
+  }, [waitingForVRF, notificationId]);
 
   const handleSpinClick = async () => {
     try {
@@ -57,13 +49,6 @@ export const Showcase = () => {
       setIsTxPending(false);
     }
   };
-
-  const { data: vrfConsumerContract } = useScaffoldContract({ contractName: "VRFConsumer" });
-
-  const { data: linkBalance } = useScaffoldContractRead({
-    contractName: "VRFConsumer",
-    functionName: "getLinkBalance",
-  });
 
   const { data: resultsData, isLoading: resultsLoading } = useScaffoldEventHistory({
     contractName: "VRFConsumer",
@@ -79,7 +64,6 @@ export const Showcase = () => {
       logs.map(log => {
         setWaitingForVRF(false);
         const { spinner, randomValue } = log.args;
-        console.log("LOG", log);
         if (!mustSpin) {
           setIsTxPending(false);
           setPrizeNumber(Number(randomValue));
@@ -89,7 +73,7 @@ export const Showcase = () => {
         notification.success(<TxnNotification message="VRF delivered" blockExplorerLink={log.transactionHash} />, {
           duration: 20000,
         });
-        // handle the results table
+        // adding new events to the results table
         if (spinner && randomValue) {
           setResults(prev => [{ spinner, randomValue: Number(randomValue) }, ...prev]);
         }
@@ -120,21 +104,17 @@ export const Showcase = () => {
   }, [resultsLoading, resultsData, results.length]);
 
   return (
-    <div className="">
+    <section>
+      <div className="mb-10">
+        <p className="text-xl">
+          This example sends a request to chainlink VRF when the spin button is clicked. Each request for a random
+          number costs LINK that is paid using the Direct Funding method. The chainlink node responds with a huge number
+          that is constrained to a number between 0 and 5 using the modulo operator{" "}
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <div className="flex flex-col">
-          <div className="flex flex-col justify-center gap-2 items-center mb-5">
-            <div className="flex items-center gap-4">
-              <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
-              <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
-            </div>
-
-            <div className="badge badge-warning">{linkBalance?.toString()} LINK</div>
-
-            <div>
-              <Address size="xl" address={vrfConsumerContract?.address} />
-            </div>
-          </div>
           <div className="bg-base-200 rounded-xl grow">
             {!resultsData || resultsLoading ? (
               <div className="w-full h-full flex flex-col justify-center items-center">
@@ -146,29 +126,30 @@ export const Showcase = () => {
           </div>
         </div>
         <div>
-          <div className={`flex justify-center ${isTxPending ? "animate-spin" : ""}`}>
-            <Wheel
-              mustStartSpinning={mustSpin}
-              prizeNumber={prizeNumber}
-              data={wheelOptions}
-              spinDuration={1}
-              onStopSpinning={() => setMustSpin(false)}
-              pointerProps={{ style: { visibility: pointerVisibility } }}
-            />
-          </div>
-
-          <div className="flex justify-center mt-1">
-            <button
-              disabled={isTxPending || waitingForVRF}
-              className="btn btn-accent text-primary text-lg px-14 "
-              onClick={handleSpinClick}
-            >
-              {isTxPending || waitingForVRF ? <LoaderIcon className="animate-spin h-5 w-5" /> : "Spin"}
-            </button>
+          <div className={`flex flex-col justify-center ${isTxPending ? "animate-spin" : ""}`}>
+            <div className="flex justify-center">
+              <Wheel
+                mustStartSpinning={mustSpin}
+                prizeNumber={prizeNumber}
+                data={wheelOptions}
+                spinDuration={1}
+                onStopSpinning={() => setMustSpin(false)}
+                pointerProps={{ style: { visibility: pointerVisibility } }}
+              />
+            </div>
+            <div className="flex justify-center">
+              <button
+                disabled={isTxPending || waitingForVRF}
+                className="btn btn-accent text-primary text-lg w-44 px-14 "
+                onClick={handleSpinClick}
+              >
+                {isTxPending || waitingForVRF ? <LoaderIcon className="animate-spin h-5 w-5" /> : "Spin"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

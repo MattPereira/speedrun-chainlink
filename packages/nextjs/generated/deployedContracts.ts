@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0xCC39FE82B3C95212Ca68A9052e26BF294EE7605b",
+          address: "0x011A9Bd7f9d273ebA3178236304c8d2EA23233e5",
           abi: [
             {
               inputs: [
@@ -95,6 +95,45 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "counter",
+                  type: "uint256",
+                },
+              ],
+              name: "CounterStarted",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "counter",
+                  type: "uint256",
+                },
+              ],
+              name: "CounterStopped",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "interval",
+                  type: "uint256",
+                },
+              ],
+              name: "IntervalUpdated",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
                   indexed: true,
                   internalType: "address",
                   name: "previousOwner",
@@ -108,6 +147,25 @@ const contracts = {
                 },
               ],
               name: "OwnershipTransferred",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "counter",
+                  type: "uint256",
+                },
+              ],
+              name: "UpkeepPerformed",
               type: "event",
             },
             {
@@ -268,6 +326,19 @@ const contracts = {
                 },
               ],
               name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_interval",
+                  type: "uint256",
+                },
+              ],
+              name: "updateInterval",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",

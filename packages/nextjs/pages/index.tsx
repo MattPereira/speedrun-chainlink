@@ -19,12 +19,12 @@ const Home: NextPage = () => {
             Scaffold-ETH 2
           </Link>
         </p>
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-10 px-0 lg:px-24">
           {PRODUCTS.map(product => (
             <Link
               href={product.path}
               key={product.name}
-              className="bg-base-100 h-72 rounded-xl p-8 hover:bg-accent hover:cursor-pointer flex flex-col justify-center hover:text-primary"
+              className="bg-base-100 rounded-xl p-8 hover:bg-accent hover:cursor-pointer flex flex-col justify-center hover:text-primary"
             >
               <h3 className="text-3xl text-center mb-8">{product.name}</h3>
               <p className="text-xl text-center my-0">{product.description}</p>

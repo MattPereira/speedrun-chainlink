@@ -12,12 +12,13 @@ error AutomationConsumer__UpkeepNotNeeded();
  * - try to figure out how to use performData
  */
 contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
-	event UpkeepPerformed(uint256 counter);
-	event CounterStarted(uint256 counter);
-	event CounterStopped(uint256 counter);
+	event UpkeepPerformed(uint256 indexed timestamp, uint256 indexed counter);
+	event CounterStarted(uint256 indexed counter);
+	event CounterStopped(uint256 indexed counter);
+	event IntervalUpdated(uint256 indexed interval);
 
 	uint public counter = 0;
-	uint public interval = 5 seconds;
+	uint public interval = 1 minutes;
 	uint public maxCounterValue = 10;
 	bool public isCounting = false;
 	uint public lastTimeStamp;
@@ -36,6 +37,15 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	function stopCounting() public {
 		isCounting = false;
 		emit CounterStopped(counter);
+	}
+
+	function resetCounter() public {
+		counter = 0;
+	}
+
+	function updateInterval(uint256 _interval) public {
+		interval = _interval;
+		emit IntervalUpdated(interval);
 	}
 
 	/**
@@ -74,10 +84,9 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		}
 
 		uint incrementValue = abi.decode(performData, (uint));
-		lastTimeStamp = block.timestamp;
 		counter += incrementValue;
-
-		emit UpkeepPerformed(counter);
+		lastTimeStamp = block.timestamp;
+		emit UpkeepPerformed(block.timestamp, counter);
 	}
 
 	// Utilitiy functions

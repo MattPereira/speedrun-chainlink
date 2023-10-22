@@ -3,5 +3,5 @@ type Props = {
 };
 
 export const InlineCode: React.FC<Props> = ({ text }) => {
-  return <code className="bg-base-100 text-neutral-100 border border-base-300 py-0.5 px-1.5 rounded-md">{text}</code>;
+  return <code className="bg-[#273F66] text-neutral-100 border border-base-200 py-0.5 px-1 rounded-md">{text}</code>;
 };

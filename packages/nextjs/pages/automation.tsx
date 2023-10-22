@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { Showcase } from "~~/components/automation/Showcase";
-import { ExternalLink, ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
+import { ExternalLink, ExternalLinkButton, InformationSection } from "~~/components/common";
 
 const AutomationPage: NextPage = () => {
   return (
@@ -47,8 +47,7 @@ const AutomationPage: NextPage = () => {
               <ExternalLink
                 href="https://docs.chain.link/chainlink-automation/reference/automation-interfaces#automationcompatibleinterface"
                 text="AutomationCompatibleInterface"
-              />{" "}
-              by overriding the <InlineCode text="checkUpkeep" /> and <InlineCode text="performUpkeep" /> functions
+              />
             </>,
             <>
               The <ExternalLink href="https://docs.chain.link/chainlink-automation/log-trigger" text="log trigger" />{" "}

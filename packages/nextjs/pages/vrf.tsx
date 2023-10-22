@@ -1,19 +1,45 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { ExternalLink, InformationSection, InlineCode } from "~~/components/common";
+import { ExternalLinkButton } from "~~/components/common";
+import { Address } from "~~/components/scaffold-eth";
 import { Showcase } from "~~/components/vrf/Showcase";
+import { useScaffoldContract, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const VRFPage: NextPage = () => {
+  const { data: vrfConsumerContract } = useScaffoldContract({ contractName: "VRFConsumer" });
+
+  const { data: linkBalance } = useScaffoldContractRead({
+    contractName: "VRFConsumer",
+    functionName: "getLinkBalance",
+  });
+
   return (
     <div>
       <MetaHeader />
       <div className="container mx-auto py-14 px-5 xl:px-20">
-        <h1 className="text-center text-5xl font-bold mb-14">🎲 VRF</h1>
-        <div className="mb-10">
-          <div className="bg-base-100 rounded-xl p-10 shadow-lg">
-            <Showcase />
+        <h1 className="text-center text-5xl font-bold mb-10">🎲 VRF</h1>
+        <div className="collapse collapse-open collapse-arrow bg-base-100 p-0 lg:p-4 mb-5">
+          <input type="radio" name="my-accordion-1" />
+          <div className="collapse-title text-xl font-medium flex flex-col justify-center">
+            <div className="flex flex-wrap justify-between gap-4 items-center">
+              <div className="flex items-center gap-4">
+                <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
+                <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
+              </div>
+              <div className="badge badge-lg badge-warning">{linkBalance?.toString()} LINK</div>
+              <div>
+                <Address size="xl" address={vrfConsumerContract?.address} />
+              </div>
+            </div>
+          </div>
+          <div className="collapse-content">
+            <div className="p-0 lg:p-5">
+              <Showcase />
+            </div>
           </div>
         </div>
+
         <InformationSection
           summary={
             <>
