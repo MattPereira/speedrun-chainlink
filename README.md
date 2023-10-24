@@ -1,5 +1,7 @@
 # Scaffold Chainlink
 
+A beginner's guide to implimenting chainlink products in your smart contracts. Learn about how to get price feeds on chain, how to get a varifiably random number (VRF) on chain, and how to set up chainlink automation so that keeper nodes trigger your contract.
+
 ## Getting Started
 
 1. Install dependencies
@@ -8,7 +10,9 @@
 yarn install
 ```
 
-2. Deploy the contracts on sepolia network. You will need funds in the deployer account. Visit the [sepolia faucet](https://sepoliafaucet.com/) and set up your .env file in the `packages/hardhat/` folder OR use `yarn generate` and send sepolia ETH to the generated address.
+2. Deploy the contracts on sepolia network. Before deployment, you must ensure your deployer account has sepolia ETH and LINK to spend.
+   a. Grab funds from the [sepolia ETH faucet](https://sepoliafaucet.com/)
+   b. Grab funds from the [sepolia LINK faucet](https://faucets.chain.link/)
 
 ```
 yarn deploy --network sepolia
@@ -20,12 +24,8 @@ yarn deploy --network sepolia
 yarn start
 ```
 
-4. Fund the VRFConsumer contract with LINK. Visit the [LINK faucet](https://faucets.chain.link/)
+## Price Feeds
 
-### Example BG Project Exploration links
+## VRF (Verifiable Random Function)
 
-- https://jadenkore.medium.com/creating-a-dynamic-nft-that-updates-in-real-time-based-on-chain-data-3d989c04f137
-
-- https://app.buidlguidl.com/build/NxKk0AQM5LBm2ks4aSZr
-
-- https://github.com/danielkhoo/scaffold-eth/tree/buidl-guidl-dynamic-nft
+## Automation

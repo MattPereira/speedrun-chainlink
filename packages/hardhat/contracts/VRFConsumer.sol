@@ -5,13 +5,14 @@ import "@chainlink/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol";
 import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 
 /**
- * if you send 1 link user can spin more than once
+ * Spin the wheel to get a random number from chainlink VRF
  */
+
 contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	// State variables
 	address public linkAddress;
 	uint32 callbackGasLimit = 100000; // limit for gas can be used when chainlink node calls fulfillRandomWords()
-	uint16 requestConfirmations = 2; // blocks before chainlink node responds
+	uint16 requestConfirmations = 3; // blocks before chainlink node responds (must be greater than a minimum amout set by VRF coordinator contract)
 	uint32 numValues = 1; // how many random numbers to generate
 
 	mapping(uint256 => address) public s_spinners; // requestId => msg.sender
@@ -40,7 +41,6 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	 * @return requestId each request has a unique ID
 	 */
 	function spinWheel() public returns (uint256 requestId) {
-		// Will revert if link.balanceOf(address(this)) is insufficient
 		requestId = requestRandomness(
 			callbackGasLimit,
 			requestConfirmations,

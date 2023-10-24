@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { Showcase } from "~~/components/automation/Showcase";
-import { ExternalLink, ExternalLinkButton, InformationSection } from "~~/components/common";
+import { ExternalLink, ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
 
 const AutomationPage: NextPage = () => {
   return (
     <div>
       <MetaHeader />
-      <div className="container mx-auto py-14 px-5">
+      <div className="container mx-auto py-14 px-5 xl:px-20">
         <h1 className="text-center text-5xl font-bold mb-14">🤖 Automation</h1>
         <Showcase />
         <InformationSection
@@ -44,7 +44,7 @@ const AutomationPage: NextPage = () => {
                 text="custom logic trigger"
               />{" "}
               requires your target contract be compatible with{" "}
-              <ExternalLink
+              <InlineCode
                 href="https://docs.chain.link/chainlink-automation/reference/automation-interfaces#automationcompatibleinterface"
                 text="AutomationCompatibleInterface"
               />
@@ -52,7 +52,7 @@ const AutomationPage: NextPage = () => {
             <>
               The <ExternalLink href="https://docs.chain.link/chainlink-automation/log-trigger" text="log trigger" />{" "}
               requires your target contract be compatible with{" "}
-              <ExternalLink
+              <InlineCode
                 href="https://docs.chain.link/chainlink-automation/reference/automation-interfaces#ilogautomation"
                 text="IlogAutomation"
               />

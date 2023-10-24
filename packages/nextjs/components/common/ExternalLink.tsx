@@ -5,7 +5,7 @@ interface ExternalLinkProps {
 
 export const ExternalLink: React.FC<ExternalLinkProps> = ({ href, text }) => {
   return (
-    <a href={href} className="link link-accent no-underline" target="_blank" rel="noopener noreferrer">
+    <a href={href} className="link link-accent no-underline hover:underline" target="_blank" rel="noopener noreferrer">
       {text}
     </a>
   );

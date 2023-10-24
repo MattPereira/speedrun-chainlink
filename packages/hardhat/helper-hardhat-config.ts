@@ -10,7 +10,7 @@ interface NetworkConfigEntryTypes {
     linkTokenAddress?: string;
   };
   AutomationConsumer: {
-    priceFeedAddress?: string;
+    registrarAddress?: string;
     linkTokenAddress?: string;
   };
 }
@@ -20,8 +20,8 @@ const networkConfig: { [key: number]: NetworkConfigEntryTypes } = {
   11155111: {
     name: "sepolia",
     AutomationConsumer: {
-      priceFeedAddress: "0x694AA1769357215DE4FAC081bf1f309aDC325306", // ETH/USD
       linkTokenAddress: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
+      registrarAddress: "0x9a811502d843E5a03913d5A2cfb646c11463467A",
     },
     VRFConsumer: {
       VRFV2WrapperAddress: "0xab18414CD93297B0d12ac29E63Ca20f515b3DB46",

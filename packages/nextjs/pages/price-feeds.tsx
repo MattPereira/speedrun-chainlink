@@ -3,15 +3,11 @@ import { MetaHeader } from "~~/components/MetaHeader";
 import { ExternalLinkButton, InformationSection, InlineCode } from "~~/components/common";
 import { AggregatorV3Consumer } from "~~/components/price-feeds/AggregatorV3Consumer";
 import { FeedRegistryDisplay } from "~~/components/price-feeds/FeedRegistry";
-import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
  * Price Feeds page
  */
 const PriceFeeds: NextPage = () => {
-  const network = getTargetNetwork();
-  console.log("network", network);
-
   return (
     <div>
       <MetaHeader />
@@ -29,8 +25,7 @@ const PriceFeeds: NextPage = () => {
               assets pairs depending on the network. The price feeds are powered by a decentralized network of
               independent, security-reviewed, and Sybil-resistant oracle nodes. The{" "}
               <InlineCode text="AggregatorV3Interface" /> is fixed to the price feed address used during instantiation,
-              but the <InlineCode text="FeedRegistry" /> is more flexible with the trade off of only being avaible on
-              mainnet.
+              but the <InlineCode text="FeedRegistry" /> is more flexible although it is only avaible on mainnet.
             </>
           }
           details={[

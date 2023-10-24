@@ -16,9 +16,18 @@ export const Events = () => {
     listener: logs => {
       logs.forEach(log => {
         const { timestamp, counter } = log.args;
-        console.log("📡 UpkeepPerformed event", timestamp, counter);
         if (timestamp && counter) {
-          setEvents(events => [...events, { timestamp, counter }]);
+          setEvents(prevEvents => {
+            const updatedEvents = [...prevEvents, { timestamp, counter }];
+
+            // Sort the updatedEvents array based on the timestamp
+            return updatedEvents.sort((a: Event, b: Event) => {
+              if (a.timestamp && b.timestamp) {
+                return a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0;
+              }
+              return 0;
+            });
+          });
         }
       });
     },
@@ -44,31 +53,36 @@ export const Events = () => {
   console.log("events", events);
 
   return (
-    <div className="bg-base-200 h-[350px] rounded-xl">
-      {!eventsData || isLoadingEvents ? (
-        <div className="w-full h-full flex flex-col justify-center items-center">
-          <Spinner width="75" height="75" />
-        </div>
-      ) : (
-        <div className="overflow-x-auto overflow-y-auto h-full hide-scrollbar ">
-          <table className="table">
-            <thead className="text-lg">
-              <tr className="border-b border-neutral-500">
-                <th>Timestamp</th>
-                <th>Count</th>
-              </tr>
-            </thead>
-            <tbody className="text-lg">
-              {events.map((event, idx) => (
-                <tr key={idx} className="border-b border-neutral-500">
-                  <td>{new Date(Number(event.timestamp) * 1000).toLocaleTimeString()}</td>
-                  <td>{event?.counter?.toString()}</td>
+    <section>
+      <h4 className="text-center font-medium text-xl">UpkeepPerformed Events</h4>
+
+      <div className="bg-base-200 h-[310px] rounded-xl">
+        {!eventsData || isLoadingEvents ? (
+          <div className="w-full h-full flex flex-col justify-center items-center">
+            <Spinner width="75" height="75" />
+          </div>
+        ) : (
+          <div className="overflow-x-auto overflow-y-auto h-full hide-scrollbar ">
+            <table className="table">
+              <thead className="text-lg">
+                <tr className="border-b border-base-100">
+                  <th>Timestamp</th>
+                  <th>Block #</th>
+                  <th>Count</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+              </thead>
+              <tbody className="text-lg">
+                {events.map((event, idx) => (
+                  <tr key={idx} className="border-b border-base-100">
+                    <td>{event.timestamp ? new Date(Number(event.timestamp) * 1000).toLocaleTimeString() : "N/A"}</td>
+                    <td>{event.counter ? event?.counter?.toString() : "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };

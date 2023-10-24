@@ -10,15 +10,14 @@ export const InformationSection: React.FC<InformationSectionProps> = ({ summary,
   return (
     <div className="collapse collapse-plus bg-base-100 p-4">
       <input type="radio" name="my-accordion-1" />
-      <div className="collapse-title text-3xl font-bold">Intro Guide</div>
+      <div className="collapse-title text-3xl font-bold">Getting Started</div>
       <div className="collapse-content">
         <div className="mb-10">
-          {/* <h3 className="text-2xl font-bold">Summary</h3> */}
           <p className="text-xl">{summary}</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
           <div>
-            <h3 className="text-2xl font-bold">Getting Started</h3>
+            <h3 className="text-2xl font-bold">Implementation Steps</h3>
             <ol className="text-xl list-decimal list-inside">
               {gettingStarted.map((step, index) => (
                 <li key={index} className="mb-1">
@@ -28,7 +27,7 @@ export const InformationSection: React.FC<InformationSectionProps> = ({ summary,
             </ol>
           </div>
           <div>
-            <h3 className="text-2xl font-bold">Details</h3>
+            <h3 className="text-2xl font-bold">Fine Details</h3>
             <ul className="text-xl list-disc list-inside">
               {details.map((detail, index) => (
                 <li key={index} className="mb-1 text-xl">

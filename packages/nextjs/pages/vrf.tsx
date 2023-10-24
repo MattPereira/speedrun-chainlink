@@ -1,71 +1,42 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { ExternalLink, InformationSection, InlineCode } from "~~/components/common";
-import { ExternalLinkButton } from "~~/components/common";
-import { Address } from "~~/components/scaffold-eth";
 import { Showcase } from "~~/components/vrf/Showcase";
-import { useScaffoldContract, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const VRFPage: NextPage = () => {
-  const { data: vrfConsumerContract } = useScaffoldContract({ contractName: "VRFConsumer" });
-
-  const { data: linkBalance } = useScaffoldContractRead({
-    contractName: "VRFConsumer",
-    functionName: "getLinkBalance",
-  });
-
   return (
     <div>
       <MetaHeader />
       <div className="container mx-auto py-14 px-5 xl:px-20">
         <h1 className="text-center text-5xl font-bold mb-10">🎲 VRF</h1>
-        <div className="collapse collapse-open collapse-arrow bg-base-100 p-0 lg:p-4 mb-5">
-          <input type="radio" name="my-accordion-1" />
-          <div className="collapse-title text-xl font-medium flex flex-col justify-center">
-            <div className="flex flex-wrap justify-between gap-4 items-center">
-              <div className="flex items-center gap-4">
-                <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
-                <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
-              </div>
-              <div className="badge badge-lg badge-warning">{linkBalance?.toString()} LINK</div>
-              <div>
-                <Address size="xl" address={vrfConsumerContract?.address} />
-              </div>
-            </div>
-          </div>
-          <div className="collapse-content">
-            <div className="p-0 lg:p-5">
-              <Showcase />
-            </div>
-          </div>
+
+        <div className="p-5 lg:p-10 bg-base-100 rounded-2xl mb-5">
+          <Showcase />
         </div>
 
         <InformationSection
           summary={
             <>
-              Chainlink VRF (Verifiable Random Function) is a provably fair and verifiable random number generator that
-              enables smart contracts to access random values without compromising security or usability. For each
-              request, Chainlink VRF generates one or more random values and cryptographic proof of how those values
-              were determined. The{" "}
-              <ExternalLink
-                href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol"
-                text="VRFConusmer"
-              />{" "}
-              contract uses the{" "}
-              <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" /> method, but
-              you may prefer the <ExternalLink href="https://docs.chain.link/vrf/v2/subscription" text="Subscription" />{" "}
-              method depending on your use case.
+              Chainlink VRF allows a smart contract to access verifiably random numbers. Each request for a random
+              number costs <InlineCode text="LINK" /> and the reponse is delivered on chain after{" "}
+              <InlineCode text="requestConfirmations" /> number of blocks. The <InlineCode text="VRFConsumer" /> example
+              uses the <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" />{" "}
+              method, but you may prefer the{" "}
+              <ExternalLink href="https://docs.chain.link/vrf/v2/subscription" text="Subscription" /> method depending
+              on your use case.
             </>
           }
           details={[
             <>
-              The Direct Funding method requires your smart contract hold <InlineCode text="LINK" /> tokens for payment{" "}
+              The <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" /> method
+              requires your smart contract hold <InlineCode text="LINK" /> tokens for payment{" "}
             </>,
             <>
-              The <InlineCode text="fulfillRandomWords()" /> function is triggered by the VRF Coordinator contract
+              The <InlineCode text="fulfillRandomWords" /> function is triggered by the VRF Coordinator contract
             </>,
             <>
-              The response time of the random number is tied to <InlineCode text="requestConfirmations" />
+              VRF response time is impacted by <InlineCode text="requestConfirmations" /> which must be greater than the
+              minimum amount set by the coordinator contract
             </>,
           ]}
           gettingStarted={[

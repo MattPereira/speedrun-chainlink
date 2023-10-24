@@ -8,7 +8,7 @@ export const ExternalLinkButton: React.FC<ExternalLinkProps> = ({ href }) => {
   return (
     <a
       href={href}
-      className="capitalize text-primary hover:underline btn btn-sm bg-accent px-1 rounded-lg hover:bg-accent-focus hover:text-white"
+      className="capitalize text-primary hover:underline btn btn-sm bg-accent px-1 rounded-lg hover:bg-accent-focus"
       target="_blank"
       rel="noopener noreferrer"
     >

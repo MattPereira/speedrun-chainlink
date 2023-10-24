@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x4407171C927Ce385885B8C658F8b086E8b1abba2",
+          address: "0x407A37d69901C0347421d94C31945658B190E4Ea",
           abi: [
             {
               inputs: [
@@ -73,13 +73,18 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0x011A9Bd7f9d273ebA3178236304c8d2EA23233e5",
+          address: "0x1db09711155BBe11E1c6cFb0C20D91EDcE4769eB",
           abi: [
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "linkTokenAddress",
+                  internalType: "contract LinkTokenInterface",
+                  name: "link",
+                  type: "address",
+                },
+                {
+                  internalType: "contract AutomationRegistrarInterface",
+                  name: "registrar",
                   type: "address",
                 },
               ],
@@ -95,7 +100,7 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
                   name: "counter",
                   type: "uint256",
@@ -108,7 +113,7 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
                   name: "counter",
                   type: "uint256",
@@ -121,7 +126,7 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
                   name: "interval",
                   type: "uint256",
@@ -153,13 +158,13 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
                   name: "timestamp",
                   type: "uint256",
                 },
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
                   name: "counter",
                   type: "uint256",
@@ -194,19 +199,6 @@ const contracts = {
             },
             {
               inputs: [],
-              name: "counter",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
               name: "getLinkBalance",
               outputs: [
                 {
@@ -220,12 +212,12 @@ const contracts = {
             },
             {
               inputs: [],
-              name: "interval",
+              name: "i_link",
               outputs: [
                 {
-                  internalType: "uint256",
+                  internalType: "contract LinkTokenInterface",
                   name: "",
-                  type: "uint256",
+                  type: "address",
                 },
               ],
               stateMutability: "view",
@@ -233,38 +225,12 @@ const contracts = {
             },
             {
               inputs: [],
-              name: "isCounting",
+              name: "i_registrar",
               outputs: [
                 {
-                  internalType: "bool",
+                  internalType: "contract AutomationRegistrarInterface",
                   name: "",
-                  type: "bool",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "lastTimeStamp",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "maxCounterValue",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
+                  type: "address",
                 },
               ],
               stateMutability: "view",
@@ -297,10 +263,160 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  components: [
+                    {
+                      internalType: "string",
+                      name: "name",
+                      type: "string",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "encryptedEmail",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "address",
+                      name: "upkeepContract",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint32",
+                      name: "gasLimit",
+                      type: "uint32",
+                    },
+                    {
+                      internalType: "address",
+                      name: "adminAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint8",
+                      name: "triggerType",
+                      type: "uint8",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "checkData",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "triggerConfig",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "offchainConfig",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "uint96",
+                      name: "amount",
+                      type: "uint96",
+                    },
+                  ],
+                  internalType: "struct RegistrationParams",
+                  name: "params",
+                  type: "tuple",
+                },
+              ],
+              name: "registerNewUpkeep",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
               inputs: [],
               name: "renounceOwnership",
               outputs: [],
               stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "resetCounter",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_counter",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_interval",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_isCounting",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_lastTimestamp",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_maxCounterValue",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_upkeepID",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
             {
@@ -353,7 +469,7 @@ const contracts = {
           ],
         },
         VRFConsumer: {
-          address: "0x0Ef0C6147B97F56742731e8836007DDEA822427E",
+          address: "0x0Aa32215C1cc7361610fe0f7E53acB1A1B62Dea9",
           abi: [
             {
               inputs: [

@@ -14,17 +14,17 @@ export const Showcase = () => {
 
   const { data: currentCount } = useScaffoldContractRead({
     contractName: "AutomationConsumer",
-    functionName: "counter",
+    functionName: "s_counter",
   });
 
   const { data: isCounting } = useScaffoldContractRead({
     contractName: "AutomationConsumer",
-    functionName: "isCounting",
+    functionName: "s_isCounting",
   });
 
   const { data: interval } = useScaffoldContractRead({
     contractName: "AutomationConsumer",
-    functionName: "interval",
+    functionName: "s_interval",
   });
 
   const { writeAsync: startCounting } = useScaffoldContractWrite({
@@ -37,14 +37,14 @@ export const Showcase = () => {
 
   const { writeAsync: stopCounting } = useScaffoldContractWrite({
     contractName: "AutomationConsumer",
-    functionName: "startCounting",
+    functionName: "stopCounting",
     onBlockConfirmation: txnReceipt => {
       console.log("Transaction blockHash", txnReceipt.blockHash);
     },
   });
 
   return (
-    <div className="bg-base-100 rounded-xl mb-10 p-10">
+    <div className="bg-base-100 rounded-xl mb-10 p-5 lg:p-10">
       <div className="flex flex-wrap justify-between gap-2 items-center mb-10">
         <div className="flex items-center gap-4">
           <h3 className="text-2xl md:text-3xl mb-0 font-bold">AutomationConsumer</h3>
