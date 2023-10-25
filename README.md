@@ -1,6 +1,20 @@
-# Scaffold Chainlink
+# 🏃 Speedrun Chainlink
 
 A beginner's guide to implimenting chainlink products in your smart contracts. Learn about how to get price feeds on chain, how to get a varifiably random number (VRF) on chain, and how to set up chainlink automation so that keeper nodes trigger your contract.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [📈 Price Feeds](#-price-feeds)
+  - [Implementation Steps](#implementation-steps)
+  - [Details](#details)
+- [🎲 VRF (Verifiable Random Function)](#-vrf-verifiable-random-function)
+  - [Implementation Steps](#implementation-steps-1)
+  - [Details](#details-1)
+- [🤖 Automation](#-automation)
+  - [Steps](#steps)
+  - [Details](#details)
+
 
 ## Getting Started
 
@@ -24,7 +38,7 @@ yarn deploy --network sepolia
 yarn start
 ```
 
-## Price Feeds
+## 📈 Price Feeds
 Chainlink price feeds offer a decentralized data source that provides price information for a range of assets pairs depending on the network. The price feeds are powered by a decentralized network of independent, security-reviewed, and Sybil-resistant oracle nodes. The `AggregatorV3Interface` is fixed to the price feed address used during instantiation, but the `FeedRegistry` is more flexible although it is only avaible on mainnet.
 
 
@@ -41,7 +55,7 @@ Chainlink price feeds offer a decentralized data source that provides price info
 - The answer returned by the price feed contract is only updated if the price deviates beyond a specified threshold or if a certain amount of time has passed since the last update 
 - `FeedRegistry` is only available on Ethereum Mainnet, but `AggregatorV3Interface` is available on a variety of networks.
 
-## VRF (Verifiable Random Function)
+## 🎲 VRF (Verifiable Random Function)
 Chainlink VRF allows a smart contract to access verifiably random numbers. Each request for a random number costs LINK and the reponse is delivered on chain after requestConfirmations number of blocks. The VRFConsumer example uses the Direct Funding method, but you may prefer the Subscription method depending on your use case.
 
 ### Implimentation Steps
@@ -54,7 +68,7 @@ Chainlink VRF allows a smart contract to access verifiably random numbers. Each 
 - The fulfillRandomWords function is triggered by the VRF Coordinator contract
 - VRF response time is impacted by requestConfirmations which must be greater than the minimum amount set by the coordinator contract
 
-## Automation
+## 🤖 Automation
 Chainlink Automation calls a smart contract function if a specified set of criteria are met. The time-based trigger calls a target function on a target contract every specified interval. The custom logic trigger allows your contract to use on-chain state to determine when to call a target function. The log trigger allows your contract to use event log data as both a trigger and an input.
 
 ### Steps
