@@ -5,7 +5,7 @@ type Props = {
 
 export const InlineCode: React.FC<Props> = ({ text, href }) => {
   const content = (
-    <code className="bg-[#273F66] text-neutral-100 border border-base-200 py-0.5 px-1 rounded-md">{text}</code>
+    <code className="bg-[#2F487A] text-neutral-200 border border-[#274072] py-0 px-1 rounded-md">{text}</code>
   );
 
   return href ? (

@@ -10,15 +10,15 @@ const VRFPage: NextPage = () => {
       <div className="container mx-auto py-14 px-5 xl:px-20">
         <h1 className="text-center text-5xl font-bold mb-10">🎲 VRF</h1>
 
-        <div className="p-5 lg:p-10 bg-base-100 rounded-2xl mb-5">
+        <div className="p-5 lg:p-10 bg-base-100 rounded-2xl mb-10">
           <Showcase />
         </div>
 
         <InformationSection
           summary={
             <>
-              Chainlink VRF allows a smart contract to access verifiably random numbers. Each request for a random
-              number costs <InlineCode text="LINK" /> and the reponse is delivered on chain after{" "}
+              Chainlink VRF provides access to verifiably random numbers on chain. Each request for a random number
+              costs <InlineCode text="LINK" /> and the reponse is delivered after{" "}
               <InlineCode text="requestConfirmations" /> number of blocks. The <InlineCode text="VRFConsumer" /> example
               uses the <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" />{" "}
               method, but you may prefer the{" "}
@@ -29,7 +29,7 @@ const VRFPage: NextPage = () => {
           details={[
             <>
               The <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" /> method
-              requires your smart contract hold <InlineCode text="LINK" /> tokens for payment{" "}
+              requires your smart contract hold <InlineCode text="LINK" /> tokens for payment
             </>,
             <>
               The <InlineCode text="fulfillRandomWords" /> function is triggered by the VRF Coordinator contract
@@ -50,14 +50,19 @@ const VRFPage: NextPage = () => {
 
             <>
               Impliment a function that triggers request for random number by calling the{" "}
-              <InlineCode text="requestRandomness" /> function which is inhereted from{" "}
+              <InlineCode text="requestRandomness" /> function inhereted from{" "}
               <ExternalLink
                 text="VRFV2WrapperConsumerBase"
                 href="https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol"
               />
             </>,
             <>
-              You must <InlineCode text="override" /> the <InlineCode text="fullFillrandomWords" /> function
+              You must <InlineCode text="override" /> the <InlineCode text="fullFillrandomWords" /> function inhereted
+              from{" "}
+              <ExternalLink
+                text="VRFV2WrapperConsumerBase"
+                href="https://github.com/smartcontractkit/chainlink/blob/develop/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol"
+              />
             </>,
           ]}
         />

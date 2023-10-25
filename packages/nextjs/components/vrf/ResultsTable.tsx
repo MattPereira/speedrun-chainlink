@@ -1,16 +1,12 @@
 import { Address } from "../scaffold-eth";
+import { ResultType } from "./Showcase";
 
 interface WheelOption {
   option: string;
 }
 
-interface Result {
-  spinner: string;
-  randomValue: number;
-}
-
 interface ResultsTableProps {
-  results: Result[];
+  results: ResultType[];
   wheelOptions: WheelOption[];
 }
 

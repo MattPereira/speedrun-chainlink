@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// Import the AggregatorV3Interface from the "@chainlink/contracts" package
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-/**
- * @dev the price feed address passed to constructor during deployment determines the asset pair
- * @notice https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1
+/** Simple contract for integrating a Chainlink price feed
+ *
+ * the price feed address passed to constructor during deployment determines the asset pair
+ *
+ * choose a price feed address:
+ * https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1
  */
+
 contract AggregatorV3Consumer {
 	// Declare state variable of type AggregatorV3Interface
 	AggregatorV3Interface internal immutable i_priceFeed;

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { ResultsTable } from "./ResultsTable";
 import { LoaderIcon } from "react-hot-toast";
 import { formatEther } from "viem";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "~~/components/assets/Spinner";
 import { ExternalLinkButton } from "~~/components/common";
 import { InlineCode } from "~~/components/common";
@@ -19,37 +20,24 @@ import {
 } from "~~/hooks/scaffold-eth/";
 import { notification } from "~~/utils/scaffold-eth";
 
-// dynamic import to satisfy nextjs ssr
+// dynamic import of roulette wheel package to satisfy nextjs ssr
 const Wheel = dynamic(() => import("react-custom-roulette").then(mod => mod.Wheel), {
   ssr: false,
   loading: () => <p>Loading...</p>,
 });
 
-type Result = {
-  spinner: string;
-  randomValue: number;
+export type ResultType = {
+  spinner: string | undefined;
+  randomValue: bigint | undefined;
 };
-/**
- *
- */
+
 export const Showcase = () => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  // const [isTxPending, setIsTxPending] = useState(false);
-  const [results, setResults] = useState<Result[]>([]);
+  const [results, setResults] = useState<ResultType[]>([]);
   const [pointerVisibility, setPointerVisibility] = useState<"visible" | "hidden">("visible");
   const [waitingForVRF, setWaitingForVRF] = useState(false);
   const [notificationId, setNotificationId] = useState<string | null>(null);
-
-  const handleSpinClick = async () => {
-    try {
-      setPointerVisibility("hidden");
-      // setWaitingForVRF(true);
-      await spinWheel();
-    } catch (e) {
-      // setWaitingForVRF(false);
-    }
-  };
 
   const { data: vrfConsumerContract } = useScaffoldContract({ contractName: "VRFConsumer" });
 
@@ -70,37 +58,36 @@ export const Showcase = () => {
     },
   });
 
-  const { data: resultsData, isLoading: resultsLoading } = useScaffoldEventHistory({
+  const { data: resultsData, isLoading: isResultsLoading } = useScaffoldEventHistory({
     contractName: "VRFConsumer",
     eventName: "WheelResult",
     fromBlock: 4491891n,
   });
-  // 4555283
+
   useScaffoldEventSubscriber({
     contractName: "VRFConsumer",
     eventName: "WheelResult",
     listener: logs => {
       logs.map(log => {
-        setWaitingForVRF(false);
         const { spinner, randomValue } = log.args;
-        const randomNum = Number(randomValue);
+        setWaitingForVRF(false);
         setPointerVisibility("visible");
         if (!mustSpin) {
-          setPrizeNumber(randomNum);
+          setPrizeNumber(Number(randomValue));
           setMustSpin(true);
         }
         notification.success(
           <TxnNotification
-            message={`VRF delivered a ${wheelOptions[randomNum].option}`}
+            message={`VRF Coordinator delivered a ${wheelOptions[Number(randomValue)].option}`}
             blockExplorerLink={log.transactionHash}
           />,
           {
             duration: 20000,
           },
         );
-        // add result to spin events table
         if (spinner && randomValue) {
-          setResults(prev => [{ spinner, randomValue: randomNum }, ...prev]);
+          setResults(prev => [{ spinner, randomValue }, ...prev]);
+          console.log("here");
         }
       });
     },
@@ -117,14 +104,20 @@ export const Showcase = () => {
   }, [waitingForVRF, notificationId]);
 
   useEffect(() => {
-    if (!results.length && !!resultsData?.length && !resultsLoading) {
+    if (!results.length && !!resultsData?.length && !isResultsLoading) {
       setResults(
-        resultsData?.map(({ args }) => {
-          return { spinner: args.spinner!, randomValue: Number(args.randomValue!) };
-        }) || [],
+        resultsData.map(({ args }) => ({
+          spinner: args.spinner,
+          randomValue: args.randomValue,
+        })) || [],
       );
     }
-  }, [resultsLoading, resultsData, results.length]);
+  }, [isResultsLoading, resultsData, results.length]);
+
+  const handleSpinClick = () => {
+    setPointerVisibility("hidden");
+    spinWheel();
+  };
 
   return (
     <section>
@@ -139,11 +132,11 @@ export const Showcase = () => {
       </div>
       <div className="mb-10">
         <p className="text-xl">
-          Spin the wheel to trigger request to chainlink VRF for a random number. Each request costs{" "}
-          <InlineCode text="LINK" /> that is paid using the{" "}
-          <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding Method" />. After the
-          request transaction is mined, the VRF Coordinator waits a minimum of{" "}
-          <InlineCode text="requestConfirmations" /> blocks before responding with a random value.
+          Spin the wheel to trigger a request for a random number. Each request costs <InlineCode text="LINK" /> that is
+          paid using the <ExternalLink href="https://docs.chain.link/vrf/v2/direct-funding" text="Direct Funding" />{" "}
+          method. After the request transaction is mined, the VRF Coordinator waits a minimum of{" "}
+          <InlineCode text="requestConfirmations" /> blocks before calling the <InlineCode text="fulfillRandomWords" />{" "}
+          function on the VRFConsumer contract.
         </p>
       </div>
 
@@ -151,7 +144,7 @@ export const Showcase = () => {
         <div className="flex flex-col">
           <h5 className="text-2xl text-center font-bold mb-3">Spin Events</h5>
           <div className="bg-base-200 rounded-xl grow">
-            {!resultsData || resultsLoading ? (
+            {!resultsData || isResultsLoading ? (
               <div className="w-full h-full flex flex-col justify-center items-center">
                 <Spinner width="75" height="75" />
               </div>
@@ -159,22 +152,14 @@ export const Showcase = () => {
               <ResultsTable results={results} wheelOptions={wheelOptions} />
             )}
           </div>
-          <div className="alert bg-sky-300 text-primary border-sky-500 mt-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="stroke-current shrink-0 w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            {linkBalance ? parseFloat(formatEther(linkBalance)).toFixed(2) : "0.0"} LINK available in contract to pay
-            for VRF requests
+          <div className="alert mt-5 text-xl">
+            <InformationCircleIcon className="stroke-current shrink-0 w-6 h-6" />
+            <div>
+              <span className="font-bold mr-2">
+                {linkBalance ? parseFloat(formatEther(linkBalance)).toFixed(2) : "0.0"} LINK
+              </span>
+              available in VRFConsumer to pay for requests
+            </div>
           </div>
         </div>
         <div>
@@ -185,7 +170,9 @@ export const Showcase = () => {
                 prizeNumber={prizeNumber}
                 data={wheelOptions}
                 spinDuration={1}
-                onStopSpinning={() => setMustSpin(false)}
+                onStopSpinning={() => {
+                  console.log("stopping spinner"), setMustSpin(false);
+                }}
                 pointerProps={{ style: { visibility: pointerVisibility } }}
               />
             </div>

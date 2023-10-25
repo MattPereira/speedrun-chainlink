@@ -9,7 +9,7 @@ import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
  */
 
 contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
-	// State variables
+	// State Variables
 	address public linkAddress;
 	uint32 callbackGasLimit = 100000; // limit for gas can be used when chainlink node calls fulfillRandomWords()
 	uint16 requestConfirmations = 3; // blocks before chainlink node responds (must be greater than a minimum amout set by VRF coordinator contract)
@@ -37,28 +37,33 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 	}
 
 	/** This function triggers the request to chainlink node that generates the random number
-	 * @dev "requestRandomness()" is inherited from VRFV2WrapperConsumerBase
+	 *
+	 * "requestRandomness()" is inherited from VRFV2WrapperConsumerBase
+	 *
 	 * @return requestId each request has a unique ID
 	 */
+
 	function spinWheel() public returns (uint256 requestId) {
+		// this request will revert if the contract does not have enough LINK to pay the fee
 		requestId = requestRandomness(
 			callbackGasLimit,
 			requestConfirmations,
 			numValues
 		);
 
-		// keep track of who sent the request
 		s_spinners[requestId] = msg.sender;
 		emit WheelSpun(requestId, msg.sender);
 	}
 
 	/** Chainlink oracle calls this function to deliver the random number
+	 *
 	 * @param requestId The ID of the request
 	 * @param randomWords Array containing the random number(s)
 	 *
 	 * @dev use the random number to change state of your contract here
-	 * @dev the random number is huge so use modulo to constrain the range
+	 * @dev modulo is used to constrain the range of the random number
 	 */
+
 	function fulfillRandomWords(
 		uint256 requestId,
 		uint256[] memory randomWords

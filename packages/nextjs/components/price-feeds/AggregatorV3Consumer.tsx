@@ -43,7 +43,7 @@ export const AggregatorV3Consumer = () => {
         <Address size="xl" address={aggregatorV3Consumer?.address} />
       </div>
 
-      <p className="text-xl">The latest price quote returned by ETH/USD price feed contract on sepolia</p>
+      <p className="text-xl">The latest round data returned by ETH/USD price feed contract on sepolia</p>
 
       {!latestPrice || !decimals || !description ? (
         <p>Loading...</p>

@@ -50,7 +50,6 @@ export const Showcase = () => {
           <h3 className="text-2xl md:text-3xl mb-0 font-bold">AutomationConsumer</h3>
           <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/AutomationConsumer.sol" />
         </div>
-        {/* <div className="badge badge-warning">{linkBalance?.toString()} LINK</div> */}
         <div>
           <Address size="xl" address={vrfConsumerContract?.address} />
         </div>
