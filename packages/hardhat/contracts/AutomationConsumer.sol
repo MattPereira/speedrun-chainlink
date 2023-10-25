@@ -27,16 +27,10 @@ interface AutomationRegistrarInterface {
 	) external returns (uint256);
 }
 
-// interface AutomationRegistryInterface {
-// 	function getUpkeep(uint256 id) external view returns (UpkeepInfo memory upkeepInfo);
-// }
-
-/**
- * Simple counter contract using chainlink automation
- *
- * the upkeep registration process is integrated within this contract
+/** Simple counter contract using chainlink automation
  *
  */
+
 contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	event UpkeepPerformed(uint256 indexed timestamp, uint256 indexed counter);
 	event CounterStarted(uint256 indexed counter);
@@ -63,14 +57,15 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		i_registry = registry;
 	}
 
-	/**
-	 * - checkData param is not used in this example, but it can be set when the Upkeep is registered
+	/** This function is called automatically by chainlink keeper nodes
+	 *
+	 * @param checkData not used in this example, but it can be set when the Upkeep is registered
 	 * @return upkeepNeeded - if true, performUpkeep() will be called
 	 * @return performData - data passed to performUpkeep() (can be dynamically computed within checkUpkeep())
 	 */
 
 	function checkUpkeep(
-		bytes memory /* checkData */
+		bytes memory checkData
 	)
 		public
 		view
@@ -84,7 +79,7 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		return (upkeepNeeded, performData);
 	}
 
-	/** performUpkeep is called by a chainlink node on the condition that the checkupkeep function returns true
+	/** This function is called by chainlink keeper when the checkupkeep() function returns true
 	 *
 	 * @param performData returned value from checkUpkeep
 	 */
@@ -98,23 +93,27 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		if (s_counter >= s_maxCounterValue) {
 			s_isCounting = false;
 			s_counter = 0;
+		} else {
+			uint incrementValue = abi.decode(performData, (uint));
+			s_counter += incrementValue;
+			s_lastTimestamp = block.timestamp;
 		}
 
-		uint incrementValue = abi.decode(performData, (uint));
-		s_counter += incrementValue;
-		s_lastTimestamp = block.timestamp;
 		emit UpkeepPerformed(block.timestamp, s_counter);
 	}
 
-	/**
+	/** This function allows the registration of a new upkeep
+	 *
 	 * @param params required params for registering an upkeep
 	 *
 	 * DEBUG NOTES:
 	 * - this contract successfully approves registrar to spend link
-	 * - UNPREDICTABLE_GAS_LIMIT must be coming from the i_registrar contract
+	 * - UNPREDICTABLE_GAS_LIMIT must be coming from i_registrar.registerUpkeep()
 	 */
 
-	function registerNewUpkeep(RegistrationParams memory params) public {
+	function registerNewUpkeep(
+		RegistrationParams memory params
+	) public onlyOwner {
 		require(
 			i_link.approve(address(i_registrar), params.amount),
 			"Failed to approve registrar contract to spend LINK"
@@ -125,9 +124,22 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		s_upkeepID = upkeepID;
 	}
 
-	// SETTERS
-	function setUpkeepID(uint256 _upkeepID) public {
+	// Setters
+	function setUpkeepID(uint256 _upkeepID) public onlyOwner {
 		s_upkeepID = _upkeepID;
+	}
+
+	/**
+	 * @param amount amount of LINK to fund upkeep with
+	 */
+	function fundUpkeep(uint96 amount) public {
+		// Transfer LINK from EOA to this contract
+		require(
+			i_link.transferFrom(msg.sender, address(this), amount),
+			"Transfer failed. Ensure this contract is approved to spend LINK"
+		);
+		i_link.approve(address(i_registry), amount);
+		i_registry.addFunds(s_upkeepID, amount);
 	}
 
 	function startCounting() public {
@@ -150,16 +162,16 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		emit IntervalUpdated(s_interval);
 	}
 
-	// GETTERS
-	function withdrawLink() public onlyOwner {
-		i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
-	}
-
-	function getLinkBalance() public view returns (uint256) {
-		return i_link.balanceOf(address(this));
-	}
-
-	function getUpkeepBalance() public view returns (UpkeepInfo memory) {
+	// Getters
+	function getUpkeepInfo() public view returns (UpkeepInfo memory) {
 		return i_registry.getUpkeep(s_upkeepID);
 	}
+
+	// function getLinkBalance() public view returns (uint256) {
+	// 	return i_link.balanceOf(address(this));
+	// }
+
+	// function withdrawLink() public onlyOwner {
+	// 	i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
+	// }
 }

@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x407A37d69901C0347421d94C31945658B190E4Ea",
+          address: "0x144379F31185749Ab6b8A77ece55FD3A614C66d4",
           abi: [
             {
               inputs: [
@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0x17207508100E1B1BD32d683e917110673484c568",
+          address: "0x878758869763463082c27E996386A9b80Dc85323",
           abi: [
             {
               inputs: [
@@ -182,7 +182,7 @@ const contracts = {
               inputs: [
                 {
                   internalType: "bytes",
-                  name: "",
+                  name: "checkData",
                   type: "bytes",
                 },
               ],
@@ -203,21 +203,21 @@ const contracts = {
               type: "function",
             },
             {
-              inputs: [],
-              name: "getLinkBalance",
-              outputs: [
+              inputs: [
                 {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
+                  internalType: "uint96",
+                  name: "amount",
+                  type: "uint96",
                 },
               ],
-              stateMutability: "view",
+              name: "fundUpkeep",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
               inputs: [],
-              name: "getUpkeepBalance",
+              name: "getUpkeepInfo",
               outputs: [
                 {
                   components: [
@@ -555,17 +555,10 @@ const contracts = {
               stateMutability: "nonpayable",
               type: "function",
             },
-            {
-              inputs: [],
-              name: "withdrawLink",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
           ],
         },
         VRFConsumer: {
-          address: "0x0Aa32215C1cc7361610fe0f7E53acB1A1B62Dea9",
+          address: "0x0994A8aF29771ffc388e575FD7914321d36e2b69",
           abi: [
             {
               inputs: [

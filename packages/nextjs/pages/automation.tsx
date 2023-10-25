@@ -61,10 +61,14 @@ const AutomationPage: NextPage = () => {
           gettingStarted={[
             <>Decide which trigger fits best for your use case</>,
             <>
-              Register a new upkeep with chainlink{" "}
-              <ExternalLinkButton href="https://automation.chain.link/sepolia/new" />{" "}
+              Import the appropriate interface and <InlineCode text="override" /> the <InlineCode text="checkUpkeep" />{" "}
+              and <InlineCode text="performUpkeep" /> functions inhereted from the interface
             </>,
-            <>Provide your target contract and target function</>,
+
+            <>
+              Register a new upkeep with chainlink by providing your target contract address and depositing{" "}
+              <InlineCode text="LINK" /> tokens <ExternalLinkButton href="https://automation.chain.link/sepolia/new" />
+            </>,
           ]}
         />
       </div>

@@ -1,16 +1,18 @@
 import { ExternalLinkButton } from "../common";
 import { InlineCode } from "../common";
 import { Events } from "./Events";
+import { formatEther } from "viem";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContract, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export const Showcase = () => {
   const { data: vrfConsumerContract } = useScaffoldContract({ contractName: "AutomationConsumer" });
 
-  // const { data: linkBalance } = useScaffoldContractRead({
-  //   contractName: "AutomationConsumer",
-  //   functionName: "getLinkBalance",
-  // });
+  const { data: upkeepInfo } = useScaffoldContractRead({
+    contractName: "AutomationConsumer",
+    functionName: "getUpkeepInfo",
+  });
 
   const { data: currentCount } = useScaffoldContractRead({
     contractName: "AutomationConsumer",
@@ -43,6 +45,8 @@ export const Showcase = () => {
     },
   });
 
+  console.log("upkeepInfo", upkeepInfo);
+
   return (
     <div className="bg-base-100 rounded-xl mb-10 p-5 lg:p-10">
       <div className="flex flex-wrap justify-between gap-2 items-center mb-10">
@@ -58,27 +62,17 @@ export const Showcase = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
           <p className="text-xl">
-            Since smart contracts cannot initiate functions or update their state by themselves, they require externally
-            owned accounts to trigger their execution. Chainlink automation is a reliable way to outsource smart
-            contract operations.
+            Since smart contracts cannot initate transactions without the help of an externally owned account, a service
+            like chainlink automation is a good option for executing transactions via time based or conditional logic
+            triggers.
           </p>
 
           <p className="text-xl">
-            Click start to update boolean state variable integrated with the <InlineCode text="checkUpkeep" />{" "}
-            function&apos;s return value that controls if chainlink nodes should call the{" "}
-            <InlineCode text="performUpkeep" /> function.
+            Click <InlineCode text="start" /> to update boolean state variable integrated with the{" "}
+            <InlineCode text="checkUpkeep" /> function&apos;s return value that controls if chainlink nodes should call
+            the <InlineCode text="performUpkeep" /> function every <InlineCode text="interval" /> seconds. The contract
+            is set up to stop counting at 10
           </p>
-
-          <p className="text-xl">
-            Modify the <InlineCode text="s_interval" /> to get a sense of how often the chainlink keeper nodes will
-            trigger the <InlineCode text="performUpkeep" /> function.
-          </p>
-        </div>
-
-        <div className="flex flex-col">
-          <h4 className="text-center font-medium text-xl">UpkeepPerformed Events</h4>
-
-          <Events />
 
           <div className="bg-base-200 rounded-xl flex flex-wrap justify-around items-center">
             <div className="stats">
@@ -112,10 +106,23 @@ export const Showcase = () => {
               </button>
             )}
           </div>
+          <div className="alert mt-5 text-xl">
+            <InformationCircleIcon className="stroke-current shrink-0 w-6 h-6" />
+            <div>
+              <span className="font-bold mr-2">
+                {upkeepInfo?.balance ? parseFloat(formatEther(upkeepInfo.balance)).toFixed(2) : "0.0"} LINK
+              </span>
+              left in upkeep to fund automation
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <h4 className="text-center font-medium text-xl">UpkeepPerformed Events</h4>
+
+          <Events />
         </div>
       </div>
     </div>
   );
 };
-
-//  parseFloat(formatUnits(latestPrice, decimals)).toFixed(2)
