@@ -6,14 +6,8 @@ A beginner's guide to implimenting chainlink products in your smart contracts. L
 
 - [Getting Started](#getting-started)
 - [📈 Price Feeds](#-price-feeds)
-  - [Implementation Steps](#implementation-steps)
-  - [Details](#details)
 - [🎲 VRF (Verifiable Random Function)](#-vrf-verifiable-random-function)
-  - [Implementation Steps](#implementation-steps-1)
-  - [Details](#details-1)
 - [🤖 Automation](#-automation)
-  - [Steps](#steps)
-  - [Details](#details)
 
 
 ## Getting Started
