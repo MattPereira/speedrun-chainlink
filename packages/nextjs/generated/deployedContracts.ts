@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0x1db09711155BBe11E1c6cFb0C20D91EDcE4769eB",
+          address: "0x17207508100E1B1BD32d683e917110673484c568",
           abi: [
             {
               inputs: [
@@ -85,6 +85,11 @@ const contracts = {
                 {
                   internalType: "contract AutomationRegistrarInterface",
                   name: "registrar",
+                  type: "address",
+                },
+                {
+                  internalType: "contract AutomationRegistryBaseInterface",
+                  name: "registry",
                   type: "address",
                 },
               ],
@@ -212,6 +217,71 @@ const contracts = {
             },
             {
               inputs: [],
+              name: "getUpkeepBalance",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "target",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint32",
+                      name: "executeGas",
+                      type: "uint32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "checkData",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "uint96",
+                      name: "balance",
+                      type: "uint96",
+                    },
+                    {
+                      internalType: "address",
+                      name: "admin",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "maxValidBlocknumber",
+                      type: "uint64",
+                    },
+                    {
+                      internalType: "uint32",
+                      name: "lastPerformBlockNumber",
+                      type: "uint32",
+                    },
+                    {
+                      internalType: "uint96",
+                      name: "amountSpent",
+                      type: "uint96",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "paused",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "offchainConfig",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct UpkeepInfo",
+                  name: "",
+                  type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
               name: "i_link",
               outputs: [
                 {
@@ -229,6 +299,19 @@ const contracts = {
               outputs: [
                 {
                   internalType: "contract AutomationRegistrarInterface",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "i_registry",
+              outputs: [
+                {
+                  internalType: "contract AutomationRegistryBaseInterface",
                   name: "",
                   type: "address",
                 },
@@ -417,6 +500,19 @@ const contracts = {
                 },
               ],
               stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_upkeepID",
+                  type: "uint256",
+                },
+              ],
+              name: "setUpkeepID",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {

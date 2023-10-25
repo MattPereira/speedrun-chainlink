@@ -57,15 +57,11 @@ export const Showcase = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="flex flex-col">
-          <Events />
-        </div>
-
         <div>
           <p className="text-xl">
-            Since every transaction costs gas and the cost must be computed before a transaction can be processed, smart
-            contracts cannot be programmed to call functions triggered by indefinite time intervals or indeterministic
-            conditional logic.
+            Since smart contracts cannot initiate functions or update their state by themselves, they require externally
+            owned accounts to trigger their execution. Chainlink automation is a reliable way to outsource smart
+            contract operations.
           </p>
 
           <p className="text-xl">
@@ -73,6 +69,18 @@ export const Showcase = () => {
             function&apos;s return value that controls if chainlink nodes should call the{" "}
             <InlineCode text="performUpkeep" /> function.
           </p>
+
+          <p className="text-xl">
+            Modify the <InlineCode text="s_interval" /> to get a sense of how often the chainlink keeper nodes will
+            trigger the <InlineCode text="performUpkeep" /> function.
+          </p>
+        </div>
+
+        <div className="flex flex-col">
+          <h4 className="text-center font-medium text-xl">UpkeepPerformed Events</h4>
+
+          <Events />
+
           <div className="bg-base-200 rounded-xl flex flex-wrap justify-around items-center">
             <div className="stats">
               <div className="stat bg-base-200">

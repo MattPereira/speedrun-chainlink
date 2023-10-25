@@ -25,12 +25,12 @@ export async function approveAndTransfer({ tokenAddress, tokenABI, spenderAddres
   const parsedAmount = ethers.utils.parseUnits(amount, await tokenContract.decimals());
   const approveTx = await tokenContract.approve(spenderAddress, parsedAmount);
   const approveTxReceipt = await approveTx.wait();
-  console.log("Approve tx hash:", approveTxReceipt.transactionHash);
+  console.log("approveTx hash:", approveTxReceipt.transactionHash);
 
-  console.log(`Transferring ${spenderAddress} 5 LINK...`);
+  console.log(`Transferring ${spenderAddress} ${amount} LINK...`);
   const transferTx = await tokenContract.transfer(spenderAddress, parsedAmount);
   const transferTxReceipt = await transferTx.wait();
-  console.log("Transfer tx hash:", transferTxReceipt.transactionHash);
+  console.log("transferTx hash:", transferTxReceipt.transactionHash);
 
   const contractTokenBalance = await tokenContract.balanceOf(spenderAddress);
   console.log(`${spenderAddress} new token balance: ${contractTokenBalance.toString()}`);

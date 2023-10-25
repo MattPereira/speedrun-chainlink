@@ -12,6 +12,7 @@ interface NetworkConfigEntryTypes {
   AutomationConsumer: {
     registrarAddress?: string;
     linkTokenAddress?: string;
+    registryAddress?: string;
   };
 }
 
@@ -22,6 +23,7 @@ const networkConfig: { [key: number]: NetworkConfigEntryTypes } = {
     AutomationConsumer: {
       linkTokenAddress: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
       registrarAddress: "0x9a811502d843E5a03913d5A2cfb646c11463467A",
+      registryAddress: "0x86EFBD0b6736Bed994962f9797049422A3A8E8Ad",
     },
     VRFConsumer: {
       VRFV2WrapperAddress: "0xab18414CD93297B0d12ac29E63Ca20f515b3DB46",

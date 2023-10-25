@@ -3,6 +3,7 @@ pragma solidity ^0.8.7;
 
 import "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 import { LinkTokenInterface } from "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol";
+import "@chainlink/contracts/src/v0.8/automation/interfaces/v2_0/AutomationRegistryInterface2_0.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 error AutomationConsumer__UpkeepNotNeeded();
@@ -26,6 +27,10 @@ interface AutomationRegistrarInterface {
 	) external returns (uint256);
 }
 
+// interface AutomationRegistryInterface {
+// 	function getUpkeep(uint256 id) external view returns (UpkeepInfo memory upkeepInfo);
+// }
+
 /**
  * Simple counter contract using chainlink automation
  *
@@ -39,40 +44,23 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	event IntervalUpdated(uint256 indexed interval);
 
 	uint public s_counter = 0;
-	uint public s_interval = 30 seconds;
+	uint public s_interval = 10 seconds;
 	uint public s_maxCounterValue = 10;
 	bool public s_isCounting = false;
 	uint public s_lastTimestamp;
 	uint public s_upkeepID;
 	LinkTokenInterface public immutable i_link;
 	AutomationRegistrarInterface public immutable i_registrar;
+	AutomationRegistryBaseInterface public immutable i_registry;
 
 	constructor(
 		LinkTokenInterface link,
-		AutomationRegistrarInterface registrar
+		AutomationRegistrarInterface registrar,
+		AutomationRegistryBaseInterface registry
 	) {
 		i_link = link;
 		i_registrar = registrar;
-	}
-
-	function startCounting() public {
-		s_isCounting = true;
-		s_lastTimestamp = block.timestamp;
-		emit CounterStarted(s_counter);
-	}
-
-	function stopCounting() public {
-		s_isCounting = false;
-		emit CounterStopped(s_counter);
-	}
-
-	function resetCounter() public {
-		s_counter = 0;
-	}
-
-	function updateInterval(uint256 _interval) public {
-		s_interval = _interval;
-		emit IntervalUpdated(s_interval);
+		i_registry = registry;
 	}
 
 	/**
@@ -120,27 +108,58 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 
 	/**
 	 * @param params required params for registering an upkeep
+	 *
+	 * DEBUG NOTES:
+	 * - this contract successfully approves registrar to spend link
+	 * - UNPREDICTABLE_GAS_LIMIT must be coming from the i_registrar contract
 	 */
 
 	function registerNewUpkeep(RegistrationParams memory params) public {
 		require(
-			i_link.balanceOf(address(this)) >= params.amount,
-			"Not enough LINK tokens in this contract"
-		);
-		require(
 			i_link.approve(address(i_registrar), params.amount),
 			"Failed to approve registrar contract to spend LINK"
 		);
+		// this function call on the registrar contract always fails with UNPREDICTABLE_GAS_LIMIT :(
 		uint256 upkeepID = i_registrar.registerUpkeep(params);
 		require(upkeepID != 0, "Upkeep registration failed");
 		s_upkeepID = upkeepID;
+	}
+
+	// SETTERS
+	function setUpkeepID(uint256 _upkeepID) public {
+		s_upkeepID = _upkeepID;
+	}
+
+	function startCounting() public {
+		s_isCounting = true;
+		s_lastTimestamp = block.timestamp;
+		emit CounterStarted(s_counter);
+	}
+
+	function stopCounting() public {
+		s_isCounting = false;
+		emit CounterStopped(s_counter);
+	}
+
+	function resetCounter() public {
+		s_counter = 0;
+	}
+
+	function updateInterval(uint256 _interval) public {
+		s_interval = _interval;
+		emit IntervalUpdated(s_interval);
+	}
+
+	// GETTERS
+	function withdrawLink() public onlyOwner {
+		i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
 	}
 
 	function getLinkBalance() public view returns (uint256) {
 		return i_link.balanceOf(address(this));
 	}
 
-	function withdrawLink() public onlyOwner {
-		i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
+	function getUpkeepBalance() public view returns (UpkeepInfo memory) {
+		return i_registry.getUpkeep(s_upkeepID);
 	}
 }

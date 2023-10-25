@@ -53,10 +53,8 @@ export const Events = () => {
   console.log("events", events);
 
   return (
-    <section>
-      <h4 className="text-center font-medium text-xl">UpkeepPerformed Events</h4>
-
-      <div className="bg-base-200 h-[310px] rounded-xl">
+    <section className="mb-5 grow bg-base-200 rounded-xl">
+      <div className="">
         {!eventsData || isLoadingEvents ? (
           <div className="w-full h-full flex flex-col justify-center items-center">
             <Spinner width="75" height="75" />
