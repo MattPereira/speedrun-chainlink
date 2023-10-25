@@ -27,18 +27,11 @@ const PriceFeeds: NextPage = () => {
             </>
           }
           details={[
+            <>The quote returned by the price feed contract has a specified number of decimals</>,
             <>
-              The price returned by the price feed contract has a specified number of decimals that can be fetched from
-              the price feed contract using the <InlineCode text="decimals()" /> method
-            </>,
-            <>
-              The <InlineCode text="answer" /> returned by the price feed contract is only updated if the price deviates
-              beyond a specified threshold or if a certain amount of time has passed since the last update{" "}
+              The quote returned by the price feed contract is only updated if the price deviates beyond a specified
+              threshold or if a certain amount of time has passed since the last update{" "}
               <ExternalLinkButton href="https://data.chain.link/ethereum/mainnet/crypto-usd/eth-usd" />
-            </>,
-            <>
-              <InlineCode text="FeedRegistry" /> is only available on Ethereum Mainnet, but{" "}
-              <InlineCode text="AggregatorV3Interface" /> is available on a variety of networks.
             </>,
           ]}
           gettingStarted={[
@@ -49,8 +42,8 @@ const PriceFeeds: NextPage = () => {
               Declare a state variable of type <InlineCode text="AggregatorV3Interface" />
             </>,
             <>
-              Choose network and a pair of assets to find the price feed address{" "}
-              <ExternalLinkButton href="https://data.chain.link/ethereum/mainnet/crypto-usd/eth-usd" />
+              Find price feed address by network and asset pair{" "}
+              <ExternalLinkButton href="https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1" />
             </>,
             <>Instantiate the variable using the price feed address</>,
             <>
