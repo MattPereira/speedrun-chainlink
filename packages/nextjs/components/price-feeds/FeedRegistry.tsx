@@ -87,8 +87,8 @@ export const FeedRegistryDisplay = () => {
             onChange={e => setBase(e.target.value)}
           >
             {Object.entries(BASE_OPTIONS).map(([key, value]) => (
-              <option key={key} value={value} className="font-bold">
-                {key}
+              <option key={key} value={value} className="font-bold flex space-between">
+                {key} : {value.slice(0, 5) + "..." + value.slice(-3)}
               </option>
             ))}
           </select>

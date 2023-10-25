@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     <div className="">
       <MetaHeader />
       <div className="container mx-auto py-20 px-5">
-        <h1 className="text-center text-5xl font-bold mb-14">Speedrun Chainlink</h1>
+        <h1 className="text-center text-5xl font-bold mb-14">🏃Speedrun Chainlink</h1>
         <p className="text-xl text-center mb-14">
           A beginner&apos;s guide to using chainlink products with{" "}
           <Link className="text-accent" href="https://github.com/scaffold-eth/scaffold-eth-2">

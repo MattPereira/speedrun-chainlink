@@ -25,7 +25,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, newTab = false }) => 
       rel={newTab ? "noopener noreferrer" : ""}
       className={`${
         isActive ? "bg-secondary shadow-md" : ""
-      } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-lg rounded-full gap-2 grid grid-flow-col`}
+      } flex items-center hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-lg rounded-full gap-2 grid grid-flow-col`}
     >
       {children}
     </Link>
