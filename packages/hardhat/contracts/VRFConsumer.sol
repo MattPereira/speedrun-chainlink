@@ -4,21 +4,25 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol";
 import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 
-/**
- * Spin the wheel to get a random number from chainlink VRF
+/** Simple contract that request random numbers from chainlink VRF
+ *
+ * this example uses the "Direct Funding" method
+ * https://docs.chain.link/vrf#two-methods-to-request-randomness
  */
 
 contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
-	// State Variables
+	// if gas consumed by fulfillRandomWords() exceeds this limit, the transaction will revert
+	uint32 callbackGasLimit = 100000;
+	// blocks before chainlink node responds (must be greater than a minimum amout set by VRF coordinator contract)
+	uint16 requestConfirmations = 3;
+	// how many random numbers to generate
+	uint32 numValues = 1;
 	address public linkAddress;
-	uint32 callbackGasLimit = 100000; // limit for gas can be used when chainlink node calls fulfillRandomWords()
-	uint16 requestConfirmations = 3; // blocks before chainlink node responds (must be greater than a minimum amout set by VRF coordinator contract)
-	uint32 numValues = 1; // how many random numbers to generate
 
+	// keeping track of who requested which random number
 	mapping(uint256 => address) public s_spinners; // requestId => msg.sender
 	mapping(address => uint256) public s_results; // msg.sender => random number
 
-	// Events
 	event WheelSpun(uint256 indexed requestId, address indexed spinner);
 	event WheelResult(
 		uint256 indexed requestId,
@@ -38,7 +42,7 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 
 	/** This function triggers the request to chainlink node that generates the random number
 	 *
-	 * "requestRandomness()" is inherited from VRFV2WrapperConsumerBase
+	 * requestRandomness() is inherited from VRFV2WrapperConsumerBase
 	 *
 	 * @return requestId each request has a unique ID
 	 */
@@ -68,7 +72,6 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 		uint256 requestId,
 		uint256[] memory randomWords
 	) internal override {
-		// The remainder of division by 6 can only be 0 - 5
 		uint256 randomNumber = (randomWords[0] % 6);
 		// update mapping to record who received which random number by using the requestId
 		s_results[s_spinners[requestId]] = randomNumber;
@@ -83,7 +86,6 @@ contract VRFConsumer is VRFV2WrapperConsumerBase, ConfirmedOwner {
 		);
 	}
 
-	// Getters
 	function getLinkBalance() public view returns (uint256) {
 		LinkTokenInterface link = LinkTokenInterface(linkAddress);
 		return link.balanceOf(address(this));

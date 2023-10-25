@@ -5,11 +5,12 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/interfaces/FeedRegistryInterface.sol";
 import "@chainlink/contracts/src/v0.8/Denominations.sol";
 
-/**Contract to consume the Chainlink FeedRegistry
+/** Simple contract to consume the Chainlink FeedRegistry
  *
  * @notice FeedRegistry address only exists on the Ethereum Mainnet
  * @notice https://docs.chain.link/data-feeds/feed-registry#contract-addresses
  */
+
 contract FeedRegistryConsumer {
 	FeedRegistryInterface internal immutable i_registry;
 
@@ -21,8 +22,13 @@ contract FeedRegistryConsumer {
 	 * Get the latest price of ETH/USD
 	 */
 	function getEthUsdPrice() public view returns (int) {
-		(, /*uint80 roundID*/ int price, , , ) = /*uint startedAt*/ /*uint timeStamp*/ /*uint80 answeredInRound*/
-		i_registry.latestRoundData(Denominations.ETH, Denominations.USD);
+		(
+			,
+			/*uint80 roundID*/ int price /*uint startedAt*/ /*uint timeStamp*/ /*uint80 answeredInRound*/,
+			,
+			,
+
+		) = i_registry.latestRoundData(Denominations.ETH, Denominations.USD);
 		return price;
 	}
 
