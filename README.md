@@ -36,7 +36,7 @@ yarn start
 Chainlink price feeds offer a decentralized data source that provides price information for a range of assets pairs depending on the network. The price feeds are powered by a decentralized network of independent, security-reviewed, and Sybil-resistant oracle nodes. The `AggregatorV3Interface` is fixed to the price feed address used during instantiation, but the `FeedRegistry` is more flexible although it is only avaible on mainnet.
 
 
-### Implementation Steps
+### Steps
 1. Import `AggregatorV3Interface` into your smart contract
 2. Declare a state variable of type `AggregatorV3Interface`
 3. Choose network and a pair of assets to find the price feed address 
@@ -52,7 +52,7 @@ Chainlink price feeds offer a decentralized data source that provides price info
 ## 🎲 VRF (Verifiable Random Function)
 Chainlink VRF allows a smart contract to access verifiably random numbers. Each request for a random number costs LINK and the reponse is delivered on chain after requestConfirmations number of blocks. The VRFConsumer example uses the Direct Funding method, but you may prefer the Subscription method depending on your use case.
 
-### Implimentation Steps
+### Steps
 1. Set up your contract to inherit VRFV2WrapperConsumerBase
 2. Impliment a function that triggers request for random number by calling the requestRandomness function which is inhereted from VRFV2WrapperConsumerBase
 3. You must override the fullFillrandomWords function
