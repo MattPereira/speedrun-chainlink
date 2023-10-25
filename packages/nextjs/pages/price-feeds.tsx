@@ -21,11 +21,9 @@ const PriceFeeds: NextPage = () => {
         <InformationSection
           summary={
             <>
-              Chainlink price feeds offer a decentralized data source that provides price information for a range of
-              assets pairs depending on the network. The price feeds are powered by a decentralized network of
-              independent, security-reviewed, and Sybil-resistant oracle nodes. The{" "}
-              <InlineCode text="AggregatorV3Interface" /> is fixed to the price feed address used during instantiation,
-              but the <InlineCode text="FeedRegistry" /> is more flexible although it is only avaible on mainnet.
+              Chainlink price feeds bring off chain price quotes on chain using a decentralized network of oracles. The{" "}
+              <InlineCode text="FeedRegistry" /> contract is only avaible on mainnet, but the price feed addresses that
+              power the <InlineCode text="AggregatorV3Interface" /> are available on a wide range of networks
             </>
           }
           details={[

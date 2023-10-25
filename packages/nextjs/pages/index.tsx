@@ -12,8 +12,9 @@ const Home: NextPage = () => {
     <div className="">
       <MetaHeader />
       <div className="container mx-auto py-20 px-5">
-        <h1 className="text-center text-5xl font-bold mb-14">🏃Speedrun Chainlink</h1>
-        <p className="text-xl text-center mb-14">
+        <h1 className="text-center text-5xl font-bold mb-10">Speedrun Chainlink</h1>
+        <div className="text-center text-5xl mb-10">🏃💨</div>
+        <p className="text-2xl text-center mb-10">
           A beginner&apos;s guide to using chainlink products with{" "}
           <Link className="text-accent" href="https://github.com/scaffold-eth/scaffold-eth-2">
             Scaffold-ETH 2
@@ -45,13 +46,14 @@ const PRODUCTS = [
     description: "Learn how to integrate price feeds in your smart contracts using AggregatorV3Interface",
   },
   {
-    name: "🤖 Automation",
-    path: "/automation",
-    description: "Learn how to automate the execution of a transaction based on some condition",
-  },
-  {
     name: "🎲 VRF",
     path: "/vrf",
-    description: "Learn how to request a verifiably random number by spinning the wheel of fruit",
+    description: "Spin the wheel of fruit to request a verifiably random number from the VRF Coordinator",
+  },
+  {
+    name: "🤖 Automation",
+    path: "/automation",
+    description:
+      "Play with the simple counter contract to understand how chainlink keeper nodes perform automated tasks on chain",
   },
 ];

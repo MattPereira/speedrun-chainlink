@@ -1,38 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ExternalLinkButton } from "../common";
 import { StatDisplay } from "./AggregatorV3Consumer";
 import { formatUnits } from "viem";
 import { useContractRead } from "wagmi";
+import { Spinner } from "~~/components/assets/Spinner";
 import { Address } from "~~/components/scaffold-eth";
+import { AddressInput } from "~~/components/scaffold-eth/Input";
 import FeedRegistry from "~~/utils/external-contracts/FeedRegistry";
 
 /**
  * @dev  FeedRegistry contract is only available on mainnet
  */
 export const FeedRegistryDisplay = () => {
-  const [base, setBase] = useState(BASE_OPTIONS.BTC);
+  const [baseAssetAddress, setBaseAssetAddress] = useState("");
+
+  useEffect(() => {
+    setBaseAssetAddress(BASE_OPTIONS[0].address);
+  }, []);
 
   const { data: description } = useContractRead({
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "description",
-    args: [base, QUOTE],
+    args: [baseAssetAddress, QUOTE],
     chainId: 1, // force request on mainnet
   });
 
-  const { data: roundData } = useContractRead({
+  const { data: roundData, isLoading } = useContractRead({
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "latestRoundData",
-    args: [base, QUOTE],
+    args: [baseAssetAddress, QUOTE],
     chainId: 1, // force request on mainnet
   });
+
+  console.log(roundData);
 
   const { data: decimals } = useContractRead({
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "decimals",
-    args: [base, QUOTE],
+    args: [baseAssetAddress, QUOTE],
     chainId: 1, // force request on mainnet
   });
 
@@ -47,8 +55,6 @@ export const FeedRegistryDisplay = () => {
 
   const items = [
     { title: "description()", value: description?.toString(), type: "string" },
-    { title: "latestRoundData().answer", value: price?.toString(), type: "int" },
-    { title: "decimals()", value: decimals?.toString(), type: "uint8" },
     {
       title: "formatUnits(price, decimals)",
       value: price && decimals ? "$" + parseFloat(formatUnits(price, Number(decimals))).toFixed(2) : "N/A",
@@ -65,9 +71,14 @@ export const FeedRegistryDisplay = () => {
         </div>
         <Address size="xl" address={"0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf"} />
       </div>
+      <p className="text-xl">Enter a supported mainnet token address to see the latest price quote in USD</p>
 
-      {!price || !description || !decimals ? (
-        <p>loading...</p>
+      {isLoading ? (
+        <div className="stats bg-base-200 shadow-lg">
+          <div className="stat">
+            <Spinner />
+          </div>
+        </div>
       ) : (
         <div className="mb-8 flex flex-wrap gap-4">
           {items.map(item => (
@@ -76,35 +87,63 @@ export const FeedRegistryDisplay = () => {
         </div>
       )}
 
-      <div className="flex items-center justify-end">
-        <div className="mr-4">
-          <label className="text-xl">Base Asset</label>
+      <div className="ml-3 mb-1">
+        <label className="text-xl">Base Asset</label>
+      </div>
+      <div className="flex items-center justify-end gap-4">
+        <div className="grow">
+          <AddressInput value={baseAssetAddress} onChange={val => setBaseAssetAddress(val)} />
         </div>
-        <div>
-          <select
-            className="select select-bordered w-full text-center bg-base-200 text-2xl"
-            value={base}
-            onChange={e => setBase(e.target.value)}
-          >
-            {Object.entries(BASE_OPTIONS).map(([key, value]) => (
-              <option key={key} value={value} className="font-bold flex space-between">
-                {key} : {value.slice(0, 5) + "..." + value.slice(-3)}
-              </option>
-            ))}
-          </select>
-        </div>
+        <button
+          className="btn btn-accent text-primary"
+          onClick={() => {
+            const modal = document?.getElementById("my_modal_2") as HTMLDialogElement;
+            modal?.showModal();
+          }}
+        >
+          Addresses
+        </button>
+        <dialog id="my_modal_2" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Token Addresses</h3>
+            <p>Copy and paste a token address into the address input field</p>
+            <div className="overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Symbol</th>
+                    <th>Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {BASE_OPTIONS.map((option, i) => (
+                    <tr key={i}>
+                      <td>{option.symbol}</td>
+                      <td>{option.address}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
       </div>
     </div>
   );
 };
 
-const BASE_OPTIONS = {
-  BTC: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
-  ETH: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-  LINK: "0x514910771AF9Ca656af840dff83E8264EcF986CA",
-  AAVE: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
-  YFI: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-};
+const BASE_OPTIONS = [
+  { symbol: "BTC", address: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB" },
+  { symbol: "ETH", address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
+  { symbol: "MATIC", address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0" },
+  { symbol: "LINK", address: "0x514910771AF9Ca656af840dff83E8264EcF986CA" },
+  { symbol: "AAVE", address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9" },
+  { symbol: "YFI", address: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e" },
+  { symbol: "CRV", address: "0xD533a949740bb3306d119CC777fa900bA034cd52" },
+];
 
 // address for USD
 const QUOTE = "0x0000000000000000000000000000000000000348";
