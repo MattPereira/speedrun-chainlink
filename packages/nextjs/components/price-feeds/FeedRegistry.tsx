@@ -15,7 +15,7 @@ export const FeedRegistryDisplay = () => {
   const [baseAssetAddress, setBaseAssetAddress] = useState("");
 
   useEffect(() => {
-    setBaseAssetAddress(BASE_OPTIONS[0].address);
+    setBaseAssetAddress(BASE_ASSET_OPTIONS[0].address);
   }, []);
 
   const { data: description } = useContractRead({
@@ -116,7 +116,7 @@ export const FeedRegistryDisplay = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {BASE_OPTIONS.map((option, i) => (
+                  {BASE_ASSET_OPTIONS.map((option, i) => (
                     <tr key={i}>
                       <td>{option.symbol}</td>
                       <td>{option.address}</td>
@@ -135,7 +135,7 @@ export const FeedRegistryDisplay = () => {
   );
 };
 
-const BASE_OPTIONS = [
+const BASE_ASSET_OPTIONS = [
   { symbol: "BTC", address: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB" },
   { symbol: "ETH", address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
   { symbol: "MATIC", address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0" },

@@ -63,8 +63,8 @@ export const Showcase = () => {
         <div>
           <p className="text-xl">
             Since smart contracts cannot initate transactions without the help of an externally owned account, a service
-            like chainlink automation is a good option for executing transactions via time based or conditional logic
-            triggers.
+            like chainlink automation is necessary for reliably executing transactions via time based or conditional
+            logic triggers.
           </p>
 
           <p className="text-xl">
