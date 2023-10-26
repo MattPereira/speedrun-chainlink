@@ -59,13 +59,13 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 
 	/** This function is called automatically by chainlink keeper nodes
 	 *
-	 * @param checkData not used in this example, but it can be set when the Upkeep is registered
+	 * param checkData not used in this example, but it can be set when the Upkeep is registered
 	 * @return upkeepNeeded - if true, performUpkeep() will be called
 	 * @return performData - data passed to performUpkeep() (can be dynamically computed within checkUpkeep())
 	 */
 
 	function checkUpkeep(
-		bytes memory checkData
+		bytes memory /* checkData */
 	)
 		public
 		view

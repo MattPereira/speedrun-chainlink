@@ -15,10 +15,7 @@ const Home: NextPage = () => {
         <h1 className="text-center text-5xl font-bold mb-10">Speedrun Chainlink</h1>
         <div className="text-center text-5xl mb-10">🏃💨</div>
         <p className="text-2xl text-center mb-10">
-          A beginner&apos;s guide to using chainlink products with{" "}
-          <Link className="text-accent" href="https://github.com/scaffold-eth/scaffold-eth-2">
-            Scaffold-ETH 2
-          </Link>
+          A beginner&apos;s guide to integrating chainlink products with smart contracts
         </p>
         <div className="grid grid-cols-1 gap-10 px-0 lg:px-24">
           {PRODUCTS.map(product => (
