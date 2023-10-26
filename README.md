@@ -19,16 +19,16 @@ A beginner's guide to implimenting chainlink products with smart contracts. Dive
 ```
 yarn install
 ```
+2. Grab funds from the faucets and set up your dev wallet to be the hardhat deployer account
+- [sepolia ETH faucet](https://sepoliafaucet.com/)
+- [sepolia LINK faucet](https://faucets.chain.link/)
 
-2. Deploy the contracts on sepolia network. Before deployment, you must ensure your deployer account has sepolia ETH and LINK to spend.
-   a. Grab funds from the [sepolia ETH faucet](https://sepoliafaucet.com/)
-   b. Grab funds from the [sepolia LINK faucet](https://faucets.chain.link/)
-
+3. Deploy the contracts on sepolia network
 ```
 yarn deploy --network sepolia
 ```
 
-3. Start the frontend
+4. Start the frontend
 
 ```
 yarn start
