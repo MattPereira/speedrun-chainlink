@@ -82,6 +82,8 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	/** This function is called by chainlink keeper when the checkupkeep() function returns true
 	 *
 	 * @param performData returned value from checkUpkeep
+	 *
+	 * turns off automated counter at max value to conserve LINK in upkeep subscription
 	 */
 
 	function performUpkeep(bytes calldata performData) external override {
@@ -167,11 +169,11 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		return i_registry.getUpkeep(s_upkeepID);
 	}
 
-	// function getLinkBalance() public view returns (uint256) {
-	// 	return i_link.balanceOf(address(this));
-	// }
+	function getLinkBalance() public view returns (uint256) {
+		return i_link.balanceOf(address(this));
+	}
 
-	// function withdrawLink() public onlyOwner {
-	// 	i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
-	// }
+	function withdrawLink() public onlyOwner {
+		i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
+	}
 }

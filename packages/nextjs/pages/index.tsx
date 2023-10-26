@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             <Link
               href={product.path}
               key={product.name}
-              className="bg-base-100 rounded-xl p-8 hover:bg-accent hover:cursor-pointer flex flex-col justify-center hover:text-primary"
+              className="bg-base-100 rounded-xl p-8 hover:bg-accent hover:cursor-pointer flex flex-col justify-center hover:text-primary shadow-lg"
             >
               <h3 className="text-3xl text-center mb-8">{product.name}</h3>
               <p className="text-xl text-center my-0">{product.description}</p>
