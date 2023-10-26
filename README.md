@@ -1,6 +1,9 @@
 # 🏃 Speedrun Chainlink
 
-A beginner's guide to implimenting chainlink products in your smart contracts. Learn about how to get price feeds on chain, how to get a varifiably random number (VRF) on chain, and how to set up chainlink automation so that keeper nodes trigger your contract.
+A beginner's guide to implimenting chainlink products with smart contracts. Dive into simplified examples that will teach you how to:
+- Access price quotes for a variety of assets on a wide range of networks
+- Generate veriably random numbers using the VRF Coordinator
+- Configure Chainlink automation to execute transactions based on time intervals or conditional logic
 
 ## Table of Contents
 
@@ -33,7 +36,7 @@ yarn start
 
 ## 📈 Price Feeds
 
-Chainlink price feeds offer a decentralized data source that provides price information for a range of assets pairs depending on the network. The price feeds are powered by a decentralized network of independent, security-reviewed, and Sybil-resistant oracle nodes. The `AggregatorV3Interface` is fixed to the price feed address used during instantiation, but the `FeedRegistry` is more flexible although it is only avaible on mainnet.
+Chainlink price feeds bring off chain price quotes on chain using a decentralized network of oracles. The `FeedRegistry` contract is only avaible on mainnet, but the price feed addresses that power the `AggregatorV3Interface` are available on a wide range of networks.
 
 ### Steps
 
@@ -45,19 +48,18 @@ Chainlink price feeds offer a decentralized data source that provides price info
 
 ### Details
 
-- The price returned by the price feed contract has a specified number of decimals that can be fetched from the price feed contract using the `decimals()` method
-- The answer returned by the price feed contract is only updated if the price deviates beyond a specified threshold or if a certain amount of time has passed since the last update
-- `FeedRegistry` is only available on Ethereum Mainnet, but `AggregatorV3Interface` is available on a variety of networks.
+- The quote returned by the price feed contract has a specified number of decimals
+- The quote returned by the price feed contract is only updated if the price deviates beyond a specified threshold or if a certain amount of time has passed since the last update 
 
 ## 🎲 VRF (Verifiable Random Function)
 
-Chainlink VRF provides access verifiably random numbers on chain. Each request for a random number costs LINK and the reponse is delivered on chain after requestConfirmations number of blocks. The VRFConsumer example uses the Direct Funding method, but you may prefer the Subscription method depending on your use case.
+Chainlink VRF provides access to verifiably random numbers on chain. Each request for a random number costs LINK and the reponse is delivered after requestConfirmations number of blocks. The VRFConsumer example uses the Direct Funding method, but you may prefer the Subscription method depending on your use case.
 
 ### Steps
 
 1. Set up your contract to inherit VRFV2WrapperConsumerBase
-2. Impliment a function that triggers request for random number by calling the requestRandomness function which is inhereted from VRFV2WrapperConsumerBase
-3. You must override the fullFillrandomWords function
+2. Impliment a function that triggers request for random number by calling the requestRandomness function inhereted from VRFV2WrapperConsumerBase
+3. You must override the fullFillrandomWords function inhereted from VRFV2WrapperConsumerBase
 
 ### Details
 
@@ -67,13 +69,13 @@ Chainlink VRF provides access verifiably random numbers on chain. Each request f
 
 ## 🤖 Automation
 
-Chainlink Automation calls a smart contract function if a specified set of criteria are met. The time-based trigger calls a target function on a target contract every specified interval. The custom logic trigger allows your contract to use on-chain state to determine when to call a target function. The log trigger allows your contract to use event log data as both a trigger and an input.
+Chainlink Automation calls a smart contract function if a specified set of criteria are met. The time-based trigger calls a target function on a target contract every specified interval. The custom logic trigger allows your contract to use on-chain state to determine when to call a target function. The log trigger allows your contract to use event log data as both a trigger and an input
 
 ### Steps
 
 1. Decide which trigger fits best for your use case
-2. Register a new upkeep with chainlink
-3. Provide your target contract and target function
+2. Import the appropriate interface and override the checkUpkeep and performUpkeep functions inhereted from the interface
+3. Register a new upkeep with chainlink by providing your target contract address and depositing LINK tokens 
 
 ### Details
 
