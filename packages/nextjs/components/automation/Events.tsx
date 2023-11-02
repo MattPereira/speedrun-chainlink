@@ -56,7 +56,7 @@ export const Events = () => {
     }
   }, [events.length, eventsData, isLoadingEvents]);
 
-  console.log("eventsData", eventsData);
+  // console.log("eventsData", eventsData);
 
   return (
     <section className="grow bg-base-200 rounded-xl h-[350px]">

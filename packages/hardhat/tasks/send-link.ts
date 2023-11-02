@@ -10,7 +10,7 @@ import { networkConfig } from "../helper-hardhat-config";
  * @notice gas fees are boosted since this is only for sepolia network
  */
 
-export async function sendLink(hre: HardhatRuntimeEnvironment, recipientAddress: string, amount: number) {
+export async function sendLink(recipientAddress: string, amount: number, hre: HardhatRuntimeEnvironment) {
   if (hre.network.name !== "sepolia") {
     throw new Error("This script is only configured for sepolia network");
   }
@@ -52,5 +52,5 @@ task("send-link", "Send a specified amount of link to a specified address")
   .addParam("recipient", "The address to send LINK token to")
   .addParam("amount", "The human readable amount of LINK to send")
   .setAction(async (taskArgs, hre) => {
-    await sendLink(hre, taskArgs.recipient, taskArgs.amount);
+    await sendLink(taskArgs.recipient, taskArgs.amount, hre);
   });

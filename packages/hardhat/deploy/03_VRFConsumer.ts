@@ -32,7 +32,7 @@ const deployVRFConsumer: DeployFunction = async function (hre: HardhatRuntimeEnv
   if (+VRFConsumerLinkBalance === 0) {
     const amount = 5;
     console.log(`Funding VRFConsumer contract with ${amount} LINK`);
-    await sendLink(hre, VRFConsumer.address, amount);
+    await sendLink(VRFConsumer.address, amount, hre);
   }
 };
 

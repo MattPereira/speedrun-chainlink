@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0x878758869763463082c27E996386A9b80Dc85323",
+          address: "0x388421109AD3eE7349Ead0CdF830284603d7dC79",
           abi: [
             {
               inputs: [
@@ -182,7 +182,7 @@ const contracts = {
               inputs: [
                 {
                   internalType: "bytes",
-                  name: "checkData",
+                  name: "",
                   type: "bytes",
                 },
               ],
@@ -213,6 +213,19 @@ const contracts = {
               name: "fundUpkeep",
               outputs: [],
               stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getLinkBalance",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
             {
@@ -551,6 +564,39 @@ const contracts = {
                 },
               ],
               name: "updateInterval",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "contract AutomationRegistrarInterface",
+                  name: "_registrar",
+                  type: "address",
+                },
+              ],
+              name: "updateRegistrarAddress",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "contract AutomationRegistryBaseInterface",
+                  name: "_registry",
+                  type: "address",
+                },
+              ],
+              name: "updateRegistryAddress",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "withdrawLink",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",

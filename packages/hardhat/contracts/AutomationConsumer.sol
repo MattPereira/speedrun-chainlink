@@ -45,8 +45,8 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	uint public s_upkeepID;
 
 	LinkTokenInterface public immutable i_link;
-	AutomationRegistrarInterface public immutable i_registrar;
-	AutomationRegistryBaseInterface public immutable i_registry;
+	AutomationRegistrarInterface public i_registrar;
+	AutomationRegistryBaseInterface public i_registry;
 
 	constructor(
 		LinkTokenInterface link,
@@ -106,9 +106,6 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	/** This function allows for the registration of a new upkeep
 	 * @param params required params for registering an upkeep
 	 *
-	 * DEBUG NOTES:
-	 * - this contract successfully approves registrar to spend link
-	 * - UNPREDICTABLE_GAS_LIMIT must be coming from i_registrar.registerUpkeep()
 	 */
 
 	function registerNewUpkeep(
@@ -162,7 +159,31 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		emit IntervalUpdated(s_interval);
 	}
 
+	function updateRegistryAddress(
+		AutomationRegistryBaseInterface _registry
+	) public onlyOwner {
+		i_registry = _registry;
+	}
+
+	function updateRegistrarAddress(
+		AutomationRegistrarInterface _registrar
+	) public onlyOwner {
+		i_registrar = _registrar;
+	}
+
+	function withdrawLink() public onlyOwner {
+		require(
+			i_link.transfer(msg.sender, i_link.balanceOf(address(this))),
+			"Unable to withdraw LINK"
+		);
+	}
+
+	/** Getters */
 	function getUpkeepInfo() public view returns (UpkeepInfo memory) {
 		return i_registry.getUpkeep(s_upkeepID);
+	}
+
+	function getLinkBalance() public view returns (uint256) {
+		return i_link.balanceOf(address(this));
 	}
 }

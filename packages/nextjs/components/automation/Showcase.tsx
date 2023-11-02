@@ -45,7 +45,7 @@ export const Showcase = () => {
     },
   });
 
-  console.log("upkeepInfo", upkeepInfo);
+  // console.log("upkeepInfo", upkeepInfo);
 
   return (
     <div className="bg-base-100 rounded-xl mb-10 p-5 lg:p-10">
@@ -63,8 +63,8 @@ export const Showcase = () => {
         <div>
           <p className="text-xl">
             Since smart contracts cannot initate transactions without the help of an externally owned account, a service
-            like chainlink automation is necessary for reliably executing transactions via time based or conditional
-            logic triggers.
+            like chainlink automation is required to reliably execute transactions via time based or conditional logic
+            triggers.
           </p>
 
           <p className="text-xl">
@@ -112,7 +112,7 @@ export const Showcase = () => {
               <span className="font-bold mr-2">
                 {upkeepInfo?.balance ? parseFloat(formatEther(upkeepInfo.balance)).toFixed(2) : "0.0"} LINK
               </span>
-              left in upkeep to fund automation
+              left in upkeep subscription
             </div>
           </div>
         </div>
