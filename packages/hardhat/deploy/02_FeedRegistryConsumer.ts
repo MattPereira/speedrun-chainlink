@@ -1,11 +1,11 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
-/**
- * Deploy PriceFeedConsumer contract
+/** Deploy FeedRegistryConsumer contract
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
+
 const deployRegistryFeedConsumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, log } = hre.deployments;

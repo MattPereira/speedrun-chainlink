@@ -6,13 +6,16 @@ interface NetworkConfigEntryTypes {
     LINK_USD: string;
   };
   VRFConsumer: {
-    VRFV2WrapperAddress?: string;
-    linkTokenAddress?: string;
+    VRFV2WrapperAddress: string;
+    linkTokenAddress: string;
   };
   AutomationConsumer: {
-    registrarAddress?: string;
-    linkTokenAddress?: string;
-    registryAddress?: string;
+    registrarAddress: string;
+    linkTokenAddress: string;
+    registryAddress: string;
+  };
+  tokenAddress: {
+    LINK: string;
   };
 }
 
@@ -33,6 +36,9 @@ const networkConfig: { [key: number]: NetworkConfigEntryTypes } = {
       BTC_USD: "0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43",
       ETH_USD: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
       LINK_USD: "0xc59E3633BAAC79493d908e63626716e204A45EdF",
+    },
+    tokenAddress: {
+      LINK: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
     },
   },
 };

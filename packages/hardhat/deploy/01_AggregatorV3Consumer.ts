@@ -3,11 +3,11 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { developmentChains, networkConfig } from "../helper-hardhat-config";
 import { network } from "hardhat";
 
-/**
- * Deploy AggregatorV3Consumer contract
+/** Deploy AggregatorV3Consumer contract
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
+
 const deployAggregatorV3Consumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, log } = hre.deployments;
