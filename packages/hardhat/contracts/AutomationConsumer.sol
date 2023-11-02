@@ -43,6 +43,7 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	bool public s_isCounting = false;
 	uint public s_lastTimestamp;
 	uint public s_upkeepID;
+
 	LinkTokenInterface public immutable i_link;
 	AutomationRegistrarInterface public immutable i_registrar;
 	AutomationRegistryBaseInterface public immutable i_registry;
@@ -58,8 +59,7 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 	}
 
 	/** This function is called automatically by chainlink keeper nodes
-	 *
-	 * param checkData not used in this example, but it can be set when the Upkeep is registered
+	 * @notice param checkData not used in this example, but it can be set when the Upkeep is registered
 	 * @return upkeepNeeded - if true, performUpkeep() will be called
 	 * @return performData - data passed to performUpkeep() (can be dynamically computed within checkUpkeep())
 	 */
@@ -79,11 +79,10 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		return (upkeepNeeded, performData);
 	}
 
-	/** This function is called by chainlink keeper when the checkupkeep() function returns true
-	 *
+	/** This function is only called by chainlink keeper when the checkupkeep() function returns true
 	 * @param performData returned value from checkUpkeep
 	 *
-	 * turns off automated counter at max value to conserve LINK in upkeep subscription
+	 * @notice turns off automated counter at max value to conserve LINK in upkeep subscription
 	 */
 
 	function performUpkeep(bytes calldata performData) external override {
@@ -104,8 +103,7 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		emit UpkeepPerformed(block.timestamp, s_counter);
 	}
 
-	/** This function allows the registration of a new upkeep
-	 *
+	/** This function allows for the registration of a new upkeep
 	 * @param params required params for registering an upkeep
 	 *
 	 * DEBUG NOTES:
@@ -126,17 +124,17 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		s_upkeepID = upkeepID;
 	}
 
-	// Setters
 	function setUpkeepID(uint256 _upkeepID) public onlyOwner {
 		s_upkeepID = _upkeepID;
 	}
 
-	/**
+	/** Funds the upkeep subscription with more link
 	 * @param amount amount of LINK to fund upkeep with
 	 */
+
 	function fundUpkeep(uint96 amount) public {
-		// Transfer LINK from EOA to this contract
 		require(
+			// Transfer of LINK from EOA to this contract
 			i_link.transferFrom(msg.sender, address(this), amount),
 			"Transfer failed. Ensure this contract is approved to spend LINK"
 		);
@@ -164,16 +162,7 @@ contract AutomationConsumer is AutomationCompatibleInterface, Ownable {
 		emit IntervalUpdated(s_interval);
 	}
 
-	// Getters
 	function getUpkeepInfo() public view returns (UpkeepInfo memory) {
 		return i_registry.getUpkeep(s_upkeepID);
-	}
-
-	function getLinkBalance() public view returns (uint256) {
-		return i_link.balanceOf(address(this));
-	}
-
-	function withdrawLink() public onlyOwner {
-		i_link.transfer(msg.sender, i_link.balanceOf(address(this)));
 	}
 }

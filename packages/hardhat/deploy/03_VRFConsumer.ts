@@ -4,7 +4,9 @@ import { networkConfig } from "../helper-hardhat-config";
 import { getTokenBalance, sendLink } from "../tasks";
 
 /** Deploy VRFConsumer contract
- * also funds contract with LINK if its a fresh deployment
+ * @param hre HardhatRuntimeEnvironment object.
+ *
+ * @notice funds contract with LINK if fresh deployment
  */
 
 const deployVRFConsumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {

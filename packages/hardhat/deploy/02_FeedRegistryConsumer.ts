@@ -2,7 +2,6 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
 /** Deploy FeedRegistryConsumer contract
- *
  * @param hre HardhatRuntimeEnvironment object.
  */
 

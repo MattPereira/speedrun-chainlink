@@ -5,16 +5,13 @@ import { networkConfig } from "../helper-hardhat-config";
 // import LinkTokenABI from "@chainlink/contracts/abi/v0.8/LinkToken.json";
 // import { approveAndTransfer } from "../scripts/approveAndTransfer";
 
-/** 1. Deploys the "AutomationConsumer" contract
- *  2. Send LINK to AutomationConsumer contract
- *  3. Register upkeep for AutomationConsumer contract
- *
+/** Deploys the AutomationConsumer contract
  * @param hre HardhatRuntimeEnvironment object.
+ *
  */
 const deployAutomationConsumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, log } = hre.deployments;
-  // const { ethers } = hre;
 
   log("------------------------------------");
   const chainId = await hre.ethers.provider.getNetwork().then(network => network.chainId);
@@ -40,7 +37,7 @@ const deployAutomationConsumer: DeployFunction = async function (hre: HardhatRun
    */
 
   // if (linkTokenAddress) {
-  // const [signer] = await ethers.getSigners();
+  //   const [signer] = await ethers.getSigners();
   //   const AutomationConsumer = await ethers.getContract("AutomationConsumer", signer);
 
   //   const fundAmount = "5";

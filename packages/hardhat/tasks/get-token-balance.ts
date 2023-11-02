@@ -11,14 +11,15 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
  */
 
 export async function getTokenBalance(hre: HardhatRuntimeEnvironment, accountAddress: string, tokenAddress: string) {
-  const { ethers } = hre;
-  const { provider } = ethers;
+  if (hre.network.name !== "sepolia") {
+    throw new Error("This script is only configured for sepolia network");
+  }
 
-  const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+  const tokenContract = new hre.ethers.Contract(tokenAddress, ERC20_ABI, hre.ethers.provider);
   const decimals = await tokenContract.decimals();
   const symbol = await tokenContract.symbol();
   const rawBalance = await tokenContract.balanceOf(accountAddress);
-  const formattedBalance = ethers.utils.formatUnits(rawBalance, decimals);
+  const formattedBalance = hre.ethers.utils.formatUnits(rawBalance, decimals);
 
   // prettier-ignore
   console.log((`Address: ${accountAddress} has ${formattedBalance} ${symbol}`));

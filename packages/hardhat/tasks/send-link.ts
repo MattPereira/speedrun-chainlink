@@ -4,10 +4,10 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { networkConfig } from "../helper-hardhat-config";
 
 /** Fund a specified address with specified amount of LINK
- *
  * @param recipientAddress who receives the LINK
  * @param amount human readable amount of LINK to send
  *
+ * @notice gas fees are boosted since this is only for sepolia network
  */
 
 export async function sendLink(hre: HardhatRuntimeEnvironment, recipientAddress: string, amount: number) {
@@ -24,9 +24,20 @@ export async function sendLink(hre: HardhatRuntimeEnvironment, recipientAddress:
   const decimals = await linkTokenContract.decimals();
   const parsedAmount = hre.ethers.utils.parseUnits(amount.toString(), decimals);
 
+  // Boosting gas fees for speedy sepolia transactions
+  const { maxFeePerGas, maxPriorityFeePerGas } = await hre.ethers.provider.getFeeData();
+  if (!maxFeePerGas || !maxPriorityFeePerGas) {
+    throw new Error("Failed to fetch gas fee data");
+  }
+  const boost = hre.ethers.utils.parseUnits("2", "gwei");
+  const boostedMaxFeePerGas = maxFeePerGas.add(boost);
+  const boostedMaxPriorityFeePerGas = maxPriorityFeePerGas.add(boost);
+
   console.log("Sending transfer transaction...");
-  // transfer(address to, uint256 amount)
-  const transferTx = await linkTokenContract.transfer(recipientAddress, parsedAmount);
+  const transferTx = await linkTokenContract.transfer(recipientAddress, parsedAmount, {
+    maxFeePerGas: boostedMaxFeePerGas,
+    maxPriorityFeePerGas: boostedMaxPriorityFeePerGas,
+  });
   console.log("txHash", transferTx.hash);
   const transferTxReceipt = await transferTx.wait();
 

@@ -4,14 +4,12 @@ import { developmentChains, networkConfig } from "../helper-hardhat-config";
 import { network } from "hardhat";
 
 /** Deploy AggregatorV3Consumer contract
- *
  * @param hre HardhatRuntimeEnvironment object.
  */
 
 const deployAggregatorV3Consumer: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, log } = hre.deployments;
-  const { ethers } = hre;
 
   const chainId = await hre.ethers.provider.getNetwork().then(network => network.chainId);
 
@@ -20,7 +18,7 @@ const deployAggregatorV3Consumer: DeployFunction = async function (hre: HardhatR
 
   if (developmentChains.includes(network.name)) {
     // use mock address if on local network
-    const MockV3Aggregator = await ethers.getContract("MockV3Aggregator");
+    const MockV3Aggregator = await hre.ethers.getContract("MockV3Aggregator");
     priceFeedAddress = MockV3Aggregator.address;
   } else {
     // use address from helper-hardhat-config if on testnet or live network
