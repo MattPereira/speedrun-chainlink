@@ -13,16 +13,18 @@ import FeedRegistry from "~~/utils/external-contracts/FeedRegistry";
  */
 export const FeedRegistryDisplay = () => {
   const [baseAssetAddress, setBaseAssetAddress] = useState("");
+  const [quoteAssetAddress, setQuoteAssetAddress] = useState("");
 
   useEffect(() => {
     setBaseAssetAddress(BASE_ASSET_OPTIONS[0].address);
+    setQuoteAssetAddress(QUOTE);
   }, []);
 
   const { data: description } = useContractRead({
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "description",
-    args: [baseAssetAddress, QUOTE],
+    args: [baseAssetAddress, quoteAssetAddress],
     chainId: 1, // force request on mainnet
   });
 
@@ -30,7 +32,7 @@ export const FeedRegistryDisplay = () => {
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "latestRoundData",
-    args: [baseAssetAddress, QUOTE],
+    args: [baseAssetAddress, quoteAssetAddress],
     chainId: 1, // force request on mainnet
   });
 
@@ -40,7 +42,7 @@ export const FeedRegistryDisplay = () => {
     address: FeedRegistry.address,
     abi: FeedRegistry.abi,
     functionName: "decimals",
-    args: [baseAssetAddress, QUOTE],
+    args: [baseAssetAddress, quoteAssetAddress],
     chainId: 1, // force request on mainnet
   });
 
@@ -48,7 +50,6 @@ export const FeedRegistryDisplay = () => {
   // handle typescript rage
   if (Array.isArray(roundData) && typeof roundData[1] === "bigint") {
     price = roundData[1];
-    console.log("$" + formatUnits(price, 8));
   } else {
     console.error("Unexpected data format");
   }
@@ -57,7 +58,7 @@ export const FeedRegistryDisplay = () => {
     { title: "description()", value: description?.toString(), type: "string" },
     {
       title: "formatUnits(price, decimals)",
-      value: price && decimals ? "$" + parseFloat(formatUnits(price, Number(decimals))).toFixed(2) : "N/A",
+      value: price && decimals ? parseFloat(formatUnits(price, Number(decimals))).toFixed(2) : "N/A",
       type: "string",
     },
   ];
@@ -67,7 +68,7 @@ export const FeedRegistryDisplay = () => {
       <div className="flex flex-col justify-center items-center mb-10 gap-2">
         <div className="flex gap-3 items-center">
           <h3 className="text-2xl md:text-3xl text-center font-bold">FeedRegistry</h3>
-          <ExternalLinkButton href="https://etherscan.io/address/0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf#code" />
+          <ExternalLinkButton href="https://docs.chain.link/data-feeds/feed-registry" />
         </div>
         <Address size="xl" address={"0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf"} />
       </div>
@@ -87,49 +88,25 @@ export const FeedRegistryDisplay = () => {
         </div>
       )}
 
-      <div className="ml-3 mb-1">
-        <label className="text-xl">Base Asset</label>
-      </div>
-      <div className="flex items-center justify-end gap-4">
-        <div className="grow">
-          <AddressInput value={baseAssetAddress} onChange={val => setBaseAssetAddress(val)} />
+      <div className="mb-3">
+        <div className="ml-3 mb-1">
+          <label className="text-xl">Base Asset</label>
         </div>
-        <button
-          className="btn btn-accent text-primary"
-          onClick={() => {
-            const modal = document?.getElementById("my_modal_2") as HTMLDialogElement;
-            modal?.showModal();
-          }}
-        >
-          Addresses
-        </button>
-        <dialog id="my_modal_2" className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Token Addresses</h3>
-            <p>Copy and paste a token address into the address input field</p>
-            <div className="overflow-x-auto">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Symbol</th>
-                    <th>Address</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {BASE_ASSET_OPTIONS.map((option, i) => (
-                    <tr key={i}>
-                      <td>{option.symbol}</td>
-                      <td>{option.address}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+        <div className="flex items-center justify-end gap-4">
+          <div className="grow">
+            <AddressInput value={baseAssetAddress} onChange={val => setBaseAssetAddress(val)} />
           </div>
-          <form method="dialog" className="modal-backdrop">
-            <button>close</button>
-          </form>
-        </dialog>
+        </div>
+      </div>
+      <div>
+        <div className="ml-3 mb-1">
+          <label className="text-xl">Quote Asset</label>
+        </div>
+        <div className="flex items-center justify-end gap-4">
+          <div className="grow">
+            <AddressInput value={quoteAssetAddress} onChange={val => setQuoteAssetAddress(val)} />
+          </div>
+        </div>
       </div>
     </div>
   );
