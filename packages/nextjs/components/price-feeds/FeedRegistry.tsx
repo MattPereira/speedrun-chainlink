@@ -17,7 +17,7 @@ export const FeedRegistryDisplay = () => {
 
   useEffect(() => {
     setBaseAssetAddress(BASE_ASSET_OPTIONS[0].address);
-    setQuoteAssetAddress(QUOTE);
+    setQuoteAssetAddress(USD_QUOTE);
   }, []);
 
   const { data: description } = useContractRead({
@@ -123,4 +123,4 @@ const BASE_ASSET_OPTIONS = [
 ];
 
 // address for USD
-const QUOTE = "0x0000000000000000000000000000000000000348";
+const USD_QUOTE = "0x0000000000000000000000000000000000000348";

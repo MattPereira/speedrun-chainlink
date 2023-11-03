@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x144379F31185749Ab6b8A77ece55FD3A614C66d4",
+          address: "0x94349c5f198Ae7d7468D563cC2aFdD1d3150E7a1",
           abi: [
             {
               inputs: [
@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0x388421109AD3eE7349Ead0CdF830284603d7dC79",
+          address: "0xaF2c60F0aBfaB8ea496609A0Bb1b5cd6B98e605a",
           abi: [
             {
               inputs: [
@@ -604,7 +604,7 @@ const contracts = {
           ],
         },
         VRFConsumer: {
-          address: "0x0994A8aF29771ffc388e575FD7914321d36e2b69",
+          address: "0xE74dF4827A13a3D1ac365fAe435213958B07bB08",
           abi: [
             {
               inputs: [

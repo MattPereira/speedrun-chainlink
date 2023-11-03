@@ -63,15 +63,14 @@ export const Showcase = () => {
         <div>
           <p className="text-xl">
             Since smart contracts cannot initate transactions without the help of an externally owned account, a service
-            like chainlink automation is required to reliably execute transactions via time based or conditional logic
-            triggers.
+            like chainlink automation is required to reliably execute transactions at regular intervals or based on
+            conditional logic triggers.
           </p>
 
           <p className="text-xl">
-            Click <InlineCode text="start" /> to update boolean state variable integrated with the{" "}
+            Click <InlineCode text="start" /> to update the boolean state variable integrated with the{" "}
             <InlineCode text="checkUpkeep" /> function&apos;s return value that controls if chainlink nodes should call
-            the <InlineCode text="performUpkeep" /> function every <InlineCode text="interval" /> seconds. The contract
-            is set up to stop counting at 10
+            the <InlineCode text="performUpkeep" /> function every <InlineCode text="interval" /> seconds.
           </p>
 
           <div className="bg-base-200 rounded-xl flex flex-wrap justify-around items-center">
