@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
+import logo from "~~/public/speed-chain-logo.png";
 
 /**
  * the site is intended to be used primarily on "Sepolia" testnet
@@ -12,11 +14,21 @@ const Home: NextPage = () => {
     <div className="">
       <MetaHeader />
       <div className="container mx-auto py-20 px-5">
-        <h1 className="text-center text-5xl font-bold mb-10">Speedrun Chainlink</h1>
-        <div className="text-center text-5xl mb-10">🏃💨</div>
-        <p className="text-2xl text-center mb-10">
+        <div className="flex justify-center mb-10 items-center gap-8 flex-wrap">
+          <div className="rounded-full overflow-hidden">
+            <Image src={logo} height="200" width="200" alt="Speedrun Chainlink Logo" />
+          </div>
+          <div>
+            <h1 className="text-center text-6xl font-cubano">
+              Speedrun <div>Chainlink</div>
+            </h1>
+          </div>
+        </div>
+
+        <p className="text-xl text-center mb-10">
           A beginner&apos;s guide to integrating chainlink products with smart contracts
         </p>
+
         <div className="grid grid-cols-1 gap-10 px-0 lg:px-24">
           {PRODUCTS.map(product => (
             <Link
