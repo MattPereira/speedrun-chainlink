@@ -24,7 +24,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, newTab = false }) => 
       rel={newTab ? "noopener noreferrer" : ""}
       className={`${
         isActive ? "bg-secondary shadow-md" : ""
-      } flex items-center hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-lg rounded-full gap-2 grid grid-flow-col`}
+      } flex items-center hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-xl rounded-full gap-2 grid grid-flow-col`}
     >
       {children}
     </Link>
@@ -74,7 +74,7 @@ export const Header = () => {
   );
 
   return (
-    <div className="sticky xl:static top-0 navbar border-b-4 border-base-200 min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2">
+    <div className="sticky xl:static top-0 navbar border-b-2 border-base-200 min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2">
       <div className="navbar-start w-auto">
         <div className="xl:hidden dropdown" ref={burgerMenuRef}>
           <label
@@ -98,13 +98,14 @@ export const Header = () => {
             </ul>
           )}
         </div>
-        <Link href="/" passHref className="hidden xl:flex items-center gap-2 ml-4 mr-6 shrink-0 font-cubano text-2xl">
+        <Link href="/" passHref className="hidden xl:flex items-center gap-2 ml-4 mr-6 shrink-0 font-cubano text-3xl">
           Speedrun Chainlink
         </Link>
+        <div>
+          <ul className="hidden xl:flex xl:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
+        </div>
       </div>
-      <div>
-        <ul className="hidden xl:flex xl:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
-      </div>
+
       <div className=" mr-4">
         <RainbowKitCustomConnectButton />
         <FaucetButton />
