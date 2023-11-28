@@ -18,14 +18,13 @@ const Home: NextPage = () => {
         <div className="mb-10">
           <h1 className="text-center text-6xl font-cubano">Speedrun Chainlink</h1>
         </div>
-        <div className="rounded-xl overflow-hidden">
+        <p className="text-3xl text-center my-10">
+          A beginner&apos;s guide to integrating chainlink products with smart contracts
+        </p>
+        <div className="rounded-xl overflow-hidden mb-14">
           <Image src={"/banner-crop.png"} height="1350" width="1550" alt="Speedrun Chainlink Banner" />
         </div>
         {/* <div className="flex justify-center mb-10 items-center gap-8 flex-wrap"></div> */}
-
-        <p className="text-3xl text-center my-20">
-          A beginner&apos;s guide to integrating chainlink products with smart contracts
-        </p>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-10 px-0">
           {PRODUCTS.map(product => (
