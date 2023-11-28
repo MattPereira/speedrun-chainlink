@@ -34,7 +34,7 @@ export const AggregatorV3Consumer = () => {
   ];
 
   return (
-    <div className="bg-base-100 rounded-xl p-10 shadow-lg">
+    <div className="bg-base-200 border border border-base-200 rounded-xl p-10 shadow-lg">
       <div className="flex flex-col justify-center items-center mb-10 gap-2">
         <div className="flex gap-3 items-center">
           <h3 className="text-2xl md:text-3xl text-center font-bold">AggregatorV3Consumer</h3>

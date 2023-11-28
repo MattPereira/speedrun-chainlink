@@ -123,7 +123,7 @@ export const Showcase = () => {
     <section>
       <div className="flex flex-wrap justify-center sm:justify-between gap-4 items-center mb-10">
         <div className="flex items-center gap-4">
-          <h3 className="text-2xl md:text-3xl mb-0 font-bold">VRFConsumer</h3>
+          <h3 className="text-2xl md:text-4xl mb-0 font-bold">VRFConsumer</h3>
           <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/VRFConsumer.sol" />
         </div>
         <div>
@@ -152,7 +152,7 @@ export const Showcase = () => {
               <ResultsTable results={results} wheelOptions={wheelOptions} />
             )}
           </div>
-          <div className="alert mt-5 text-xl">
+          <div className="alert bg-neutral-700 mt-5 text-xl">
             <InformationCircleIcon className="stroke-current shrink-0 w-6 h-6" />
             <div>
               <span className="font-bold mr-2">
@@ -179,7 +179,7 @@ export const Showcase = () => {
             <div className="flex justify-center">
               <button
                 disabled={waitingForVRF}
-                className="btn btn-accent text-primary text-lg w-44 px-14 mt-2"
+                className="btn btn-primary text-2xl w-44 px-14 mt-2 font-cubano"
                 onClick={handleSpinClick}
               >
                 {waitingForVRF ? <LoaderIcon className="animate-spin h-5 w-5" /> : "Spin"}

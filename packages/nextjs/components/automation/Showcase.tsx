@@ -48,10 +48,10 @@ export const Showcase = () => {
   // console.log("upkeepInfo", upkeepInfo);
 
   return (
-    <div className="bg-base-100 rounded-xl mb-10 p-5 lg:p-10">
+    <div className="bg-base-200 border border-base-200 rounded-xl mb-10 p-5 lg:p-10">
       <div className="flex flex-wrap justify-between gap-2 items-center mb-10">
         <div className="flex items-center gap-4">
-          <h3 className="text-2xl md:text-3xl mb-0 font-bold">AutomationConsumer</h3>
+          <h3 className="text-2xl md:text-4xl mb-0 font-bold">AutomationConsumer</h3>
           <ExternalLinkButton href="https://github.com/MattPereira/speedrun-chainlink/blob/main/packages/hardhat/contracts/AutomationConsumer.sol" />
         </div>
         <div>
@@ -75,13 +75,13 @@ export const Showcase = () => {
 
           <div className="bg-base-200 rounded-xl flex flex-wrap justify-around items-center">
             <div className="stats">
-              <div className="stat bg-base-200">
+              <div className="stat">
                 <div className="stat-value">{interval?.toString()}</div>
                 <div className="stat-title">interval</div>
               </div>
             </div>
             <div className="stats">
-              <div className="stat bg-base-200">
+              <div className="stat">
                 <div className={`stat-value ${isCounting ? "text-green-500" : "text-red-500"}`}>
                   {isCounting?.toString()}
                 </div>
@@ -89,23 +89,23 @@ export const Showcase = () => {
               </div>
             </div>
             <div className="stats">
-              <div className="stat bg-base-200">
+              <div className="stat">
                 <div className="stat-value">{Number(currentCount)}</div>
                 <div className="stat-title">counter</div>
               </div>
             </div>
 
             {isCounting ? (
-              <button onClick={() => stopCounting()} className="btn btn-error">
+              <button onClick={() => stopCounting()} className="btn btn-error font-cubano text-xl rounded-lg px-7">
                 Stop
               </button>
             ) : (
-              <button onClick={() => startCounting()} className="btn btn-success">
+              <button onClick={() => startCounting()} className="btn btn-primary font-cubano text-xl rounded-lg px-7">
                 Start
               </button>
             )}
           </div>
-          <div className="alert mt-5 text-xl">
+          <div className="alert bg-neutral-700 mt-5 text-xl">
             <InformationCircleIcon className="stroke-current shrink-0 w-6 h-6" />
             <div>
               <span className="font-bold mr-2">
@@ -117,7 +117,7 @@ export const Showcase = () => {
         </div>
 
         <div className="flex flex-col">
-          <h4 className="text-center font-medium text-xl">UpkeepPerformed Events</h4>
+          <h4 className="text-center font-bold text-2xl">Upkeep Events</h4>
 
           <Events />
         </div>

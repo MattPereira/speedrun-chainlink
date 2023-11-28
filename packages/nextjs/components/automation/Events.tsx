@@ -69,7 +69,7 @@ export const Events = () => {
           <div className="overflow-x-auto overflow-y-auto h-full hide-scrollbar ">
             <table className="table table-pin-rows">
               <thead className="text-lg">
-                <tr className="bg-base-300 ">
+                <tr className="bg-neutral-700 rounded-xl">
                   <th>Timestamp</th>
                   <th>Block</th>
                   <th>Count</th>

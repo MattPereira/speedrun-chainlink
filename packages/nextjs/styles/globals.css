@@ -1,4 +1,5 @@
 @import url("https://fonts.cdnfonts.com/css/cubano");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lobster&display=swap");
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
@@ -6,7 +7,7 @@
 
 :root,
 [data-theme] {
-  background: hsl(var(--b2));
+  background: hsl(var(--b3));
 }
 
 body {
@@ -26,7 +27,12 @@ p {
 }
 
 .btn {
-  @apply shadow-md;
+  font-weight: normal;
+  text-transform: none;
+  /* padding: 0.5rem 1.5rem; */
+  /* font-family: "Cubano", sans-serif; */
+  /* font-size: 24px; */
+  /* border-radius: 0.5rem; */
 }
 
 .btn.btn-ghost {

@@ -53,10 +53,7 @@ export const RainbowKitCustomConnectButton = () => {
                       <span>Wrong network</span>
                       <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
                     </label>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu p-2 mt-1 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
-                    >
+                    <ul tabIndex={0} className="dropdown-content menu p-2 mt-1 bg-base-300 rounded-box gap-1">
                       <li>
                         <button
                           className="btn-sm !rounded-xl flex py-3 gap-3"
@@ -94,7 +91,7 @@ export const RainbowKitCustomConnectButton = () => {
                   <div className="dropdown dropdown-end leading-3">
                     <label
                       tabIndex={0}
-                      className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto"
+                      className="btn bg-base-200 border border-base-200 btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto"
                     >
                       <BlockieAvatar address={account.address} size={30} ensImage={account.ensAvatar} />
                       <span className="ml-2 mr-1">{account.displayName}</span>
@@ -102,7 +99,8 @@ export const RainbowKitCustomConnectButton = () => {
                     </label>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
+                      style={{ backdropFilter: "blur(10px)" }}
+                      className="dropdown-content menu z-[2] p-2 mt-2 bg-base-200 rounded-box gap-1"
                     >
                       <li>
                         {addressCopied ? (

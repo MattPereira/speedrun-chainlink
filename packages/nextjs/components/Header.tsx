@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { BanknotesIcon, Bars3Icon, BugAntIcon, LinkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
@@ -62,22 +62,6 @@ export const Header = () => {
           Debug Contracts
         </NavLink>
       </li>
-      {network.id === 11155111 && (
-        <>
-          <li>
-            <NavLink newTab href="https://faucets.chain.link/sepolia">
-              <LinkIcon className="h-4 w-4" />
-              Link Faucet
-            </NavLink>
-          </li>
-          <li>
-            <NavLink newTab href="https://sepoliafaucet.com/">
-              <BanknotesIcon className="h-4 w-4" />
-              Sepolia Faucet
-            </NavLink>
-          </li>
-        </>
-      )}
       {network.id === 31337 && (
         <li>
           <NavLink href="/blockexplorer">
@@ -90,7 +74,7 @@ export const Header = () => {
   );
 
   return (
-    <div className="sticky xl:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
+    <div className="sticky xl:static top-0 navbar border-b-4 border-base-200 min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2">
       <div className="navbar-start w-auto">
         <div className="xl:hidden dropdown" ref={burgerMenuRef}>
           <label

@@ -12,7 +12,7 @@ const PriceFeeds: NextPage = () => {
     <div>
       <MetaHeader />
       <div className="container mx-auto py-14 px-5 xl:px-20">
-        <h1 className="text-center text-5xl font-bold mb-14">📈 Price Feeds</h1>
+        <h1 className="text-center text-6xl font-cubano mb-14">📈 Price Feeds</h1>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-14 mb-14">
           <AggregatorV3Consumer />

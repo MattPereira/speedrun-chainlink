@@ -16,7 +16,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ results, wheelOption
       <div className="overflow-x-auto">
         <table className="table text-2xl table-pin-rows">
           <thead>
-            <tr className="text-lg bg-base-300 ">
+            <tr className="text-lg bg-neutral-700">
               <th>Spinner</th>
               <th>Result</th>
             </tr>

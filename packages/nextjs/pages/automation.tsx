@@ -8,7 +8,7 @@ const AutomationPage: NextPage = () => {
     <div>
       <MetaHeader />
       <div className="container mx-auto py-14 px-5 xl:px-20">
-        <h1 className="text-center text-5xl font-bold mb-14">🤖 Automation</h1>
+        <h1 className="text-center text-6xl font-cubano mb-14">🤖 Automation</h1>
         <Showcase />
         <InformationSection
           summary={

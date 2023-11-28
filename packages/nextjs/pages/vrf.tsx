@@ -8,9 +8,9 @@ const VRFPage: NextPage = () => {
     <div>
       <MetaHeader />
       <div className="container mx-auto py-14 px-5 xl:px-20">
-        <h1 className="text-center text-5xl font-bold mb-10">🎲 VRF</h1>
+        <h1 className="text-center text-6xl font-cubano mb-10">🎲 VRF</h1>
 
-        <div className="p-5 lg:p-10 bg-base-100 rounded-2xl mb-10">
+        <div className="p-5 lg:p-10 bg-base-200 border-base-200 border rounded-2xl mb-10">
           <Showcase />
         </div>
 

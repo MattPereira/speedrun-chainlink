@@ -8,7 +8,7 @@ interface InformationSectionProps {
 
 export const InformationSection: React.FC<InformationSectionProps> = ({ summary, details, gettingStarted }) => {
   return (
-    <div className="collapse collapse-plus bg-base-100 p-4">
+    <div className="collapse collapse-plus bg-base-200 border border border-base-200 p-4">
       <input type="radio" name="my-accordion-1" />
       <div className="collapse-title text-3xl font-bold">Getting Started</div>
       <div className="collapse-content">
