@@ -57,7 +57,7 @@ export const Header = () => {
         <NavLink href="/automation">🤖 Automation</NavLink>
       </li>
       <li>
-        <NavLink href="/functions">💻 Functions</NavLink>
+        <NavLink href="/functions">📡 Functions</NavLink>
       </li>
       <li>
         <NavLink href="/debug">

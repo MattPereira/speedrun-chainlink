@@ -63,8 +63,8 @@ const PRODUCTS = [
       "Play with the simple counter contract to understand how chainlink keeper nodes perform automated tasks on chain",
   },
   {
-    name: "💻 Functions",
+    name: "📡 Functions",
     path: "/functions",
-    description: "Learn how to fetch off chain data from within your smart contracts",
+    description: "Learn how to send request to off chain API and store the verified response on chain",
   },
 ];
