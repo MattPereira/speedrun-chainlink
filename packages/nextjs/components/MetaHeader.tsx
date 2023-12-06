@@ -15,7 +15,7 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT
 
 export const MetaHeader = ({
   title = "Speedrun Chainlink",
-  description = "Built with 🏗 Scaffold-ETH 2",
+  description = "A beginner's guide to integrating chainlink price feeds, VRF, automation, and functions",
   image = "banner.png",
   twitterCard = "summary_large_image",
   children,
