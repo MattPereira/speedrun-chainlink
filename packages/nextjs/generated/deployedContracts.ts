@@ -5,7 +5,7 @@ const contracts = {
       name: "sepolia",
       contracts: {
         AggregatorV3Consumer: {
-          address: "0x94349c5f198Ae7d7468D563cC2aFdD1d3150E7a1",
+          address: "0xD91dFa60eA260A91F3E48b441515C23fCFDdd1f2",
           abi: [
             {
               inputs: [
@@ -73,7 +73,7 @@ const contracts = {
           ],
         },
         AutomationConsumer: {
-          address: "0xaF2c60F0aBfaB8ea496609A0Bb1b5cd6B98e605a",
+          address: "0x68169EC2cAfE3f98A6bF5a4ED5c523A463454824",
           abi: [
             {
               inputs: [
@@ -603,8 +603,281 @@ const contracts = {
             },
           ],
         },
+        FunctionsConsumer: {
+          address: "0xCa71c907547f65D301Ae5EEb1e5FB56A79E66eA6",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_router",
+                  type: "address",
+                },
+                {
+                  internalType: "uint64",
+                  name: "_subscriptionId",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint32",
+                  name: "_gasLimit",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "_donID",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "EmptySource",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "NoInlineSecrets",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "OnlyRouterCanFulfill",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "requestId",
+                  type: "bytes32",
+                },
+              ],
+              name: "UnexpectedRequestID",
+              type: "error",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+              ],
+              name: "OwnershipTransferRequested",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+              ],
+              name: "OwnershipTransferred",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "id",
+                  type: "bytes32",
+                },
+              ],
+              name: "RequestFulfilled",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "id",
+                  type: "bytes32",
+                },
+              ],
+              name: "RequestSent",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "requestId",
+                  type: "bytes32",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "builderCount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "bytes",
+                  name: "response",
+                  type: "bytes",
+                },
+                {
+                  indexed: false,
+                  internalType: "bytes",
+                  name: "err",
+                  type: "bytes",
+                },
+              ],
+              name: "Response",
+              type: "event",
+            },
+            {
+              inputs: [],
+              name: "acceptOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "builderCount",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "requestId",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "response",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "err",
+                  type: "bytes",
+                },
+              ],
+              name: "handleOracleFulfillment",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_lastError",
+              outputs: [
+                {
+                  internalType: "bytes",
+                  name: "",
+                  type: "bytes",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_lastRequestId",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "s_lastResponse",
+              outputs: [
+                {
+                  internalType: "bytes",
+                  name: "",
+                  type: "bytes",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "sendRequest",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "requestId",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+              ],
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
         VRFConsumer: {
-          address: "0xE74dF4827A13a3D1ac365fAe435213958B07bB08",
+          address: "0x421225a8cE7f2c561D3A857d82FD2d144DA82779",
           abi: [
             {
               inputs: [

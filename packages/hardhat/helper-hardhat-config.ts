@@ -14,6 +14,12 @@ interface NetworkConfigEntryTypes {
     linkTokenAddress: string;
     registryAddress: string;
   };
+  FunctionsConsumer: {
+    routerAddress: string;
+    subscriptionId: string;
+    gasLimit: string;
+    donId: string;
+  };
   tokenAddress: {
     LINK: string;
   };
@@ -36,6 +42,12 @@ const networkConfig: { [key: number]: NetworkConfigEntryTypes } = {
       BTC_USD: "0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43",
       ETH_USD: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
       LINK_USD: "0xc59E3633BAAC79493d908e63626716e204A45EdF",
+    },
+    FunctionsConsumer: {
+      routerAddress: "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0",
+      subscriptionId: "1464",
+      gasLimit: "300000",
+      donId: "0x66756e2d657468657265756d2d7365706f6c69612d3100000000000000000000",
     },
     tokenAddress: {
       LINK: "0x779877A7B0D9E8603169DdbD7836e478b4624789",

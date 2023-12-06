@@ -26,7 +26,7 @@ const Home: NextPage = () => {
         </div>
         {/* <div className="flex justify-center mb-10 items-center gap-8 flex-wrap"></div> */}
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-10 px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 px-0">
           {PRODUCTS.map(product => (
             <Link
               href={product.path}
@@ -61,5 +61,10 @@ const PRODUCTS = [
     path: "/automation",
     description:
       "Play with the simple counter contract to understand how chainlink keeper nodes perform automated tasks on chain",
+  },
+  {
+    name: "💻 Functions",
+    path: "/functions",
+    description: "Learn how to fetch off chain data from within your smart contracts",
   },
 ];

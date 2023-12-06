@@ -57,9 +57,12 @@ export const Header = () => {
         <NavLink href="/automation">🤖 Automation</NavLink>
       </li>
       <li>
+        <NavLink href="/functions">💻 Functions</NavLink>
+      </li>
+      <li>
         <NavLink href="/debug">
           <BugAntIcon className="h-4 w-4" />
-          Debug Contracts
+          Contracts
         </NavLink>
       </li>
       {network.id === 31337 && (
