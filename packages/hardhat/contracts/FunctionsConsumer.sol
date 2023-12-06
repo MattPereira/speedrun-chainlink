@@ -24,7 +24,7 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 	// Event to log responses
 	event Response(
 		bytes32 indexed requestId,
-		uint256 builderCount,
+		string weatherResult,
 		bytes response,
 		bytes err
 	);
@@ -41,20 +41,10 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 	bytes32 donID;
 
 	// State variables to hold function response data
-	uint256 public builderCount;
+	string public weatherResult;
 
-	// JavaScript source code
-	// Fetch character name from the Star Wars API.
-	// Documentation: https://swapi.dev/documentation#people
-	string source =
-		"const apiResponse = await Functions.makeHttpRequest({"
-		"url: `https://buidlguidl-v3.ew.r.appspot.com/api/stats`});"
-		"if (apiResponse.error) {"
-		"throw Error('Request failed');"
-		"}"
-		"const { data } = apiResponse;"
-		"const builderCount = data.builderCount;"
-		"return Functions.encodeUint256(builderCount);";
+	// JavaScript source code to fetch weather data from the OpenWeather API
+	string public weatherSource;
 
 	/**
 	 * @notice Initializes the contract with the Chainlink router address and sets the contract owner
@@ -63,21 +53,29 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 		address _router,
 		uint64 _subscriptionId,
 		uint32 _gasLimit,
-		bytes32 _donID
+		bytes32 _donID,
+		string memory _weatherSource
 	) FunctionsClient(_router) ConfirmedOwner(msg.sender) {
 		router = _router;
 		subscriptionId = _subscriptionId;
 		gasLimit = _gasLimit;
 		donID = _donID;
+		weatherSource = _weatherSource;
 	}
 
 	/**
-	 * @notice Sends an HTTP request for Buidl Guidl stats
+	 * @notice Sends an HTTP request to fetch weather data from the OpenWeather API
+	 * @param args String arguments passed into the source code and accessible via the global variable `args`
+	 * arg 1: the zip code
+	 * arg 2: the ISO 3166 country code
 	 * @return requestId The ID of the request
 	 */
-	function sendRequest() external onlyOwner returns (bytes32 requestId) {
+	function sendRequest(
+		string[] calldata args
+	) external onlyOwner returns (bytes32 requestId) {
 		FunctionsRequest.Request memory req;
-		req.initializeRequestForInlineJavaScript(source); // Initialize the request with JS code
+		req.initializeRequestForInlineJavaScript(weatherSource); // Initialize the request with JS code
+		if (args.length > 0) req.setArgs(args); // Set the arguments for the request
 
 		// Send the request and store the request ID
 		s_lastRequestId = _sendRequest(
@@ -106,10 +104,10 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 		}
 		// Update the contract's state variables with the response and any errors
 		s_lastResponse = response;
-		builderCount = abi.decode(response, (uint256));
+		weatherResult = string(response);
 		s_lastError = err;
 
 		// Emit an event to log the response
-		emit Response(requestId, builderCount, s_lastResponse, s_lastError);
+		emit Response(requestId, weatherResult, s_lastResponse, s_lastError);
 	}
 }

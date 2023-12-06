@@ -604,7 +604,7 @@ const contracts = {
           ],
         },
         FunctionsConsumer: {
-          address: "0xCa71c907547f65D301Ae5EEb1e5FB56A79E66eA6",
+          address: "0x7855b9755E8A1704cd59288214fd50387e05c50C",
           abi: [
             {
               inputs: [
@@ -628,9 +628,19 @@ const contracts = {
                   name: "_donID",
                   type: "bytes32",
                 },
+                {
+                  internalType: "string",
+                  name: "_weatherSource",
+                  type: "string",
+                },
               ],
               stateMutability: "nonpayable",
               type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "EmptyArgs",
+              type: "error",
             },
             {
               inputs: [],
@@ -733,9 +743,9 @@ const contracts = {
                 },
                 {
                   indexed: false,
-                  internalType: "uint256",
-                  name: "builderCount",
-                  type: "uint256",
+                  internalType: "string",
+                  name: "weatherResult",
+                  type: "string",
                 },
                 {
                   indexed: false,
@@ -758,19 +768,6 @@ const contracts = {
               name: "acceptOwnership",
               outputs: [],
               stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "builderCount",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
               type: "function",
             },
             {
@@ -849,7 +846,13 @@ const contracts = {
               type: "function",
             },
             {
-              inputs: [],
+              inputs: [
+                {
+                  internalType: "string[]",
+                  name: "args",
+                  type: "string[]",
+                },
+              ],
               name: "sendRequest",
               outputs: [
                 {
@@ -872,6 +875,32 @@ const contracts = {
               name: "transferOwnership",
               outputs: [],
               stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "weatherResult",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "weatherSource",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
           ],

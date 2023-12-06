@@ -1,6 +1,8 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { networkConfig } from "../helper-hardhat-config";
+import fs from "fs";
+import path from "path";
 
 /** Deploy FunctionsConsumer contract
  * @param hre HardhatRuntimeEnvironment object.
@@ -14,9 +16,15 @@ const functionsConsumer: DeployFunction = async function (hre: HardhatRuntimeEnv
 
   log("------------------------------------");
   const chainId = await hre.ethers.provider.getNetwork().then(network => network.chainId);
-  const { routerAddress, subscriptionId, gasLimit, donId } = networkConfig[chainId].FunctionsConsumer;
 
-  const args = [routerAddress, subscriptionId, gasLimit, donId];
+  const { routerAddress, subscriptionId, gasLimit, donId } = networkConfig[chainId].FunctionsConsumer;
+  const weatherSourceScriptPath = path.join(__dirname, "../functions-source-scripts/fetch-weather-data.js");
+  const weatherSourceScript = fs.readFileSync(weatherSourceScriptPath, "utf8");
+
+  console.log("weatherSourceScriptPath", weatherSourceScriptPath);
+  console.log("weatherSourceScript", weatherSourceScript);
+
+  const args = [routerAddress, subscriptionId, gasLimit, donId, weatherSourceScript];
 
   const FunctionsConsumer = await deploy("FunctionsConsumer", {
     from: deployer,
