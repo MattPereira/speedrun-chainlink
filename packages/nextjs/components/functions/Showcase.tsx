@@ -35,12 +35,12 @@ export const Showcase = () => {
         <div>
           <p className="text-xl">
             Chainlink functions are used to send request from FunctionsConsumer contract to the decentralized oracle
-            network (DON) which executes the API request off chain and returns the result on chain where the
-            FunctionsConsumer contract stores the response in a state variable
+            network (DON) which executes API request to Buidl Guidl server in off chain environment and returns the
+            result on chain where the FunctionsConsumer contract stores the response in a state variable
           </p>
         </div>
         <div>
-          <h3 className="text-3xl text-center mb-5 font-cubano">Buidl Guidl Stats</h3>
+          <h3 className="text-3xl text-center mb-5 font-cubano">On Chain Stats</h3>
           <div className="flex gap-4 mb-3">
             <div>
               <div className="stats shadow mb-3">
@@ -50,7 +50,10 @@ export const Showcase = () => {
                 </div>
               </div>
               <div className="flex justify-center">
-                <button className="btn btn-primary text-xl w-full" onClick={async () => await updateBuilderCount()}>
+                <button
+                  className="btn btn-outline hover:text-primary-content text-xl w-full"
+                  onClick={async () => await updateBuilderCount()}
+                >
                   Update
                 </button>
               </div>
@@ -63,7 +66,10 @@ export const Showcase = () => {
                 </div>
               </div>
               <div className="flex justify-center">
-                <button className="btn btn-primary text-xl w-full" onClick={async () => await updateBuilderCount()}>
+                <button
+                  className="btn btn-outline hover:text-primary-content text-xl w-full"
+                  onClick={async () => await updateBuilderCount()}
+                >
                   Update
                 </button>
               </div>
@@ -76,7 +82,10 @@ export const Showcase = () => {
                 </div>
               </div>
               <div className="flex justify-center">
-                <button className="btn btn-primary text-xl w-full" onClick={async () => await updateBuilderCount()}>
+                <button
+                  className="btn btn-outline hover:text-primary-content text-xl w-full"
+                  onClick={async () => await updateBuilderCount()}
+                >
                   Update
                 </button>
               </div>
