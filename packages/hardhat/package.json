@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@chainlink/contracts": "^0.7.1",
+    "@chainlink/functions-toolkit": "^0.2.8",
     "@openzeppelin/contracts": "^4.8.1",
     "dotenv": "^16.0.3",
     "envfile": "^6.18.0",

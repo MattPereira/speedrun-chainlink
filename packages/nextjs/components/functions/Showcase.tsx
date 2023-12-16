@@ -1,34 +1,35 @@
 import { ExternalLinkButton } from "~~/components/common";
 import { Address } from "~~/components/scaffold-eth";
-import {
-  useScaffoldContract, //  useScaffoldContractRead, useScaffoldContractWrite
-} from "~~/hooks/scaffold-eth";
+import { useScaffoldContract, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+
+// https://gist.githubusercontent.com/MattPereira/110db22c9d24cc1b30298f2818e2d6ef/raw
+// below is above URL encrypted with secretsManager.encryptSecretsUrls()
+const encryptedSecretsReference =
+  "0x822432d0a83c5c2308b6fd1a06964bbf027b1aae2beb4997b2d766011d4da126a0e6a5e32d5977862178c975eb35d5473758e4d84f19fc08a88ef8f1166bfda8704c5e35bea4f6ca31078b14eca867accb7418ba049a3c1d6c08819da13a87ead4a860cb0fad5d77658263c791d73641fb76554f370c03286ae1fe11bf6089e2483a25bb30fc7c93db01a5080206042ae5dc64a022f167a455720ac1e2992ec6c7";
 
 export const Showcase = () => {
   const { data: functionsConsumerContract } = useScaffoldContract({ contractName: "FunctionsConsumer" });
 
-  // const { writeAsync: fetchWeatherData } = useScaffoldContractWrite({
-  //   contractName: "FunctionsConsumer",
-  //   functionName: "sendRequest",
-  //   args: [["94521", "US"]],
-  // });
+  const { writeAsync: sendRequest } = useScaffoldContractWrite({
+    contractName: "FunctionsConsumer",
+    functionName: "sendRequest",
+    args: [["94521", "US", "metric"], encryptedSecretsReference],
+  });
 
   // const { data: weatherResult } = useScaffoldContractRead({
   //   contractName: "FunctionsConsumer",
   //   functionName: "weatherResult",
   // });
 
-  // const { data: s_lastError } = useScaffoldContractRead({
-  //   contractName: "FunctionsConsumer",
-  //   functionName: "s_lastError",
-  // });
+  const { data: s_lastError } = useScaffoldContractRead({
+    contractName: "FunctionsConsumer",
+    functionName: "s_lastError",
+  });
 
-  // const { data: s_lastResponse } = useScaffoldContractRead({
-  //   contractName: "FunctionsConsumer",
-  //   functionName: " s_lastResponse",
-  // });
-
-  // console.log(weatherResult);
+  const { data: s_lastResponse } = useScaffoldContractRead({
+    contractName: "FunctionsConsumer",
+    functionName: "s_lastResponse",
+  });
 
   return (
     <section>
@@ -48,38 +49,46 @@ export const Showcase = () => {
             which executes the provided source code in off chain environment and returns the result on chain through the
             `fulfillRequest` function
           </p>
-          <div>
-            <h3 className="font-cubano text-4xl">TODO</h3>
-            <ol className="list-decimal list-inside text-xl">
-              <li>Figure out how to upload encrypted secret to DON</li>
-              <li>Set up vercel serverless function with cron job to upload secret once per day</li>
-              <li>Set up function to return weather data</li>
-            </ol>
+          <button className="btn btn-primary" onClick={() => sendRequest()}>
+            Send Request
+          </button>
+
+          <div className="mt-5">
+            <h5 className="font-bold text-3xl">TODO</h5>
+            <ul>
+              <li>Debug to get successful response</li>
+              <li>Store latest city/country on chain</li>
+              <li>Display city/country for latest request on chain</li>
+              <li>Fancy user interface that shows image of sun if hot, clouds if cold, etc...</li>
+            </ul>
           </div>
         </div>
 
         <div>
-          <h3 className="text-3xl text-center mb-5 font-cubano">On Chain Weather</h3>
-          {/* <div className="flex gap-4 mb-3">
-            <div>
-              <div className="stats shadow mb-3">
-                <div className="stat bg-base-200 w-48 text-center">
-                  <div className="stat-value">{builderCount?.toString()}</div>
-                  <div className="stat-title">Builder Count</div>
-                </div>
-              </div>
-              <div className="flex justify-center">
-                <button
-                  className="btn btn-outline hover:text-primary-content text-xl w-full"
-                  onClick={async () => await updateBuilderCount()}
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div> */}
+          <h3 className="text-3xl text-center mb-5 font-bold">On Chain Weather</h3>
+          <div>
+            <label className="text-xl font-semibold">s_lastResponse ( bytes )</label>
+            <div className="w-full overflow-x-auto hide-scrollbar">{s_lastResponse?.toString()}</div>
+
+            <label className="text-xl font-semibold">s_lastError ( bytes )</label>
+            <div className="w-full overflow-x-auto hide-scrollbar">{s_lastError?.toString()}</div>
+            <div className="text-xl">{s_lastError && decodeHexError(s_lastError)}</div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
+
+function decodeHexError(hexString: string) {
+  // Remove the '0x' prefix if it exists
+  if (hexString.startsWith("0x")) {
+    hexString = hexString.substring(2);
+  }
+
+  // Convert the hex string to a Buffer
+  const buffer = Buffer.from(hexString, "hex");
+
+  // Convert the Buffer to a string
+  return buffer.toString("utf8");
+}

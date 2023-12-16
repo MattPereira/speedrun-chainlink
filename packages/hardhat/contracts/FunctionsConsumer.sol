@@ -35,10 +35,10 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 	bytes public s_lastError;
 
 	// State variables used as args in the request
-	address router; // https://docs.chain.link/chainlink-functions/supported-networks
-	uint64 subscriptionId; // functions.chain.link
-	uint32 gasLimit;
-	bytes32 donID;
+	address public router; // https://docs.chain.link/chainlink-functions/supported-networks
+	uint64 public subscriptionId; // functions.chain.link
+	uint32 public gasLimit;
+	bytes32 public donID;
 
 	// State variables to hold function response data
 	string public weatherResult;
@@ -71,10 +71,14 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 	 * @return requestId The ID of the request
 	 */
 	function sendRequest(
-		string[] calldata args
-	) external onlyOwner returns (bytes32 requestId) {
+		string[] calldata args,
+		bytes memory encryptedSecretsUrls
+	) external returns (bytes32 requestId) {
 		FunctionsRequest.Request memory req;
 		req.initializeRequestForInlineJavaScript(weatherSource); // Initialize the request with JS code
+		if (encryptedSecretsUrls.length > 0) {
+			req.addSecretsReference(encryptedSecretsUrls);
+		}
 		if (args.length > 0) req.setArgs(args); // Set the arguments for the request
 
 		// Send the request and store the request ID
@@ -84,7 +88,6 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
 			gasLimit,
 			donID
 		);
-
 		return s_lastRequestId;
 	}
 

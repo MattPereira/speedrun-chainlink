@@ -19,6 +19,7 @@ interface NetworkConfigEntryTypes {
     subscriptionId: string;
     gasLimit: string;
     donId: string;
+    toolkitDonId: string;
   };
   tokenAddress: {
     LINK: string;
@@ -48,6 +49,7 @@ const networkConfig: { [key: number]: NetworkConfigEntryTypes } = {
       subscriptionId: "1464",
       gasLimit: "300000",
       donId: "0x66756e2d657468657265756d2d7365706f6c69612d3100000000000000000000",
+      toolkitDonId: "fun-ethereum-sepolia-1",
     },
     tokenAddress: {
       LINK: "0x779877A7B0D9E8603169DdbD7836e478b4624789",

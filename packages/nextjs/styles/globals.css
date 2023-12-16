@@ -27,7 +27,7 @@ p {
 }
 
 .btn {
-  font-weight: normal;
+  /* font-weight: normal; */
   text-transform: none;
   /* padding: 0.5rem 1.5rem; */
   /* font-family: "Cubano", sans-serif; */
@@ -42,9 +42,4 @@ p {
 /* Hide scrollbar for Chrome, Safari, and Opera */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
-}
-
-/* Hide scrollbar for IE and Edge */
-.hide-scrollbar {
-  -ms-overflow-style: none;
 }

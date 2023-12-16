@@ -604,7 +604,7 @@ const contracts = {
           ],
         },
         FunctionsConsumer: {
-          address: "0x7855b9755E8A1704cd59288214fd50387e05c50C",
+          address: "0x00B07a4b8155Ab74e45F9BabE01686e2684c3041",
           abi: [
             {
               inputs: [
@@ -640,6 +640,11 @@ const contracts = {
             {
               inputs: [],
               name: "EmptyArgs",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "EmptySecrets",
               type: "error",
             },
             {
@@ -771,6 +776,32 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "donID",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "gasLimit",
+              outputs: [
+                {
+                  internalType: "uint32",
+                  name: "",
+                  type: "uint32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "bytes32",
@@ -796,6 +827,19 @@ const contracts = {
             {
               inputs: [],
               name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "router",
               outputs: [
                 {
                   internalType: "address",
@@ -852,6 +896,11 @@ const contracts = {
                   name: "args",
                   type: "string[]",
                 },
+                {
+                  internalType: "bytes",
+                  name: "encryptedSecretsUrls",
+                  type: "bytes",
+                },
               ],
               name: "sendRequest",
               outputs: [
@@ -862,6 +911,19 @@ const contracts = {
                 },
               ],
               stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "subscriptionId",
+              outputs: [
+                {
+                  internalType: "uint64",
+                  name: "",
+                  type: "uint64",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
             {

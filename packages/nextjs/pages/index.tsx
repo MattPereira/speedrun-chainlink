@@ -21,12 +21,10 @@ const Home: NextPage = () => {
         <p className="text-3xl text-center my-10">
           A beginner&apos;s guide to integrating chainlink products with smart contracts
         </p>
-        <div className="rounded-xl overflow-hidden mb-14">
-          <Image src={"/banner-crop.png"} height="1350" width="1550" alt="Speedrun Chainlink Banner" />
-        </div>
+
         {/* <div className="flex justify-center mb-10 items-center gap-8 flex-wrap"></div> */}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 px-0 mb-14">
           {PRODUCTS.map(product => (
             <Link
               href={product.path}
@@ -37,6 +35,10 @@ const Home: NextPage = () => {
               <p className="text-xl my-0">{product.description}</p>
             </Link>
           ))}
+        </div>
+
+        <div className="rounded-xl overflow-hidden">
+          <Image src={"/banner-crop.png"} height="1350" width="1550" alt="Speedrun Chainlink Banner" />
         </div>
       </div>
     </div>

@@ -21,9 +21,6 @@ const functionsConsumer: DeployFunction = async function (hre: HardhatRuntimeEnv
   const weatherSourceScriptPath = path.join(__dirname, "../functions-source-scripts/fetch-weather-data.js");
   const weatherSourceScript = fs.readFileSync(weatherSourceScriptPath, "utf8");
 
-  console.log("weatherSourceScriptPath", weatherSourceScriptPath);
-  console.log("weatherSourceScript", weatherSourceScript);
-
   const args = [routerAddress, subscriptionId, gasLimit, donId, weatherSourceScript];
 
   const FunctionsConsumer = await deploy("FunctionsConsumer", {

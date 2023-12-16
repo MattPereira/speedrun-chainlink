@@ -8,7 +8,7 @@ if (!secrets.apiKey) {
 
 const zipCode = `${args[0]},${args[1]}`;
 
-const geoCodingURL = "http://api.openweathermap.org/geo/1.0/zip?";
+const geoCodingURL = "https://api.openweathermap.org/geo/1.0/zip?";
 
 console.log(`Sending HTTP request to ${geoCodingURL}zip=${zipCode}`);
 
@@ -25,7 +25,7 @@ const geoCodingResponse = await geoCodingRequest;
 
 if (geoCodingResponse.error) {
   console.error(geoCodingResponse.error);
-  throw Error("Request failed, try checking the params provided");
+  throw Error(zipCode + " is not a valid zip code --" + `${geoCodingURL}zip=${zipCode}`);
 }
 
 console.log(geoCodingResponse);
@@ -66,6 +66,8 @@ console.log("Weather response", weatherResponse);
 const result = {
   temp: temperature,
 };
+
+console.log("result", result);
 
 // Use JSON.stringify() to convert from JSON object to JSON string
 // Finally, use the helper Functions.encodeString() to encode from string to bytes
